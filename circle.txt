@@ -1,0 +1,5 @@
+# Triangle
+city 0 0
+city 100 0
+city 50 86.60
+station 50 30
