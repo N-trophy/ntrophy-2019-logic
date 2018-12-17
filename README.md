@@ -3,5 +3,5 @@
 ## Example
 
 ```
-$ ./evaluate_score circle.txt
+$ ./evaluate_score triangle.txt
 ```
