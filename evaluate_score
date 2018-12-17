@@ -10,6 +10,7 @@ Format: each line contains one point.
 
 Usage: evaluate_score input.txt
 Output: single number representing error (lower = better, optimum = 0)
+Error = average distance of each city to the nearest station
 """
 
 import sys
@@ -26,7 +27,7 @@ def euclid_distance(city: City, station: Station) -> float:
     return math.sqrt((city.x-station.x)**2 + (city.y-station.y)**2)
 
 
-def error(cities: List[City], stations: List[Station]) -> int:
+def error(cities: List[City], stations: List[Station]) -> float:
     _sum = 0
     for city in cities:
         nearest = min(stations, key=lambda s: euclid_distance(city, s))
@@ -40,13 +41,19 @@ def process_file(stream):
     stations = set()
 
     for line in stream:
+        if line and line[0] == '#':
+            continue
+
         command, x, y = line.split()
-        x = int(x)
-        y = int(y)
+        x = float(x)
+        y = float(y)
         if command[0].lower() == 'c':
             cities.add(City(x, y))
         elif command[0].lower() == 's':
             stations.add(Station(x, y))
+
+    assert len(cities) > 0, 'Need at least one city'
+    assert len(stations) > 0, 'Need at least one station'
 
     print(error(cities, stations))
 
