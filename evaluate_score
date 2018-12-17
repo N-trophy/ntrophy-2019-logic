@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+"""
+N-trophy 2019 logic task score evaluator.
+
+This sripts accepts input as a single multiline file / stdin.
+Format: each line contains one point.
+ * 'c x y' -- define city at [x, y]
+ * 's x y' -- define ambulace station at [x, y]
+
+Usage: evaluate_score input.txt
+"""
+
+import sys
+from collections import namedtuple
+import math
+
+
+City = namedtuple('City', 'x y')
+Station = namedtuple('Station', 'x y')
+
+
+def euclid_distance(city, station):
+    return math.sqrt((city.x-station.x)**2 + (city.y-station.y)**2)
+
+
+def score(cities, stations) -> int:
+    _sum = 0
+    for city in cities:
+        nearest = min(stations, key=lambda s: euclid_distance(city, s))
+        _sum += euclid_distance(city, nearest)
+    return _sum / len(cities)
+
+
+def process_file(stream):
+    cities = set()
+    stations = set()
+
+    for line in stream:
+        command, x, y = line.split()
+        x = int(x)
+        y = int(y)
+        if command[0].lower() == 'c':
+            cities.add(City(x, y))
+        elif command[0].lower() == 's':
+            stations.add(Station(x, y))
+
+    print(score(cities, stations))
+
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        stream_in = open(sys.argv[1])
+    else:
+        stream_in = sys.stdin
+
+    process_file(stream_in)
