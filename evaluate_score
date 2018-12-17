@@ -28,7 +28,7 @@ def euclid_distance(city: City, station: Station) -> float:
 
 
 def error(cities: List[City], stations: List[Station]) -> float:
-    _sum = 0
+    _sum = 0.0
     for city in cities:
         nearest = min(stations, key=lambda s: euclid_distance(city, s))
         _sum += euclid_distance(city, nearest)
