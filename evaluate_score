@@ -9,22 +9,24 @@ Format: each line contains one point.
  * 's x y' -- define ambulace station at [x, y]
 
 Usage: evaluate_score input.txt
+Output: single number representing error (lower = better, optimum = 0)
 """
 
 import sys
 from collections import namedtuple
 import math
+from typing import List
 
 
 City = namedtuple('City', 'x y')
 Station = namedtuple('Station', 'x y')
 
 
-def euclid_distance(city, station):
+def euclid_distance(city: City, station: Station) -> float:
     return math.sqrt((city.x-station.x)**2 + (city.y-station.y)**2)
 
 
-def score(cities, stations) -> int:
+def error(cities: List[City], stations: List[Station]) -> int:
     _sum = 0
     for city in cities:
         nearest = min(stations, key=lambda s: euclid_distance(city, s))
@@ -33,6 +35,7 @@ def score(cities, stations) -> int:
 
 
 def process_file(stream):
+    """Process whole file and print error."""
     cities = set()
     stations = set()
 
@@ -45,7 +48,7 @@ def process_file(stream):
         elif command[0].lower() == 's':
             stations.add(Station(x, y))
 
-    print(score(cities, stations))
+    print(error(cities, stations))
 
 
 if __name__ == '__main__':
