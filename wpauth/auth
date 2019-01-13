@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+from passlib.hash import phpass
+import MySQLdb
+import sys
+from getpass import getpass
+
+
+if len(sys.argv) < 2:
+    sys.stderr.write('Usage: auth username\n')
+    sys.exit(1)
+
+connection = MySQLdb.connect(
+    host='logika.ntrophy.cz',
+    user='ntrophy-log-2019',
+    passwd='F5Rc6GdKpUEqizYG',
+    db='ntrophy-log-2019'
+)
+
+cursor = connection.cursor()
+
+
+try:
+    cursor.execute("SELECT user_pass FROM users WHERE user_login='%s'" % (sys.argv[1]))
+    row = cursor.fetchone()
+    if not row:
+        print('User does not exist!')
+        sys.exit(0)
+
+    passwd = getpass()
+    print('OK' if phpass.verify(passwd, row[0]) else 'NOK')
+
+finally:
+    cursor.close()
+    connection.close()
