@@ -23,59 +23,71 @@ function format(fmt, ...args) {
     });
 }
 
-var S = undefined
-
-function init_sigma(){
-    S = new sigma({
-        graph: {nodes:[], edges:[]},
-        renderers: [
-            {
-                container: document.getElementById('graph-container'),
-                type: 'canvas'
-            }
-        ],
-        settings: {
-            doubleClickEnabled: true,
-            enableEdgeHovering: true,
-            maxEdgeSize: 4,
-        }
-    });
-
-    S.bind('clickEdge', function(e) {
-        console.log(e)
-        if (e.data.captor.isDragging) return;
-        S.graph.addNode({
-            id: format('n.{0}.{1}', e.data.edge.id, Math.random()),
-            label: format("[{0}, {1}]", e.data.captor.x, e.data.captor.y),
-            x: e.data.captor.x,
-            y: e.data.captor.y,
-            size: 20,
-            color: 'aa4444',
-        })
-        S.refresh();        
-    });
+function new_node(id, x, y, size){
+    return {
+        id: 'n' + id,
+        label: format("[{0}, {1}]", x, y),
+        x: x,
+        y: y,
+        size: size * 10,
+        shape: 'dot',
+        fixed: true,
+        // color: '#333',
+    } 
 }
 
+function station_node(x, y){
+    var node = new_node(undefined, x, y, 1);
+    node.id = 's' + station_id++;
+    node.color = '#aa3512';
+    return node;
+}
+
+var station_counter = 0;
+var station_id = 0;
+
 function update_graph(graph_spec){
-    S.graph.clear()
-    graph_spec.nodes.forEach(node => {
-        S.graph.addNode({
-            id: 'n' + node[0],
-            label: format("[{0}, {1}]", node[1], node[2]),
-            x: node[1],
-            y: node[2],
-            size: node[3],
-            color: '#333',
-        })
+    var nodes = new vis.DataSet(graph_spec.nodes.map(node => {
+        return new_node(node[0], node[1], node[2], node[3])
+    }))
+    station_id = 0
+    station_counter = 0
+    
+    // create an array with edges
+    var edges = new vis.DataSet(graph_spec.edges.map(edge => {
+        return {
+            from: 'n' + edge[1],
+            to: 'n' + edge[2],
+            smooth: false,
+        }
+    }))
+    
+    // create a network
+    var container = document.getElementById('graph-container');
+    
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges,
+    };
+    var options = {
+        physics: {
+            enabled: false,
+        }
+    };
+    
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+    network.on('click',function(event){
+        if(station_counter < 1 && event.nodes.length == 0 && event.edges.length == 1) {
+            station_counter++
+            nodes.add([
+                station_node(event.pointer.canvas.x, event.pointer.canvas.y)
+            ])
+        }
+        if(event.nodes.length == 1 && event.nodes[0][0] == 's') {
+            nodes.remove(event.nodes[0])
+            station_counter--
+        }
     })
-    graph_spec.edges.forEach(edge => {
-        S.graph.addEdge({
-            id: 'e' + edge[0],
-            source: 'n' + edge[1],
-            target: 'n' + edge[2],
-            size: 20,
-            color: '#ccc'        
-        })
-    })
-    S.refresh()
 }

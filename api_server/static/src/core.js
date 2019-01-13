@@ -21,8 +21,8 @@ function click_task(task) {
 }
 
 window.onload = () => {
-    init_sigma()
-    click_task(1);
+    // init_sigma()
+    click_task(2);
 
     for(let i=1; i<=8; i++) {
         document.getElementById("task"+i).onclick = () => {

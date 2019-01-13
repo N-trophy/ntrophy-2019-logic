@@ -25,7 +25,7 @@ SECRET_KEY = '2@ma8vfsiidcn&i@4gjbsxl!+zovv)u)y836@0tt5r-u%3z$e1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['logika.ntrophy.cz']
+ALLOWED_HOSTS = ['logika.ntrophy.cz', 'localhost']
 
 
 # Application definition
