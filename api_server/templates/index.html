@@ -2,95 +2,11 @@
     <head>
         <title>Ntrophy Logika</title>
         <meta charset="UTF-8"> 
-        <script src="/static/lib/sigma.min.js"></script>
         <script src="/static/lib/axios.min.js"></script>
-        <script src="/static/lib/vis.min.js"></script>
-        <script src="/static/src/graph.js"></script>
-        <script src="/static/src/core.js"></script>
-        <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
-        <style>
-            #container {
-                width: 100%;
-                height: 100%;
-            }
-            #graph-container {
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                position: absolute;
-                background: #eeeeee;
-            }
-            #header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 50px;
-                z-index: 10;
-                background: rgba(255, 255, 255, 0.5)
-            }
-            #logo {
-                position: fixed;
-                left: 20px;
-                bottom: 20px;
-                height: 100px;
-                z-index: 10;
-            }
-            #progress-bar {
-                display: inline-block;
-                height: 40px;
-                margin: 5px;
-                width: 60%;
-            }
-            .task-bar {
-                display: inline-block;
-                width: 5%;
-                padding: 10px 10px;
-                margin: 0;
-                text-align: center;
-            }
-            .task-bar.active {
-                background: rgba(0, 0, 0, 0.9);
-                border: solid black 1px;
-                color: white;
-            }
-            .task-bar.closed {
-                background: rgba(67, 158, 67, 0.5);
-                border: none;
-                padding: 11px 11px;
-            }
-            #team {
-                display: inline-block;
-                float: right;
-                margin: 5px;
-                margin-right: 20px; 
-                height: 40px;
-                line-height: 40px;
-                max-width: 30%;
-                text-align: center;
-            }
-        </style>
     </head>
     <body>
-        <div id="container">
-            <div id="header">
-                <div id="progress-bar">
-                    <div id="task1" class="task-bar closed">I</div>
-                    <div id="task2" class="task-bar closed">II</div>
-                    <div id="task3" class="task-bar closed">III</div>
-                    <div id="task4" class="task-bar closed">IV</div>
-                    <div id="task5" class="task-bar opened">V</div>
-                    <div id="task6" class="task-bar opened">VI</div>
-                    <div id="task7" class="task-bar opened">VII</div>
-                    <div id="task8" class="task-bar opened">VIII</div>
-                </div>
-                <div id="team">
-                    Tým: Glofunkt Hakrsex
-                </div>
-            </div>
-            <img id="logo" src="/static/img/ntrophy-logo.png">
-            <div id="graph-container"></div>
-        </div>
+        {% for level in levels %}
+            <li><a href="/level/{{ level.id }}">Level {{ level.id }}</a></li>
+        {% endfor %}
     </body>
 </html>

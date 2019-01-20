@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import TemplateView
 import api_server.views as views
+import api_server.evaluator as evaluator
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html'), name="home"),
-    path('graph/', views.Graph.as_view()),
+    path('level/<int:id>', views.level),
+    path('', views.index),
+    path('level/<int:id>/graph', views.graph),
+    path('level/<int:id>/eval', evaluator.eval_level),
+    path('js/graph<int:id>.js', views.graph_js)
 ]

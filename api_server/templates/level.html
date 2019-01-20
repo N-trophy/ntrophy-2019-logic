@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Ntrophy Logika</title>
+        <meta charset="UTF-8"> 
+        <script src="/static/lib/axios.min.js"></script>
+        <script src="/static/lib/vis.min.js"></script>
+        <script src="/static/src/graph.js"></script>
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+            level_id = {{ level_id }}
+            SITE_DOMAIN = ""
+            window.onload = () => {
+                axios.get('/level/{{level_id}}/graph')
+                    .then(response => {
+                        init_graph(response.data)
+                    })
+                    .catch(err => {
+                        console.error(err)
+                    });
+            }
+        </script>
+
+        <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
+        <style>
+            #container {
+                width: 100%;
+                height: 100%;
+            }
+            #graph-container {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                background: #eeeeee;
+            }
+            #header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 50px;
+                z-index: 10;
+                background: rgba(255, 255, 255, 0.5);
+                text-align: center;
+                line-height: 50px;
+            }
+            #logo {
+                position: fixed;
+                left: 20px;
+                bottom: 20px;
+                height: 100px;
+                z-index: 10;
+            }
+            #home {
+                float: left;
+            }
+            #eval {
+                float: right;
+                margin: 10px;
+                height: 30px;
+                background: rgb(129, 221, 129);
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <a id="home" href="/">Domů</a>
+                Úloha {{ level_id }}
+                <button id="eval" onclick='eval()'>Vyhodnoť</button>
+            </div>
+            <img id="logo" src="/static/img/ntrophy-logo.png">
+            <div id="graph-container"></div>
+        </div>
+    </body>
+</html>

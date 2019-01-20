@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['logika.ntrophy.cz', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'api_server',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,5 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
