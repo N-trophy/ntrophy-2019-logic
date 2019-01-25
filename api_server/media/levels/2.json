@@ -6,5 +6,5 @@
     },
     "edges": [],
     "stations": 1,
-    "score": "quadratic"
+    "score": "linear"
 }
