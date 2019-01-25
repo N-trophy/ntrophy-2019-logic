@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+"""
+Generate some random points in 2D area.
+"""
+
+import json
+from random import randint
+
+MIN = -500
+MAX = 500
+NO_INCIDENTS = 200
+
+output = {
+    'nodes' : {},
+    'edges': [],
+    'stations': 1,
+    'score': 'quadratic',
+}
+
+for i in range(NO_INCIDENTS):
+    output['nodes'][i] = [randint(MIN, MAX), randint(MIN, MAX), 1]
+
+print(json.dumps(output, sort_keys=True, indent=4))
