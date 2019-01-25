@@ -17,9 +17,10 @@ def graph(request, *args, **kwargs):
         raise Http404("Task doesn't exist.")
 
     with level_object.data.open("r") as f:
-        data = f.read()
+        data = json.loads(f.read())
 
-    return JsonResponse(json.loads(data))
+    data['nodes'] = [[nodeid]+nodedata for nodeid, nodedata in data['nodes'].items()]
+    return JsonResponse(data)
 
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
