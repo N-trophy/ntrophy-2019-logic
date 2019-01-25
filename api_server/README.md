@@ -8,7 +8,8 @@ Edit api_server/settings/local.py as you wish.
 $ virtualenv -p python3 djangoenv
 $ source djangoenv/bin/activate
 $ pip3 install -r requirements.txt
-$ python3 manage.py command --settings=api_server.settings.local
+$ ./manage.py command --settings=api_server.settings.local
+$ ./manage.py runserver --settings=api_server.settings.local
 ```
 
 ## How to deploy to production
@@ -16,5 +17,5 @@ $ python3 manage.py command --settings=api_server.settings.local
 ```
 $ cp api_server/settings/production.py.txt api_server/settings/production.py
 Edit api_server/settings/local.py as you wish.
-$ python3 manage.py collectstatic --settings=api_server.settings.production
+$ ./manage.py collectstatic --settings=api_server.settings.production
 ```
