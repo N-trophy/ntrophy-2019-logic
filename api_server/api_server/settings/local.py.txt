@@ -4,3 +4,10 @@ SECRET_KEY = '2@ma8vfsiidcn&i@4gjbsxl!+zovv)u)y836@0tt5r-u%3z$e1'
 STATIC_ROOT = "/abs/path/to/dir/static"
 DEBUG = True
 ALLOWED_HOSTS = ['localhost']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
