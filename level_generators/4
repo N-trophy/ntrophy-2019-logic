@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+
+"""
+Generate some not-so-random points in 2D area.
+"""
+
+import json
+from random import randint
+from math import sqrt
+
+MIN_POS = -400
+MAX_POS = 400
+NO_INCIDENTS = 142
+NO_CITIES = 8
+CITY_AVERAGE = 100
+MIN_DISTANCE = CITY_AVERAGE * 2
+
+def dist(posa, posb):
+    return sqrt((posa[0]-posb[0])**2 + (posa[1]-posb[1])**2)
+
+def nearest(point, points):
+    return min(points, key=lambda p: dist(point, p))
+
+cities = [(randint(MIN_POS, MAX_POS), randint(MIN_POS, MAX_POS))]
+for _ in range(NO_CITIES):
+    x, y = (randint(MIN_POS, MAX_POS), randint(MIN_POS, MAX_POS))
+    while dist(nearest((x, y), cities), (x, y)) < MIN_DISTANCE:
+        x, y = (randint(MIN_POS, MAX_POS), randint(MIN_POS, MAX_POS))
+    cities.append((x, y))
+
+output = {
+    'nodes' : {},
+    'edges': [],
+    'stations': NO_CITIES,
+    'score': 'quadratic',
+}
+
+for i in range(NO_INCIDENTS):
+    cityx, cityy = cities[randint(0, len(cities)-1)]
+    output['nodes'][i] = [randint(cityx-CITY_AVERAGE, cityx+CITY_AVERAGE),
+                          randint(cityy-CITY_AVERAGE, cityy+CITY_AVERAGE),
+                          1]
+
+print(json.dumps(output, sort_keys=True, indent=4))
