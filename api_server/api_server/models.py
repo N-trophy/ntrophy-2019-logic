@@ -12,19 +12,14 @@ def path_and_rename(instance, filename):
     return os.path.join(upload_to, filename)
 
 class Level(models.Model):
+    EVAL_FUNCTIONS = [('QUADRATIC', 'quadratic'), ('LINEAR', 'linear')]
+
     id = models.PositiveIntegerField(primary_key=True)
+    no_stations = models.PositiveIntegerField(default=1)
+    score = models.CharField(max_length=16, choices=EVAL_FUNCTIONS, default='1')
     graph = models.TextField()
 
     def validate_graph_data(graph):
         if False:
             # TODO Add graph validation
             raise ValueError()
-
-    def save(self, *args, **kwargs):
-        json_text_data = self.data.read().decode('utf-8')
-        try:
-            json_data = json.loads(json_text_data)
-            LevelFile.validate_graph_data(json_data)
-            super(LevelFile, self).save(*args, **kwargs)
-        except ValueError:
-            raise forms.ValidationError("Invalid JSON format.")
