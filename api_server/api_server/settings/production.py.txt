@@ -4,6 +4,7 @@ import os
 SECRET_KEY = 'XXX'
 DEBUG = False
 ALLOWED_HOSTS = ['logika.ntrophy.cz', 'localhost']
+STATIC_ROOT = "/abs/path/to/dir/static"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
