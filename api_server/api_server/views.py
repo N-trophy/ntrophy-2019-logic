@@ -7,12 +7,12 @@ from django.http import JsonResponse
 
 import json
 
-from api_server.models import LevelFile
+from api_server.models import Level
 
 def graph(request, *args, **kwargs):
     task_number = kwargs['id']
     try:
-        level_object = LevelFile.objects.get(id=task_number)
+        level_object = Level.objects.get(id=task_number)
     except ObjectDoesNotExist:
         raise Http404("Task doesn't exist.")
 
@@ -24,7 +24,7 @@ def graph(request, *args, **kwargs):
 
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
-    levels = LevelFile.objects.order_by('id')
+    levels = Level.objects.order_by('id')
     print(levels)
     context = {
         'levels': levels

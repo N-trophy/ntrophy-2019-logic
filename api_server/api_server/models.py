@@ -4,16 +4,16 @@ import json
 import os
 
 def path_and_rename(instance, filename):
-        upload_to = 'levels'
-        ext = filename.split('.')[-1]
-        # get filename
-        filename = '{}.{}'.format(instance.pk, ext)
-        # return the whole path to the file
-        return os.path.join(upload_to, filename)
+    upload_to = 'levels'
+    ext = filename.split('.')[-1]
+    # get filename
+    filename = '{}.{}'.format(instance.pk, ext)
+    # return the whole path to the file
+    return os.path.join(upload_to, filename)
 
-class LevelFile(models.Model):
-    data = models.FileField(upload_to=path_and_rename)
+class Level(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
+    graph = models.TextField()
 
     def validate_graph_data(graph):
         if False:

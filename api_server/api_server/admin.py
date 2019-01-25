@@ -1,4 +1,4 @@
 from django.contrib import admin
-from api_server.models import LevelFile
+from api_server.models import Level
 
-admin.site.register(LevelFile)
+admin.site.register(Level)
