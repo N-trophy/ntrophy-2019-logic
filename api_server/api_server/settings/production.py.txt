@@ -1,0 +1,16 @@
+from api_server.settings.base import *
+import os
+
+SECRET_KEY = 'XXX'
+DEBUG = False
+ALLOWED_HOSTS = ['logika.ntrophy.cz', 'localhost']
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'xxx',
+        'USER': 'xxx',
+        'PASSWORD': 'xxx',
+        'HOST': 'localhost',
+        'PORT': 3306,
+    }
+}
