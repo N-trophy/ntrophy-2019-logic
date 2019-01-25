@@ -16,9 +16,9 @@ def graph(request, *args, **kwargs):
     except ObjectDoesNotExist:
         raise Http404("Task doesn't exist.")
 
-    level_object.data.open("r")
-    data = level_object.data.read()
-    level_object.data.close()
+    with level_object.data.open("r") as f:
+        data = f.read()
+
     return JsonResponse(json.loads(data))
 
 def index(request, *args, **kwargs):
