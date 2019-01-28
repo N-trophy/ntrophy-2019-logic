@@ -1,7 +1,4 @@
-# N-trophy 2019 Logic Helpers
+# N-trophy 2019 Logic Qualification Task
 
-## Example
-
-```
-$ ./evaluate_score triangle.txt
-```
+This repo contains several materials for [N-trophy](https://ntrophy.cz/)
+qualification task for year 2019.
