@@ -47,7 +47,10 @@ def level_status(next_level, level, submission=None):
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
     done_levels = api_server.level.done_levels(request.user)
-    next_level = max(done_levels.keys())+1
+    if len(done_levels.keys()) > 0:
+        next_level = max(done_levels.keys())+1
+    else
+        next_level = 1
     levels = list(map(lambda l: {
         'id': l.id,
         'status': level_status(next_level, l, done_levels.get(l.id)),
