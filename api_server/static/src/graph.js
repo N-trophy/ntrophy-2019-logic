@@ -48,6 +48,25 @@ function eval(){
         })
 }
 
+function submit(){
+    cords = station_nodes_as_cords()
+    axios({
+            method:'post',
+            url: SITE_DOMAIN + format('/level/{0}/submit', level_id),
+            data: cords,
+            headers: {
+                "X-CSRFToken": CSRF_TOKEN, 
+                "content-type": "application/json"
+            }
+        })
+        .then(res=>{
+            console.log(res.data)  
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+}
+
 // Graph handler
 function new_node(id, x, y, size){
     return {
