@@ -49,7 +49,7 @@ def index(request, *args, **kwargs):
     done_levels = api_server.level.done_levels(request.user)
     if len(done_levels.keys()) > 0:
         next_level = max(done_levels.keys())+1
-    else
+    else:
         next_level = 1
     levels = list(map(lambda l: {
         'id': l.id,
