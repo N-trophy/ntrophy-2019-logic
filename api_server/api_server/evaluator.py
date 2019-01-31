@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 
 from api_server.models.level import Level
+from api_server.models.evaluation import Evaluation
 import api_server.level
 import api_server.evaluation
 import api_server.evaluators.plane_quadratic as epc
@@ -26,13 +27,23 @@ def eval_level(request, *args, **kwargs):
     nodes = json.loads(level.graph)['nodes'].values()
     nodes = [epc.City(node[0], node[1]) for node in nodes]
 
-    data = json.loads(request.body.decode('utf-8'))
+    body = request.body.decode('utf-8')
+    data = json.loads(body)
     stations = [epc.Station(s['x'], s['y']) for s in data]
 
     if len(stations) != level.no_stations:
         raise ValidationError('Invalid number od stations!')
 
     score = epc.error(nodes, stations)
+
+    evaluation = Evaluation(
+        user=request.user,
+        level=level,
+        score=score,
+        positions=body,
+        report='ok',
+    )
+    evaluation.save()
 
     return JsonResponse({'score': score})
 
