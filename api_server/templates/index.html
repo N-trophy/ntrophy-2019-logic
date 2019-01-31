@@ -71,7 +71,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       {% for level in levels %}
       <a {% if level.id <= next_level %} href="/level/{{ level.id }}" {% endif %}>
         <div class="w3-cell-row w3-padding-large w3-large {{level.class}}">
-            <div class="w3-container w3-cell">{{ level.id }}. úroveň</div>
+            <div class="w3-container w3-cell w3-cell-middle">{{ level.id }}. úroveň</div>
             <div class="w3-container w3-cell w3-right">{{ level.status }}</div>
         </div>
       </a>
