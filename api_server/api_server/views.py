@@ -23,10 +23,14 @@ def graph(request, *args, **kwargs):
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
     levels = Level.objects.order_by('id')
-    print(levels)
     context = {
         'levels': levels
     }
+    return HttpResponse(template.render(context, request))
+
+def team(request, *args, **kwargs):
+    template = loader.get_template('team.html')
+    context = {}
     return HttpResponse(template.render(context, request))
 
 def level(request, *args, **kwargs):
