@@ -68,22 +68,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
     <div class="w3-twothird">
       <h1>Úrovně</h1>
-      <div class="w3-cell-row w3-padding-large w3-large w3-red">
-          <div class="w3-container w3-cell">1. úroveň</div>
-          <div class="w3-container w3-cell w3-right">Skóre: 125</div>
-      </div>
-      <div class="w3-cell-row w3-padding-large w3-large w3-red">
-          <div class="w3-container w3-cell">2. úroveň</div>
-          <div class="w3-container w3-cell w3-right">Skóre: 324</div>
-      </div>
-      <div class="w3-cell-row w3-padding-large w3-large w3-white">
-          <div class="w3-container w3-cell">3. úroveň</div>
-          <div class="w3-container w3-cell w3-right">Jít řešit</div>
-      </div>
-      <div class="w3-cell-row w3-padding-large w3-large w3-dark-gray">
-          <div class="w3-container w3-cell">4. úroveň</div>
-          <div class="w3-container w3-cell w3-right">Uzavřen</div>
-      </div>
+      {% for level in levels %}
+      <a {% if level.id <= next_level %} href="/level/{{ level.id }}" {% endif %}>
+        <div class="w3-cell-row w3-padding-large w3-large {{level.class}}">
+            <div class="w3-container w3-cell">{{ level.id }}. úroveň</div>
+            <div class="w3-container w3-cell w3-right">{{ level.status }}</div>
+        </div>
+      </a>
+      {% endfor %}
     </div>
   </div>
 </div>
