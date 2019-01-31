@@ -7,7 +7,7 @@ from django.http import JsonResponse
 
 import json
 
-from api_server.models import Level
+from api_server.models.level import Level
 
 def graph(request, *args, **kwargs):
     task_number = kwargs['id']

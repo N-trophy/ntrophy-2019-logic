@@ -3,14 +3,6 @@ from django import forms
 import json
 import os
 
-def path_and_rename(instance, filename):
-    upload_to = 'levels'
-    ext = filename.split('.')[-1]
-    # get filename
-    filename = '{}.{}'.format(instance.pk, ext)
-    # return the whole path to the file
-    return os.path.join(upload_to, filename)
-
 class Level(models.Model):
     EVAL_FUNCTIONS = [('QUADRATIC', 'quadratic'), ('LINEAR', 'linear')]
 
