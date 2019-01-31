@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 import json
 from api_server.models import Level
+import api_server.level
 
 register = Library()
 
@@ -43,7 +44,7 @@ def level_status(next_level, level):
 @login_required
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
-    next_level = 3
+    next_level = api_server.level.next_level(request.user)
     levels = list(map(lambda l: {
         'id': l.id,
         'status': level_status(next_level, l),
