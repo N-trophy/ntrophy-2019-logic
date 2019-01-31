@@ -10,3 +10,7 @@ def done_levels(user):
         submission.level.id: submission \
         for submission in Submission.objects.filter(user=user)
     }
+
+def is_level_open(user, level_id):
+    done = done_levels(user).keys()
+    return level_id in done or level_id-1 in done

@@ -4,6 +4,8 @@ from django.views import View
 from django.template import loader, RequestContext, Library
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+from django.http import Http404
+from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth.decorators import login_required
 
@@ -60,6 +62,9 @@ def index(request, *args, **kwargs):
 
 @login_required
 def level(request, *args, **kwargs):
+    if not api_server.level.is_level_open(request.user, kwargs['id']):
+        raise PermissionDenied("Task not opened.")
+
     template = loader.get_template('level.html')
     level = Level.objects.get(id=kwargs['id'])
     context = {
