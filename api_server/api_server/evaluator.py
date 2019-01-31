@@ -2,11 +2,14 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 
 from api_server.models.level import Level
 import api_server.level
 import api_server.evaluation
+import api_server.evaluators.plane_quadratic as epc
+
+import json
 
 
 @login_required
@@ -20,7 +23,18 @@ def eval_level(request, *args, **kwargs):
     if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
         raise PermissionDenied('Reached limit of evaluations!')
 
-    return JsonResponse({'score': kwargs['id']})
+    nodes = json.loads(level.graph)['nodes'].values()
+    nodes = [epc.City(node[0], node[1]) for node in nodes]
+
+    data = json.loads(request.body.decode('utf-8'))
+    stations = [epc.Station(s['x'], s['y']) for s in data]
+
+    if len(stations) != level.no_stations:
+        raise ValidationError('Invalid number od stations!')
+
+    score = epc.error(nodes, stations)
+
+    return JsonResponse({'score': score})
 
 
 @login_required
