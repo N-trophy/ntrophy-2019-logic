@@ -50,8 +50,6 @@ def get_new_random_neighbor(vertice):
 output = {
     'nodes' : {},
     'edges': [],
-    'stations': 1,
-    'score': 'quadratic',
 }
 
 def get_weight(v):

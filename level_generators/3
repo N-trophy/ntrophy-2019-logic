@@ -14,8 +14,6 @@ NO_INCIDENTS = 200
 output = {
     'nodes' : {},
     'edges': [],
-    'stations': 1,
-    'score': 'quadratic',
 }
 
 for i in range(NO_INCIDENTS):

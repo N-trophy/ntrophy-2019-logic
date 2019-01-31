@@ -31,8 +31,6 @@ for _ in range(NO_CITIES):
 output = {
     'nodes' : {},
     'edges': [],
-    'stations': NO_CITIES,
-    'score': 'quadratic',
 }
 
 for i in range(NO_INCIDENTS):
