@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+
+"""
+Generate large tree.
+"""
+
+import json
+import sys
+import random
+
+NO_INCIDENTS = sys.argv[1] if len(sys.argv) > 1 else 100
+GRID_A = 100
+WIDTH = 15
+HEIGHT = 15
+NO_EDGES = 130
+NEIGHBOURHOOD = [(1, 0), (0, 1), (0, -1), (-1, 0)]
+
+class Vertice:
+    def __init__(self, pos, neighbors=None):
+        if neighbors is None:
+            neighbors = []
+        self.pos = pos
+        self.neighbors = neighbors # [(x, y)]
+
+    def __str__(self):
+        return str(self.pos[0]) + ';' + str(self.pos[1])
+
+    __repr__ = __str__
+
+
+grid = [[Vertice((x, y)) for x in range(WIDTH)] for y in range(HEIGHT)]
+
+def valid(base, increment):
+    absolute = [a+b for (a, b) in zip(base, increment)]
+    return (
+        absolute[0] >= 0 and absolute[1] >= 0 and \
+        absolute[0] < WIDTH and absolute[1] < HEIGHT and \
+        len(grid[absolute[1]][absolute[0]].neighbors) == 0
+    )
+
+def get_new_random_neighbor(vertice):
+    free = [
+        pos for pos in NEIGHBOURHOOD \
+        if pos not in vertice.neighbors and valid(vertice.pos, pos)
+    ]
+    if len(free) == 0:
+        return None
+    return random.choice(free)
+
+output = {
+    'nodes' : {},
+    'edges': [],
+    'stations': 1,
+    'score': 'quadratic',
+}
+
+def get_weight(v):
+    if len(v.neighbors) == 0:
+        return 0
+
+    MAP = {
+        0: 0,
+        1: 2,
+        2: 2,
+        3: 2.5,
+        4: 2.5,
+    }
+
+    return MAP[len(NEIGHBOURHOOD)-len(v.neighbors)]
+
+def get_node_for_edge():
+    vertices = [v for row in grid for v in row]
+    weights = [get_weight(v) for v in vertices]
+    return random.choices(vertices, weights)[0]
+
+def edge(a, b):
+    return (str(a[0])+';'+str(a[1]), str(b[0])+';'+str(b[1]), 1)
+
+# Add first edge manually
+x, y = (
+    random.randint(WIDTH//2 - WIDTH//4, WIDTH//2 + WIDTH//4),
+    random.randint(HEIGHT//2 - HEIGHT//4, HEIGHT//2 + HEIGHT//4)
+)
+grid[y][x].neighbors = [(1, 0)]
+grid[y][x+1].neighbors = [(-1, 0)]
+NO_EDGES = NO_EDGES-1
+
+no_edges = 0
+while no_edges < NO_EDGES:
+    v = get_node_for_edge()
+    n = get_new_random_neighbor(v)
+    if n is not None:
+        v.neighbors.append(n)
+        nx, ny = (v.pos[0]+n[0], v.pos[1]+n[1])
+        grid[ny][nx].neighbors.append((-n[0], -n[1]))
+        no_edges += 1
+
+for y in range(len(grid)):
+    for x in range(len(grid[y])):
+        if len(grid[y][x].neighbors) == 0:
+            continue
+
+        output['nodes'][str(grid[y][x])] = [
+            x*GRID_A,
+            y*GRID_A,
+            1
+        ]
+
+        for nx, ny in map(lambda n: (n[0]+x, n[1]+y), grid[y][x].neighbors):
+            if (edge((nx, ny), (x, y))) not in output['edges']:
+                output['edges'].append(edge((x, y), (nx, ny)))
+
+print(json.dumps(output, sort_keys=True, indent=4))
