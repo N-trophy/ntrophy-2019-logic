@@ -24,6 +24,8 @@ def eval_level(request, *args, **kwargs):
     if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
         raise PermissionDenied('Reached limit of evaluations!')
 
+    # TODO: add another limit of evaluations?
+
     nodes = json.loads(level.graph)['nodes'].values()
     nodes = [epc.City(node[0], node[1]) for node in nodes]
 
@@ -45,7 +47,10 @@ def eval_level(request, *args, **kwargs):
     )
     evaluation.save()
 
-    return JsonResponse({'score': score})
+    return JsonResponse({
+        'score': score,
+        'remaining': level.no_evaluations-done_evaluations-1, # -1 if no limit
+    })
 
 
 @login_required
