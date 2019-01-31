@@ -44,7 +44,11 @@ def level_status(next_level, level):
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
     next_level = 3
-    levels = list(map(lambda l: { 'id': l.id, 'status': level_status(next_level, l), 'class': level_class(next_level, l.id) }, Level.objects.order_by('id')))
+    levels = list(map(lambda l: {
+        'id': l.id,
+        'status': level_status(next_level, l),
+        'class': level_class(next_level, l.id)
+    }, Level.objects.order_by('id')))
 
     context = {
         'levels': levels,
