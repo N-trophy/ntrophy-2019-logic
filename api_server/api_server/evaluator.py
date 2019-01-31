@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 
 from api_server.models.level import Level
 import api_server.level
+import api_server.evaluation
 
 
 @login_required
@@ -13,6 +14,11 @@ import api_server.level
 def eval_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
         raise PermissionDenied('Level not opened')
+
+    level = Level.objects.get(id=kwargs['id'])
+    done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
+    if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
+        raise PermissionDenied('Reached limit of evaluations!')
 
     return JsonResponse({'score': kwargs['id']})
 

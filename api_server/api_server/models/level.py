@@ -11,6 +11,7 @@ class Level(models.Model):
     score = models.CharField(max_length=16, choices=EVAL_FUNCTIONS, default='1')
     graph = models.TextField()
     intro_text = models.TextField(default='')
+    no_evaluations = models.IntegerField(default=0)
 
     def validate_graph_data(graph):
         if False:
