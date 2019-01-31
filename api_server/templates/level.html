@@ -52,19 +52,21 @@
                 background: #eeeeee;
             }
             body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-            .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+            .w3-bar,h1,button,a {font-family: "Montserrat", sans-serif}
         </style>
     </head>
     
     <body>
+        <!-- Navbar -->
         <div class="w3-top">
             <div class="w3-bar w3-black w3-card w3-left-align w3-large">
                 <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-padding-large w3-hover-white"><i class="fa fa-home"></i></a>
-                <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Stáhnout zadání"><i class="fas fa-file-download"></i></button>
-                <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Vložit soubor s řešením"><i class="fas fa-file-upload"></i></button>
+                <button class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Stáhnout zadání"><i class="fas fa-file-download"></i></button>
+                <button class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Vložit soubor s řešením"><i class="fas fa-file-upload"></i></button>
                 <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="eval({{ level.id }})">Vyhodnotit</i></button>
                 <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="submit({{ level.id }})">Odeslat</button>
-                <a href="/accounts/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+                <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white" title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
+                <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white" title="Odeslat"><i class="fas fa-angle-double-right"></i></button>
             </div>
         </div>
 
