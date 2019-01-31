@@ -61,8 +61,10 @@ def index(request, *args, **kwargs):
 @login_required
 def level(request, *args, **kwargs):
     template = loader.get_template('level.html')
+    level = Level.objects.get(id=kwargs['id'])
     context = {
-        'level_id': kwargs['id']
+        'level_id': kwargs['id'],
+        'level': level
     }
     return HttpResponse(template.render(context, request))
 

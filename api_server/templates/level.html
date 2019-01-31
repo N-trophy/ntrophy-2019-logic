@@ -12,6 +12,7 @@
         <script src="/static/lib/axios.min.js"></script>
         <script src="/static/lib/vis.min.js"></script>
         <script src="/static/src/graph.js"></script>
+        <script src="/static/src/core.js"></script>
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
             level_id = {{ level_id }}
@@ -31,7 +32,18 @@
                 width: 100%;
                 height: 100%;
             }
+            #modal-button {
+                position: absolute;
+                top: 60px;
+                left: 16px;
+                font-size: 30px;
+                z-index: -1;
+            }
+            #modal {
+
+            }
             #graph-container {
+                z-index: -100;
                 top: 0;
                 bottom: 0;
                 left: 0;
@@ -43,10 +55,11 @@
             .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
         </style>
     </head>
+    
     <body>
         <div class="w3-top">
             <div class="w3-bar w3-black w3-card w3-left-align w3-large">
-                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="toggleNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
                 <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
                 <a href="/#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pravidla</a>
                 <a href="/#levels" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Přehled úrovní</a>
@@ -58,14 +71,23 @@
                 <a href="/#levels" class="w3-bar-item w3-button w3-padding-large">Přehled úrovní</a>
             </div>
         </div>
-        <div id="container">
-            <div id="header">
-                <a id="home" href="/">Domů</a>
-                Úloha {{ level_id }}
-                <button id="eval" onclick='eval()'>Vyhodnoť</button>
+
+        <button id="modal-button" onclick="document.getElementById('modal').style.display='block'" class="w3-button"><i class="fas fa-question-circle w3-text-green"></i></button>
+
+        <!-- The Modal -->
+        <div id="modal" class="w3-modal" style="display: block;">
+            <div class="w3-modal-content">
+                <div class="w3-container w3-padding-large">
+                    <span onclick="document.getElementById('modal').style.display='none'" 
+                    class="w3-button w3-display-topright">&times;</span>
+                    <h1>{{ level.id }}. úroveň</h1>
+                    <p>
+                        {{ level.intro_text }}
+                    </p>
+                </div>
             </div>
-            <img id="logo" src="/static/img/ntrophy-logo.png">
-            <div id="graph-container"></div>
         </div>
+
+        <div id="graph-container"></div>
     </body>
 </html>

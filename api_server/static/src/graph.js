@@ -52,7 +52,7 @@ function eval(){
 function new_node(id, x, y, size){
     return {
         id: 'n' + id,
-        label: format("[{0}, {1}]", x, y),
+        // label: format("[{0}, {1}]", x, y),
         x: x,
         y: y,
         size: size * 10,
