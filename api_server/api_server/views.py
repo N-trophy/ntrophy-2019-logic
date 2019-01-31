@@ -33,9 +33,9 @@ def level_class(next_level, level_id):
     else:
         return "w3-dark-gray"
 
-def level_status(next_level, level):
-    if next_level > level.id:
-        return "Skóre: 3"
+def level_status(next_level, level, submission=None):
+    if next_level > level.id and submission is not None:
+        return "Skóre: %d" % (submission.score)
     elif next_level == level.id:
         return "Otevřeno"
     else:
@@ -44,10 +44,11 @@ def level_status(next_level, level):
 @login_required
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
-    next_level = api_server.level.next_level(request.user)
+    done_levels = api_server.level.done_levels(request.user)
+    next_level = max(done_levels.keys())+1
     levels = list(map(lambda l: {
         'id': l.id,
-        'status': level_status(next_level, l),
+        'status': level_status(next_level, l, done_levels.get(l.id)),
         'class': level_class(next_level, l.id)
     }, Level.objects.order_by('id')))
 
