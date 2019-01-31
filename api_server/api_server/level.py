@@ -13,4 +13,4 @@ def done_levels(user):
 
 def is_level_open(user, level_id):
     done = done_levels(user).keys()
-    return level_id in done or level_id-1 in done
+    return level_id in done or level_id-1 in done or level_id == 1
