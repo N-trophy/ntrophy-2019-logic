@@ -18,6 +18,7 @@ class Level(models.Model):
     no_stations = models.PositiveIntegerField(default=1)
     score = models.CharField(max_length=16, choices=EVAL_FUNCTIONS, default='1')
     graph = models.TextField()
+    intro_text = models.TextField()
 
     def validate_graph_data(graph):
         if False:
