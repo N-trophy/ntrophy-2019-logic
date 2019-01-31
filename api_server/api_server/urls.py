@@ -24,7 +24,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('level/<int:id>', views.level),
     path('', views.index),
-    path('team/', views.team),
     path('level/<int:id>/graph', views.graph),
     path('level/<int:id>/eval', evaluator.eval_level),
     path('js/graph<int:id>.js', views.graph_js)

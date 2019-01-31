@@ -1,7 +1,14 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Ntrophy Logika</title>
-        <meta charset="UTF-8"> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/w3.css">
+        <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <script src="/static/lib/axios.min.js"></script>
         <script src="/static/lib/vis.min.js"></script>
         <script src="/static/src/graph.js"></script>
@@ -19,8 +26,6 @@
                     });
             }
         </script>
-
-        <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
         <style>
             #container {
                 width: 100%;
@@ -34,37 +39,25 @@
                 position: absolute;
                 background: #eeeeee;
             }
-            #header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 50px;
-                z-index: 10;
-                background: rgba(255, 255, 255, 0.5);
-                text-align: center;
-                line-height: 50px;
-            }
-            #logo {
-                position: fixed;
-                left: 20px;
-                bottom: 20px;
-                height: 100px;
-                z-index: 10;
-            }
-            #home {
-                float: left;
-            }
-            #eval {
-                float: right;
-                margin: 10px;
-                height: 30px;
-                background: rgb(129, 221, 129);
-                border: none;
-            }
+            body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+            .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
         </style>
     </head>
     <body>
+        <div class="w3-top">
+            <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+                <a href="/#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pravidla</a>
+                <a href="/#levels" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Přehled úrovní</a>
+            </div>
+            
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <a href="/#rules" class="w3-bar-item w3-button w3-padding-large">Pravidla</a>
+                <a href="/#levels" class="w3-bar-item w3-button w3-padding-large">Přehled úrovní</a>
+            </div>
+        </div>
         <div id="container">
             <div id="header">
                 <a id="home" href="/">Domů</a>

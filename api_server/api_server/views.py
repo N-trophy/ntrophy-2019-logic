@@ -24,15 +24,6 @@ def graph(request, *args, **kwargs):
     data['nodes'] = [[nodeid]+nodedata for nodeid, nodedata in data['nodes'].items()]
     return JsonResponse(data)
 
-@login_required
-def index(request, *args, **kwargs):
-    template = loader.get_template('index.html')
-    levels = Level.objects.order_by('id')
-    context = {
-        'levels': levels
-    }
-    return HttpResponse(template.render(context, request))
-
 def level_class(next_level, level_id):
     if next_level > level_id:
         return "w3-red"
@@ -50,8 +41,8 @@ def level_status(next_level, level):
         return "Zatím uzavřeno"
 
 @login_required
-def team(request, *args, **kwargs):
-    template = loader.get_template('team.html')
+def index(request, *args, **kwargs):
+    template = loader.get_template('index.html')
     next_level = 3
     levels = list(map(lambda l: { 'id': l.id, 'status': level_status(next_level, l), 'class': level_class(next_level, l.id) }, Level.objects.order_by('id')))
 
