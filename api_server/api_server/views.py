@@ -56,7 +56,8 @@ def index(request, *args, **kwargs):
 
     context = {
         'levels': levels,
-        'next_level': next_level
+        'next_level': next_level,
+        'name': request.user.get_full_name()
     }
     return HttpResponse(template.render(context, request))
 
