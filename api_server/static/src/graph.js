@@ -85,8 +85,8 @@ function init_graph(graph_spec){
     // create an array with edges
     var edges = new vis.DataSet(graph_spec.edges.map(edge => {
         return {
-            from: 'n' + edge[1],
-            to: 'n' + edge[2],
+            from: 'n' + edge[0],
+            to: 'n' + edge[1],
             smooth: false,
         }
     }))
