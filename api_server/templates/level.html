@@ -78,7 +78,9 @@
             <button onclick="document.getElementById('modal-upload').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-hover-white"><i
                     class="fas fa-file-upload"></i></button>
             <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Vyhodnotit</i></button>
+            {% if allow_submit %}
             <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Odevzdat</button>
+            {% endif %}
             <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
             <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
