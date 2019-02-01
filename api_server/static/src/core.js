@@ -86,8 +86,10 @@ function receivedText(e) {
 }
 
 function try_eval() {
+    document.getElementById('eval-send').disabled = true;
+    
+    let info_elem = document.getElementById('eval-info');
     if (station_counter != max_number_of_stations) {
-        let info_elem = document.getElementById('eval-info');
         info_elem.innerHTML = "Zadejte přesně ";
         if (max_number_of_stations == 1)
             info_elem.innerHTML += "1 nemocnici";
@@ -101,8 +103,10 @@ function try_eval() {
 }
 
 function try_submit() {
+    document.getElementById('submit-send').disabled = true;
+
+    let info_elem = document.getElementById('submit-info');
     if (station_counter != max_number_of_stations) {
-        let info_elem = document.getElementById('submit-info');
         info_elem.innerHTML = "Zadejte přesně ";
         if (max_number_of_stations == 1)
             info_elem.innerHTML += "1 nemocnici";

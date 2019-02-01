@@ -140,7 +140,7 @@
     <div id="modal-eval" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none';" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none'; document.getElementById('eval-send').disabled = false;" class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin w3-center w3-padding-large">
                     {% if evals_remaining > -1 %}
                     Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
@@ -151,8 +151,8 @@
                     Opravdu chcete vyhodnotit?
                 </p>
                 <div class="w3-center">
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="try_eval()">Vyhodnotit</button>
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none';">Zrušit</button>
+                    <button id="eval-send" class="w3-button w3-padding-large w3-black w3-margin" onclick="try_eval()">Vyhodnotit</button>
+                    <button id="eval-back" class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none'; document.getElementById('eval-send').disabled = false;">Zrušit</button>
                 </div>
                 <p id="eval-info" class="w3-padding-large" style="display: none;"></p>
             </div>
@@ -163,13 +163,13 @@
     <div id="modal-submit" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none';" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none'; document.getElementById('submit-send').disabled = false;" class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin w3-center w3-padding-large">
                     Odevzdat lze jen jednou, opravdu chcete odevzdat?
                 </p>
                 <div class="w3-center">
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="try_submit()">Odevzdat</button>
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none';">Zrušit</button>
+                    <button id="submit-send" class="w3-button w3-padding-large w3-black w3-margin" onclick="try_submit()">Odevzdat</button>
+                    <button id="submit-back" class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none'; document.getElementById('submit-send').disabled = false;">Zrušit</button>
                 </div>
                 <p id="submit-info" class="w3-padding-large" style="display: none;"></p>
             </div>
