@@ -90,7 +90,7 @@ function new_node(id, x, y, size){
         size: Math.sqrt(size) * 10,
         shape: 'dot',
         fixed: true,
-        title: format("[{0},{1}] ({2})", x, y, size),
+        title: format("[{0},{1}] (score: {2}, id: \"{3}\")", x, y, size, id),
         shadow:{
             enabled: false,
         },

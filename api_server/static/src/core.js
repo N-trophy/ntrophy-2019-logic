@@ -64,15 +64,15 @@ function receivedText(e) {
     data_to_send = {}
     for (let i = 0; i<loaded_data.length;i++){
         data = loaded_data[i]
-        station_counter++
-        if (station_counter > max_number_of_stations) break;
+        if (station_counter >= max_number_of_stations) break;
         let n = new_station_node(data[0], data[1])
         data_to_send[n.id] = { x:data[0], y:data[1] }
-        if (data.length == 4) {
+        if (place_anywhere == false) {
             data_to_send[n.id].edge_a = data[2]
             data_to_send[n.id].edge_b = data[3]
         }
         nodes.add([n])
+        station_counter++
     }
 
     let info_elem = document.getElementById('loaded-info');
