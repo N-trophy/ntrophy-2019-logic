@@ -92,7 +92,7 @@
                     class="w3-button w3-display-topright">&times;</span>
                     <h1>{{ level.id }}. úroveň</h1>
                     <p>
-                        {{ level.intro_text }}
+                        {{ level.intro_text | safe }}
                     </p>
                 </div>
             </div>
