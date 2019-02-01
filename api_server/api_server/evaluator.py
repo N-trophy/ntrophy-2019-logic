@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 
 from api_server.models.level import Level
 from api_server.models.evaluation import Evaluation
+from api_server.models.submission import Submission
 import api_server.level
 import api_server.evaluation
 import api_server.evaluators.plane as ep
@@ -90,7 +91,27 @@ def eval_level(request, *args, **kwargs):
 @login_required
 @require_http_methods(['POST'])
 def submit_level(request, *args, **kwargs):
-    if kwargs['id'] != next_level(user):
+    if kwargs['id'] != api_server.level.next_level(request.user):
         raise PermissionDenied('Level not opened for submission')
 
-    return JsonResponse({'score': kwargs['id']})
+    level = Level.objects.get(id=kwargs['id'])
+    body = request.body.decode('utf-8')
+    stations = json.loads(body)
+
+    if len(stations) != level.no_stations:
+        raise ValidationError('Invalid number of stations!')
+
+    score = error(level, stations)
+
+    evaluation = Submission(
+        user=request.user,
+        level=level,
+        score=score,
+        positions=body,
+        report='ok',
+    )
+    evaluation.save()
+
+    return JsonResponse({
+        'score': score,
+    })
