@@ -33,4 +33,5 @@ def evals_remaining(user, level):
         return -1
     else:
         done_evaluations = api_server.evaluation.no_evaluations(user, level)
-        return level.no_evaluations-done_evaluations
+        remaining = level.no_evaluations-done_evaluations
+        return remaining if remaining > 0 else 0
