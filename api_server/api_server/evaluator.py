@@ -83,7 +83,7 @@ def eval_level(request, *args, **kwargs):
     if len(stations) != level.no_stations:
         raise ValidationError('Invalid number of stations!')
 
-    score = error(level, stations)
+    score = round(error(level, stations), 2)
 
     evaluation = Evaluation(
         user=request.user,
