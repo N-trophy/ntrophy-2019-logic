@@ -87,8 +87,9 @@ function receivedText(e) {
 
 function try_eval() {
     document.getElementById('eval-send').disabled = true;
-    
+
     let info_elem = document.getElementById('eval-info');
+    info_elem.style="display: block";
     if (station_counter != max_number_of_stations) {
         info_elem.innerHTML = "Zadejte přesně ";
         if (max_number_of_stations == 1)
@@ -96,9 +97,9 @@ function try_eval() {
         else
             info_elem.innerHTML += max_number_of_stations + " nemocnic";
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
-        info_elem.style="display: block";
         return;
     }
+    info_elem.innerHTML = "Score: ";
     eval();
 }
 
@@ -106,6 +107,7 @@ function try_submit() {
     document.getElementById('submit-send').disabled = true;
 
     let info_elem = document.getElementById('submit-info');
+    info_elem.style="display: block";
     if (station_counter != max_number_of_stations) {
         info_elem.innerHTML = "Zadejte přesně ";
         if (max_number_of_stations == 1)
@@ -113,8 +115,8 @@ function try_submit() {
         else
             info_elem.innerHTML += max_number_of_stations + " nemocnic";
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
-        info_elem.style="display: block";
         return;
     }
+    info_elem.innerHTML = "Odevzdali jste řešení.<br>Score: ";
     submit();
 }

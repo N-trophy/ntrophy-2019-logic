@@ -53,11 +53,13 @@ function eval(){
             }
         })
         .then(res=>{
-            score = document.getElementById('score')
-            score.innerText = res.data.score
+            score = document.getElementById('score');
+            score.innerText = res.data.score;
+            document.getElementById('eval-info').innerHTML += res.data.score;
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err);
+            document.getElementById('eval-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
         })
 }
 
@@ -73,10 +75,12 @@ function submit(){
             }
         })
         .then(res=>{
-            console.log(res.data)  
+            console.log(res.data);
+            document.getElementById('submit-info').innerHTML += res.data.score;
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err);
+            document.getElementById('submit-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
         })
 }
 
