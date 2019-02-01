@@ -83,8 +83,10 @@
             {% endif %}
             <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
+            {% if allow_submit %}
             <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Odevzdat"><i class="fas fa-angle-double-right"></i></button>
+            {% endif %}
         </div>
     </div>
 
