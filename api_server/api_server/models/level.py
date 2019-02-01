@@ -12,8 +12,3 @@ class Level(models.Model):
     graph = models.TextField()
     intro_text = models.TextField(default='')
     no_evaluations = models.IntegerField(default=0)
-
-    def validate_graph_data(graph):
-        if False:
-            # TODO Add graph validation
-            raise ValueError()
