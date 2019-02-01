@@ -83,14 +83,25 @@ function submit(){
 function new_node(id, x, y, size){
     return {
         id: 'n' + id,
-        // label: format("[{0}, {1}]", x, y),
         x: x,
         y: y,
-        size: size * 10,
+        label: ""+size,
+        size: Math.sqrt(size) * 10,
         shape: 'dot',
         fixed: true,
-        // color: '#333',
-    } 
+        title: format("[{0},{1}] ({2})", x, y, size),
+        shadow:{
+            enabled: false,
+        },
+        shapeProperties: {
+            borderDashes: false, // only for borders
+            borderRadius: 6,     // only for box shape
+            interpolation: false,  // only for image and circularImage shapes
+            useImageSize: false,  // only for image and circularImage shapes
+            useBorderWithImage: false  // only for image shape
+        }
+    }
+    // color: '#333', 
 }
 
 function new_station_node(x, y){
@@ -121,6 +132,7 @@ function init_graph(graph_spec){
         return {
             from: 'n' + edge[0],
             to: 'n' + edge[1],
+            label: "" + edge[2],
             smooth: false,
         }
     }))
