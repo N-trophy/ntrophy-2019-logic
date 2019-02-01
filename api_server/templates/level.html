@@ -165,13 +165,7 @@
             <div class="w3-container w3-padding-large">
                 <span onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none';" class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin w3-center w3-padding-large">
-                    {% if evals_remaining > -1 %}
-                    Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
-                    {%else%}
-                    Pro tuto úroveň můžete využít neomezeně vyhodnocení.
-                    {%endif%}
-                    <br><br>
-                    Opravdu chcete odevzdat?
+                    Odevzdat lze jen jednou, opravdu chcete odevzdat?
                 </p>
                 <div class="w3-center">
                     <button class="w3-button w3-padding-large w3-black w3-margin" onclick="try_submit()">Odevzdat</button>
