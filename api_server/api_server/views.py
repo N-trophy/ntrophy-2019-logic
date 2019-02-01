@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
 import json
+import csv
 
 from api_server.models import Level
 from api_server.models import Post
@@ -96,3 +97,36 @@ def graph_js(request, *args, **kwargs):
         'level_id': kwargs['id']
     }
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def data_level(request, *args, **kwargs):
+    if not api_server.level.is_level_open(request.user, kwargs['id']):
+        raise PermissionDenied("Task not opened.")
+
+    response = HttpResponse(content_type='text/csv; charset=utf8')
+    response['Content-Disposition'] = 'attachment; filename={0}'.\
+        format('level%d.csv' % (kwargs['id']))
+
+    data = csv.writer(response)
+    graph = json.loads(Level.objects.get(id=kwargs['id']).graph)
+    nodes_weighted = api_server.level.are_nodes_weighted(graph)
+    edges_weighted = api_server.level.are_edges_weighted(graph)
+
+    for nname, ndata in graph['nodes'].items():
+        row = ['edge']
+        if len(graph['edges']) > 0:
+            row.append(nname)
+        row += [ndata[0], ndata[1]]
+        if nodes_weighted:
+            row.append(ndata[2])
+        data.writerow(row)
+
+    for edge in graph['edges']:
+        if edges_weighted:
+            data.writerow(['edge', edge[0], edge[1], edge[2]])
+        else:
+            data.writerow(['edge', edge[0], edge[1]])
+
+    return response
+

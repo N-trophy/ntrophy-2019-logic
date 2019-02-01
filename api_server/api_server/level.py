@@ -14,3 +14,15 @@ def done_levels(user):
 def is_level_open(user, level_id):
     done = done_levels(user).keys()
     return level_id in done or level_id-1 in done or level_id == 1
+
+def are_nodes_weighted(graph):
+    for ndata in graph['nodes'].values():
+        if ndata[2] != 1:
+            return True
+    return False
+
+def are_edges_weighted(graph):
+    for edge in graph['edges']:
+        if edge[2] != 1:
+            return True
+    return False

@@ -27,5 +27,6 @@ urlpatterns = [
     path('level/<int:id>/graph', views.graph),
     path('level/<int:id>/eval', evaluator.eval_level),
     path('level/<int:id>/submit', evaluator.submit_level),
+    path('level/<int:id>/data', views.data_level),
     path('js/graph<int:id>.js', views.graph_js)
 ]
