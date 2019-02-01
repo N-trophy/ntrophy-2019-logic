@@ -35,6 +35,11 @@ def error_plane(level, stations, graph=None):
 def euclid_distance(a: (float, float), b: (float, float)) -> float:
     return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
 
+def is_edge_in_graph(graph, nodea, nodeb):
+    for e in graph['edges']:
+        if (e[0] == nodea and e[1] == nodeb) or (e[0] == nodeb and e[1] == nodea):
+            return True
+    return False
 
 def error_graph(level, stations, graph=None):
     if graph is None:
@@ -45,6 +50,10 @@ def error_graph(level, stations, graph=None):
     s = []
     for st in stations:
         nodea, nodeb, x, y = (st['edge_a'], st['edge_b'], st['x'], st['y'])
+
+        if not is_edge_in_graph(graph, nodea, nodeb):
+            raise ValidationError('There is no such edge in graph!')
+
         nodes_dist = euclid_distance(graph['nodes'][nodea], graph['nodes'][nodeb])
         dista = euclid_distance(graph['nodes'][nodea], (x, y))
         distb = euclid_distance(graph['nodes'][nodeb], (x, y))
@@ -93,13 +102,15 @@ def eval_level(request, *args, **kwargs):
     try:
         evaluation.score = round(error(level, stations), 2)
         evaluation.report = 'ok'
+    except ValidationError as e:
+        evaluation.report = 'Validation Error:\n' + traceback.format_exc()
+        return HttpResponseBadRequest(str(e))
     except Exception:
         evaluation.report = traceback.format_exc()
         raise
     finally:
         evaluation.save()
 
-    print(evaluation.score)
     return JsonResponse({
         'score': evaluation.score,
         'remaining': api_server.level.evals_remaining(request.user, level), # -1 if no limit
@@ -128,6 +139,9 @@ def submit_level(request, *args, **kwargs):
     try:
         score = round(error(level, stations), 2)
         evaluation.report = 'ok'
+    except ValidationError as e:
+        evaluation.report = 'Validation Error:\n' + traceback.format_exc()
+        return HttpResponseBadRequest(str(e))
     except Exception:
         evaluation.report = traceback.format_exc()
         raise
