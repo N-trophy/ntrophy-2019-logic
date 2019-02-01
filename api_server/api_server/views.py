@@ -64,7 +64,7 @@ def index(request, *args, **kwargs):
         'levels': levels,
         'next_level': next_level,
         'name': request.user.get_full_name(),
-        'posts': Post.objects.filter(published__lt=datetime.utcnow()).\
+        'posts': Post.objects.filter(published__lt=datetime.now()).\
         order_by('-published'),
     }
     return HttpResponse(template.render(context, request))
