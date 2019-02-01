@@ -73,6 +73,14 @@
         function receivedText(e) {
             var loaded_data = parseCSV(fr.result);
             console.log(loaded_data);
+            let info_elem = document.getElementById('loaded-info');
+            info_elem.innerHTML = "Načteno:<br>";
+            for (let i = 0; i < loaded_data.length; i++) {
+                info_elem.innerHTML += loaded_data[i][0];
+                info_elem.innerHTML += ", ";
+                info_elem.innerHTML += loaded_data[i][1];
+                info_elem.innerHTML += "<br>";
+            }
         }
     </script>
     <style>
@@ -130,10 +138,20 @@
     <div id="modal-upload" class="w3-modal">
         <div class="w3-modal-content" style="width: 600px">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-upload').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <p class="w3-margin">Nějaký text o tom jak to napsat.</p>
+                <span onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';" class="w3-button w3-display-topright">&times;</span>
+                <p class="w3-margin">
+                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y (každá nemocnice na nový řádek, souřadnice
+                    x a y oddělené čárkami, zaokrouleny na 2 desetinná místa s použitím desetinné tečky).<br><br>
+
+                    Příklad:<br><br>
+
+                    1.99, 200.78<br>
+                    -56.72, 39.15<br>
+                    0.56, -57.80
+                </p>
                 <input type="file" id="upload-file" class="w3-margin-left w3-margin-right"><br>
                 <input type="submit" class="w3-center w3-margin" onclick="parseUploadedFile()">
+                <p id="loaded-info"></p>
             </div>
         </div>
     </div>
