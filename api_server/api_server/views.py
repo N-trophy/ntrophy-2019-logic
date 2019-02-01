@@ -7,8 +7,8 @@ from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from datetime import datetime
 import json
 import csv
 
@@ -64,7 +64,7 @@ def index(request, *args, **kwargs):
         'levels': levels,
         'next_level': next_level,
         'name': request.user.get_full_name(),
-        'posts': Post.objects.filter(published__lt=datetime.now()).\
+        'posts': Post.objects.filter(published__lt=timezone.now()).\
         order_by('-published'),
     }
     return HttpResponse(template.render(context, request))
