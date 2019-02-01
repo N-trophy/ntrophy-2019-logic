@@ -109,6 +109,7 @@ function new_station_node(x, y){
     var node = new_node(undefined, x, y, 2)
     node.id = 's' + next_station_id++
     node.color = '#aa3512'
+    node.fixed = false
     return node
 }
 
@@ -222,5 +223,9 @@ function init_graph(graph_spec){
         if(!deleted && station_counter < max_number_of_stations){
             place_node(event)
         }
+    })
+
+    network.on('dragEnd', function(event){
+        console.log(event.edges)
     })
 }

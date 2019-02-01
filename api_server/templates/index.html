@@ -4,6 +4,7 @@
 <title>Logika N-trophy 2019</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
 <script src="/static/src/core.js"></script>
 <link rel="stylesheet" href="/static/css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -12,7 +13,19 @@
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-book-open,.fa-tasks {font-size:200px}
+.fa-book-open,.fa-tasks,.fa-info-circle {font-size:200px}
+.post {
+  width: 100%;
+}
+.post-head {
+  width: 100%;
+  text-align: right
+}
+#logo {
+  background-color: black;
+  padding: 50px;
+  border-radius: 100%;
+}
 </style>
 <body>
 
@@ -36,22 +49,40 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">AHOJ</h1>
-  <p class="w3-xlarge">{{ name }}</p>
-  <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
+    <div class="w3-third w3-center">
+        <!-- <img id="logo" src="/static/img/logo.png" alt="">
+        <i class="fas fa-info-circle w3-padding-64 w3-text-white"></i> -->
+    </div>
+    <div class="w3-third w3-center">
+      <h1 class="w3-margin w3-jumbo">AHOJ</h1>
+      <p class="w3-xlarge">{{ name }}</p>
+      <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
+    </div>
+    <div class="w3-third w3-center">
+      <!-- <i class="fas fa-info-circle w3-padding-64 w3-text-red"></i> -->
+    </div>
 </header>
 
 
 <!-- First Grid -->
 <div id="news" class="w3-row-padding w3-light-gray w3-padding-64 w3-container">
   <div class="w3-content">
-    <h1>Novinky</h1>
-    {% for post in posts %}
-      <div class="">
-        {{ post.published }}
-        {{ post.text | safe }}
-      </div>
-    {% endfor %}
+    <div class="w3-third w3-center">
+      <i class="fas fa-info-circle w3-padding-64 w3-text-red"></i>
+    </div>
+    <div class="w3-twothird w3-border-bottom">
+      <h1>Novinky</h1>
+      {% for post in posts %}
+        <div class="w3-container w3-padding w3-border-top w3-border-left w3-border-right w3-white">
+          <h6 class="post-head">
+            {{ post.published }}
+          </h6>
+          <div class="post">
+            {{ post.text | safe }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
