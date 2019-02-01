@@ -64,11 +64,14 @@ def level(request, *args, **kwargs):
 
     template = loader.get_template('level.html')
     level = Level.objects.get(id=kwargs['id'])
+    graph = json.loads(level.graph)
     context = {
         'level_id': kwargs['id'],
         'level': level,
         'allow_submit': kwargs['id'] == api_server.level.next_level(request.user),
         'evals_remaining': api_server.level.evals_remaining(request.user, level),
+        'weighted_edges': api_server.level.are_edges_weighted(graph),
+        'weighted_nodes': api_server.level.are_nodes_weighted(graph),
     }
     return HttpResponse(template.render(context, request))
 
