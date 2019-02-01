@@ -1,7 +1,5 @@
 from django.contrib import admin
-from api_server.models.level import Level
-from api_server.models.evaluation import Evaluation
-from api_server.models.submission import Submission
+from api_server.models import Level, Evaluation, Submission, Post
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
@@ -20,3 +18,9 @@ class SubmissionAdmin(admin.ModelAdmin):
     list_display = ('user', 'level', 'score', 'datetime')
     list_filter = ('user', 'level', 'datetime')
     ordering = ['datetime']
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('id', 'author', 'published', 'text')
+    list_filter = ('id', 'author', 'published')
+    ordering = ['published']
