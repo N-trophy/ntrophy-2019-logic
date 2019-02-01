@@ -6,11 +6,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
-
 from django.contrib.auth.decorators import login_required
 
+from datetime import datetime
 import json
+
 from api_server.models import Level
+from api_server.models import Post
 import api_server.level
 
 register = Library()
@@ -57,10 +59,20 @@ def index(request, *args, **kwargs):
         'class': level_class(next_level, l.id)
     }, Level.objects.order_by('id')))
 
+    posts = [
+        {
+            'published': post.published,
+            'text': post.text,
+        }
+        for post in Post.objects.filter(published__lt=datetime.utcnow()).\
+        order_by('-published')
+    ]
+
     context = {
         'levels': levels,
         'next_level': next_level,
-        'name': request.user.get_full_name()
+        'name': request.user.get_full_name(),
+        'posts': posts,
     }
     return HttpResponse(template.render(context, request))
 
