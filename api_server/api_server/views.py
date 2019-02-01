@@ -106,7 +106,6 @@ def data_level(request, *args, **kwargs):
     for nname, ndata in graph['nodes'].items():
         row = ['node']
         if len(graph['edges']) > 0:
-            print(nname)
             row.append(nname)
         row += [ndata[0], ndata[1]]
         if nodes_weighted:
