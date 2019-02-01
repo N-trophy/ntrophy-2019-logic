@@ -24,7 +24,7 @@ def error(cities: List[City], stations: List[Station], metrics) -> float:
 
 
 def quadratic_error(cities: List[City], stations: List[Station]) -> float:
-    return error(cities, stations, quad_eudclid_distance)
+    return error(cities, stations, quad_euclid_distance)
 
 
 def linear_error(cities: List[City], stations: List[Station]) -> float:
