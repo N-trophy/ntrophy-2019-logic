@@ -13,7 +13,7 @@ class Submission(models.Model):
         Level,
         on_delete=models.CASCADE
     )
-    score = models.DecimalField(max_digits=8, decimal_places=2)
+    score = models.DecimalField(max_digits=16, decimal_places=2, null=True, default=None)
     positions = models.TextField() # Positions of cities, json
     report = models.TextField() # Anything useful
     datetime = models.DateTimeField(default=timezone.now)
