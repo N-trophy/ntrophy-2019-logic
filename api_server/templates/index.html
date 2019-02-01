@@ -43,6 +43,19 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 
 <!-- First Grid -->
+<div id="rules" class="w3-row-padding w3-light-gray w3-padding-64 w3-container">
+  <div class="w3-content">
+    <h1>Novinky</h1>
+    {% for post in posts %}
+      <div class="">
+        {{ post.published }}
+        {{ post.text | safe }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Second Grid -->
 <div id="rules" class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-twothird">
@@ -60,7 +73,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     </div>
   </div>
 
-<!-- Second Grid -->
+<!-- Third Grid -->
 <div id="levels" class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-third w3-center">

@@ -60,20 +60,12 @@ def index(request, *args, **kwargs):
         'class': level_class(next_level, l.id)
     }, Level.objects.order_by('id')))
 
-    posts = [
-        {
-            'published': post.published,
-            'text': post.text,
-        }
-        for post in Post.objects.filter(published__lt=datetime.utcnow()).\
-        order_by('-published')
-    ]
-
     context = {
         'levels': levels,
         'next_level': next_level,
         'name': request.user.get_full_name(),
-        'posts': posts,
+        'posts': Post.objects.filter(published__lt=datetime.utcnow()).\
+        order_by('-published'),
     }
     return HttpResponse(template.render(context, request))
 
