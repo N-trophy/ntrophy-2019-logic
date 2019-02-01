@@ -53,7 +53,8 @@ function eval(){
             }
         })
         .then(res=>{
-            console.log(res.data)  
+            score = document.getElementById('score')
+            score.innerText = res.data.score
         })
         .catch(err=>{
             console.log(err)

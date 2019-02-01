@@ -95,6 +95,13 @@
                 font-size: 30px;
                 z-index: -1;
             }
+            #score-panel {
+                position: absolute;
+                top: 120px;
+                left: 16px;
+                font-size: 16px;
+                z-index: -1;
+            }
             #modal {
 
             }
@@ -158,6 +165,7 @@
 
     <button id="modal-button" onclick="document.getElementById('modal').style.display='block'" class="w3-button"><i
             class="fas fa-question-circle w3-text-green"></i></button>
+    <div id="score-panel" class="w3-panel">Skóre: <a id="score">-</a></div>
 
     <!-- The Modal -->
     <div id="modal" class="w3-modal" style="display: block;">
