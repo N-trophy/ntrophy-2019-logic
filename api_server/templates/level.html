@@ -107,7 +107,10 @@
                     0.56, -57.80
                 </p>
                 <input type="file" id="upload-file" class="w3-margin-left w3-margin-right"><br>
-                <input type="submit" class="w3-center w3-margin" onclick="parseUploadedFile()">
+                <div class="w3-center">
+                    <input class="w3-button w3-padding-large w3-black w3-margin" type="submit" onclick="parseUploadedFile()">
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';">Zrušit</button>
+                </div>
                 <p id="loaded-info"></p>
             </div>
         </div>
@@ -121,7 +124,7 @@
     <div id="modal" class="w3-modal" style="display: block;">
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal').style.display='none';" class="w3-button w3-display-topright">&times;</span>
                 <h1>{{ level.id }}. úroveň</h1>
                 {{ level.intro_text | safe }}
                 {% if evals_remaining > -1 %}
@@ -137,7 +140,7 @@
     <div id="modal-eval" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-eval').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none';" class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin w3-center w3-padding-large">
                     {% if evals_remaining > -1 %}
                     Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
@@ -148,9 +151,10 @@
                     Opravdu chcete vyhodnotit?
                 </p>
                 <div class="w3-center">
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="eval({{ level.id }})">Vyhodnotit</button>
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'">Zrušit</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="try_eval()">Vyhodnotit</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none';">Zrušit</button>
                 </div>
+                <p id="eval-info" class="w3-padding-large" style="display: none;"></p>
             </div>
         </div>
     </div>
@@ -159,7 +163,7 @@
     <div id="modal-submit" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-submit').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none';" class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin w3-center w3-padding-large">
                     {% if evals_remaining > -1 %}
                     Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
@@ -170,9 +174,10 @@
                     Opravdu chcete odevzdat?
                 </p>
                 <div class="w3-center">
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="submit({{ level.id }})">Odevzdat</button>
-                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-submit').style.display='none'">Zrušit</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="try_submit()">Odevzdat</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = ''; document.getElementById('submit-info').style='display: none';">Zrušit</button>
                 </div>
+                <p id="submit-info" class="w3-padding-large" style="display: none;"></p>
             </div>
         </div>
     </div>

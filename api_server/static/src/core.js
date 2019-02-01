@@ -84,3 +84,27 @@ function receivedText(e) {
         info_elem.innerHTML += "<br>";
     }
 }
+
+function try_eval() {
+    if (data_to_send.length != max_number_of_stations) {
+        if (max_number_of_stations == 1)
+            document.getElementById('eval-info').innerHTML = "Zadejte přesně 1 nemocnici";
+        else
+            document.getElementById('eval-info').innerHTML = "Zadejte přesně " + max_number_of_stations + " nemocnic";
+        document.getElementById('eval-info').style="display: block";
+        return;
+    }
+    eval();
+}
+
+function try_submit() {
+    if (data_to_send.length != max_number_of_stations) {
+        if (max_number_of_stations == 1)
+            document.getElementById('submit-info').innerHTML = "Zadejte přesně 1 nemocnici";
+        else
+            document.getElementById('submit-info').innerHTML = "Zadejte přesně " + max_number_of_stations + " nemocnic";
+        document.getElementById('submit-info').style="display: block";
+        return;
+    }
+    submit();
+}
