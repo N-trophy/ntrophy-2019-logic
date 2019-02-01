@@ -34,6 +34,13 @@ function get_edge_by_id(id){
     if (n.length) return n[0]
 }
 
+function get_edge_by_node_id(id){
+    for (key in network.body.edges) {
+        edge = network.body.edges[key]
+        if (edge.toId == id || edge.fromId == id) return edge
+    }
+}
+
 function eval(){
     cords = Object.values(data_to_send)
     axios({
@@ -164,6 +171,11 @@ function init_graph(graph_spec){
             data_to_send[n.id] = {x:x, y:y}
             if (!place_anywhere && event.edges.length) {
                 e = get_edge_by_id(event.edges[0])
+                data_to_send[n.id].edge_a = e.fromId.substr(1)
+                data_to_send[n.id].edge_b = e.toId.substr(1)
+            }
+            if (!place_anywhere && event.nodes.length) {
+                e = get_edge_by_node_id(event.nodes[0])
                 data_to_send[n.id].edge_a = e.fromId.substr(1)
                 data_to_send[n.id].edge_b = e.toId.substr(1)
             }
