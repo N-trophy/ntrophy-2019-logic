@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,7 @@ import api_server.evaluators.graph as eg
 
 import json
 import math
+import traceback
 
 
 def error_plane(level, stations, graph=None):
@@ -68,12 +69,12 @@ def error(level, stations) -> float:
 @require_http_methods(['POST'])
 def eval_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
-        raise PermissionDenied('Level not opened')
+        return HttpResponseForbidden('Level not opened!')
 
     level = Level.objects.get(id=kwargs['id'])
     done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
     if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
-        raise PermissionDenied('Reached limit of evaluations!')
+        return HttpResponseForbidden('Reached limit of evaluations!')
 
     # TODO: add another limit of evaluations?
 
@@ -81,21 +82,26 @@ def eval_level(request, *args, **kwargs):
     stations = json.loads(body)
 
     if len(stations) != level.no_stations:
-        raise ValidationError('Invalid number of stations!')
-
-    score = round(error(level, stations), 2)
+        return HttpResponseBadRequest('Invalid number of stations!')
 
     evaluation = Evaluation(
         user=request.user,
         level=level,
-        score=score,
         positions=body,
-        report='ok',
     )
-    evaluation.save()
 
+    try:
+        evaluation.score = round(error(level, stations), 2)
+        evaluation.report = 'ok'
+    except Exception:
+        evaluation.report = traceback.format_exc()
+        raise
+    finally:
+        evaluation.save()
+
+    print(evaluation.score)
     return JsonResponse({
-        'score': score,
+        'score': evaluation.score,
         'remaining': api_server.level.evals_remaining(request.user, level), # -1 if no limit
     })
 
@@ -104,25 +110,29 @@ def eval_level(request, *args, **kwargs):
 @require_http_methods(['POST'])
 def submit_level(request, *args, **kwargs):
     if kwargs['id'] != api_server.level.next_level(request.user):
-        raise PermissionDenied('Level not opened for submission')
+        return HttpResponseForbidden('Level not opened for submission!')
 
     level = Level.objects.get(id=kwargs['id'])
     body = request.body.decode('utf-8')
     stations = json.loads(body)
 
     if len(stations) != level.no_stations:
-        raise ValidationError('Invalid number of stations!')
-
-    score = error(level, stations)
+        return HttpResponseBadRequest('Invalid number of stations!')
 
     evaluation = Submission(
         user=request.user,
         level=level,
-        score=score,
         positions=body,
-        report='ok',
     )
-    evaluation.save()
+
+    try:
+        score = round(error(level, stations), 2)
+        evaluation.report = 'ok'
+    except Exception:
+        evaluation.report = traceback.format_exc()
+        raise
+    finally:
+        evaluation.save()
 
     return JsonResponse({
         'score': score,

@@ -8,16 +8,16 @@ class LevelAdmin(admin.ModelAdmin):
 
 @admin.register(Evaluation)
 class EvaluationAdmin(admin.ModelAdmin):
-    list_display = ('user', 'level', 'score', 'datetime')
-    list_filter = ('user', 'level', 'datetime')
-    ordering = ['datetime']
+    list_display = ('user', 'level', 'score', 'datetime', 'report')
+    list_filter = ('user', 'level', 'datetime', 'report')
+    ordering = ['-datetime']
 
 
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'level', 'score', 'datetime')
-    list_filter = ('user', 'level', 'datetime')
-    ordering = ['datetime']
+    list_display = ('user', 'level', 'score', 'datetime', 'report')
+    list_filter = ('user', 'level', 'datetime', 'report')
+    ordering = ['-datetime']
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
