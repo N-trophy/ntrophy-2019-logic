@@ -16,15 +16,11 @@
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
             level_id = {{ level_id }}
+            graph_data = {{ level.graph|safe }}
+            graph_data.stations = {{ level.no_stations }}
             SITE_DOMAIN = ""
-            window.onload = () => {
-                axios.get('/level/{{level_id}}/graph')
-                    .then(response => {
-                        init_graph(response.data)
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    });
+            window.onload = function(){
+                init_graph(graph_data)
             }
         </script>
         <style>

@@ -24,6 +24,11 @@ function format(fmt, ...args) {
 }
 
 
+function get_node_by_id(id){
+    n = Object.values(network.body.nodes).filter(node=>node.id==id)
+    if (n.length) return n[0]
+}
+
 // Evaluator
 function station_nodes_as_cords(){
     return Object.values(network.body.nodes).filter(node=>node.id[0]=='s').map(node => {return {x: node.x, y: node.y}})
@@ -82,7 +87,7 @@ function new_node(id, x, y, size){
 }
 
 function new_station_node(x, y){
-    var node = new_node(undefined, x, y, 1)
+    var node = new_node(undefined, x, y, 2)
     node.id = 's' + next_station_id++
     node.color = '#aa3512'
     return node
@@ -94,8 +99,8 @@ var next_station_id = 0
 var max_number_of_stations = 0
 
 function init_graph(graph_spec){
-    var nodes = new vis.DataSet(graph_spec.nodes.map(node => {
-        return new_node(node[0], node[1], node[2], node[3])
+    var nodes = new vis.DataSet(Object.entries(graph_spec.nodes).map(rec => {
+        return new_node(rec[0], rec[1][0], rec[1][1], rec[1][2])
     }))
     next_station_id = 0
     station_counter = 0
@@ -126,8 +131,16 @@ function init_graph(graph_spec){
     
     function place_node(event){
         station_counter++
+        console.log(event)
+        x = event.pointer.canvas.x
+        y = event.pointer.canvas.y
+        if (event.nodes.length){
+            center = get_node_by_id(event.nodes[0])
+            x = center.x
+            y = center.y
+        }
         nodes.add([
-            new_station_node(event.pointer.canvas.x, event.pointer.canvas.y)
+            new_station_node(x, y)
         ])
     }
 

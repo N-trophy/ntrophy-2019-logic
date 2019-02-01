@@ -18,18 +18,6 @@ import api_server.level
 
 register = Library()
 
-@login_required
-def graph(request, *args, **kwargs):
-    task_number = kwargs['id']
-    try:
-        level_object = Level.objects.get(id=task_number)
-    except ObjectDoesNotExist:
-        raise Http404("Task doesn't exist.")
-
-    data = json.loads(level_object.graph)
-    data['nodes'] = [[nodeid]+nodedata for nodeid, nodedata in data['nodes'].items()]
-    return JsonResponse(data)
-
 def level_class(next_level, level_id):
     if next_level > level_id:
         return "w3-red"
@@ -123,4 +111,3 @@ def data_level(request, *args, **kwargs):
             data.writerow(['edge', edge[0], edge[1]])
 
     return response
-
