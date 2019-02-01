@@ -114,7 +114,7 @@ def data_level(request, *args, **kwargs):
     edges_weighted = api_server.level.are_edges_weighted(graph)
 
     for nname, ndata in graph['nodes'].items():
-        row = ['edge']
+        row = ['node']
         if len(graph['edges']) > 0:
             row.append(nname)
         row += [ndata[0], ndata[1]]
