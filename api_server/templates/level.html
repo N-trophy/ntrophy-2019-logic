@@ -91,9 +91,12 @@
                     <span onclick="document.getElementById('modal').style.display='none'" 
                     class="w3-button w3-display-topright">&times;</span>
                     <h1>{{ level.id }}. úroveň</h1>
-                    <p>
-                        {{ level.intro_text | safe }}
-                    </p>
+                    {{ level.intro_text | safe }}
+                    {% if evals_remaining > -1 %}
+                      <p>Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.</p>
+                    {%else%}
+                      <p>Pro tuto úroveň můžete využít neomezeně vyhodnocení.</p>
+                    {%endif%}
                 </div>
             </div>
         </div>
