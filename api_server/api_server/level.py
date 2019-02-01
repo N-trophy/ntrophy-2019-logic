@@ -3,13 +3,13 @@ from api_server.models import Level, Submission
 import api_server.evaluation
 
 def next_level(user):
-    return Submission.objects.filter(user=user).\
+    return Submission.objects.filter(user=user,).exclude(score=None).\
         aggregate(Max('level'))['level__max'] + 1
 
 def done_levels(user):
     return {
         submission.level.id: submission \
-        for submission in Submission.objects.filter(user=user)
+        for submission in Submission.objects.filter(user=user).exclude(score=None)
     }
 
 def is_level_open(user, level_id):
