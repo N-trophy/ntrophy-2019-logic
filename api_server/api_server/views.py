@@ -95,13 +95,31 @@ def data_level(request, *args, **kwargs):
     nodes_weighted = api_server.level.are_nodes_weighted(graph)
     edges_weighted = api_server.level.are_edges_weighted(graph)
 
+    row = ['Type']
+    if len(graph['edges']) > 0:
+        row.append('Id')
+    row += ['X', 'Y']
+    if nodes_weighted:
+        row.append('Weight')
+    data.writerow(row)
+
     for nname, ndata in graph['nodes'].items():
         row = ['node']
         if len(graph['edges']) > 0:
+            print(nname)
             row.append(nname)
         row += [ndata[0], ndata[1]]
         if nodes_weighted:
             row.append(ndata[2])
+        data.writerow(row)
+
+    data.writerow([])
+
+    if len(graph['edges']) > 0:
+        row = ['Type']
+        row += ['From', 'To']
+        if edges_weighted:
+            row.append('Weight')
         data.writerow(row)
 
     for edge in graph['edges']:
