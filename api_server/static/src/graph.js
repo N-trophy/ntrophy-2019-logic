@@ -113,15 +113,67 @@ function new_station_node(x, y){
 }
 
 var network
+var nodes
+var edges
 var place_anywhere = false
 var station_counter = 0
 var next_station_id = 0
 var max_number_of_stations = 0
 var data_to_send = {}
 
+function place_node(event){
+    x = event.pointer.canvas.x
+    y = event.pointer.canvas.y
+    event_nodes = event.nodes.filter(node => node[0]=='n')
+    if (event_nodes.length){
+        center = get_node_by_id(event_nodes[0])
+        x = center.x
+        y = center.y
+    } else if (event.edges.length) {
+        e = get_edge_by_id(event.edges[0])
+        from = get_node_by_id(e.fromId)
+        to = get_node_by_id(e.toId)
+        vx = x-from.x
+        vy = y-from.y
+        ux = to.x-from.x
+        uy = to.y-from.y
+        nx = -uy
+        ny = ux
+        norm_len = Math.sqrt(nx*nx + ny*ny)
+        len = (vx*uy-vy*ux)/norm_len
+        
+        nx *= len/norm_len
+        ny *= len/norm_len
+        x += nx
+        y += ny
+    }
+    if (place_anywhere || event.edges.length){
+        station_counter++
+        let n = new_station_node(x, y)
+        data_to_send[n.id] = {x:x, y:y}
+        if (!place_anywhere && event.edges.length) {
+            e = get_edge_by_id(event.edges[0])
+            data_to_send[n.id].edge_a = e.fromId.substr(1)
+            data_to_send[n.id].edge_b = e.toId.substr(1)
+        }
+        if (!place_anywhere && event.nodes.length) {
+            e = get_edge_by_node_id(event.nodes[0])
+            data_to_send[n.id].edge_a = e.fromId.substr(1)
+            data_to_send[n.id].edge_b = e.toId.substr(1)
+        }
+        nodes.add([n])
+    }
+}
+
+function delete_node(node_id){
+    nodes.remove(node_id)
+    station_counter--
+    delete data_to_send[node_id]
+}
+
 function init_graph(graph_spec){
     if (graph_spec.edges.length == 0) place_anywhere = true
-    var nodes = new vis.DataSet(Object.entries(graph_spec.nodes).map(rec => {
+    nodes = new vis.DataSet(Object.entries(graph_spec.nodes).map(rec => {
         return new_node(rec[0], rec[1][0], rec[1][1], rec[1][2])
     }))
     next_station_id = 0
@@ -129,7 +181,7 @@ function init_graph(graph_spec){
     max_number_of_stations = graph_spec.stations
     
     // create an array with edges
-    var edges = new vis.DataSet(graph_spec.edges.map(edge => {
+    edges = new vis.DataSet(graph_spec.edges.map(edge => {
         return {
             from: 'n' + edge[0],
             to: 'n' + edge[1],
@@ -150,56 +202,6 @@ function init_graph(graph_spec){
         physics: {
             enabled: false,
         }
-    }
-    
-    function place_node(event){
-        x = event.pointer.canvas.x
-        y = event.pointer.canvas.y
-        event_nodes = event.nodes.filter(node => node[0]=='n')
-        if (event_nodes.length){
-            center = get_node_by_id(event_nodes[0])
-            x = center.x
-            y = center.y
-        } else if (event.edges.length) {
-            e = get_edge_by_id(event.edges[0])
-            from = get_node_by_id(e.fromId)
-            to = get_node_by_id(e.toId)
-            vx = x-from.x
-            vy = y-from.y
-            ux = to.x-from.x
-            uy = to.y-from.y
-            nx = -uy
-            ny = ux
-            norm_len = Math.sqrt(nx*nx + ny*ny)
-            len = (vx*uy-vy*ux)/norm_len
-            
-            nx *= len/norm_len
-            ny *= len/norm_len
-            x += nx
-            y += ny
-        }
-        if (place_anywhere || event.edges.length){
-            station_counter++
-            let n = new_station_node(x, y)
-            data_to_send[n.id] = {x:x, y:y}
-            if (!place_anywhere && event.edges.length) {
-                e = get_edge_by_id(event.edges[0])
-                data_to_send[n.id].edge_a = e.fromId.substr(1)
-                data_to_send[n.id].edge_b = e.toId.substr(1)
-            }
-            if (!place_anywhere && event.nodes.length) {
-                e = get_edge_by_node_id(event.nodes[0])
-                data_to_send[n.id].edge_a = e.fromId.substr(1)
-                data_to_send[n.id].edge_b = e.toId.substr(1)
-            }
-            nodes.add([n])
-        }
-    }
-
-    function delete_node(node_id){
-        nodes.remove(node_id)
-        station_counter--
-        delete data_to_send[node_id]
     }
 
     function is_station_node(node){
