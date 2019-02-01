@@ -77,14 +77,9 @@ def eval_level(request, *args, **kwargs):
     )
     evaluation.save()
 
-    if level.no_evaluations == 0:
-        remaining = -1
-    else:
-        remaining = level.no_evaluations-done_evaluations-1
-
     return JsonResponse({
         'score': score,
-        'remaining': remaining, # -1 if no limit
+        'remaining': api_server.level.evals_remaining(request.user, level), # -1 if no limit
     })
 
 

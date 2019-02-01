@@ -86,7 +86,9 @@ def level(request, *args, **kwargs):
     level = Level.objects.get(id=kwargs['id'])
     context = {
         'level_id': kwargs['id'],
-        'level': level
+        'level': level,
+        'allow_submit': kwargs['id'] == api_server.level.next_level(request.user),
+        'evals_remaining': api_server.level.evals_remaining(request.user, level),
     }
     return HttpResponse(template.render(context, request))
 

@@ -1,5 +1,6 @@
 from django.db.models import Max
 from api_server.models import Level, Submission
+import api_server.evaluation
 
 def next_level(user):
     return Submission.objects.filter(user=user).\
@@ -26,3 +27,10 @@ def are_edges_weighted(graph):
         if edge[2] != 1:
             return True
     return False
+
+def evals_remaining(user, level):
+    if level.no_evaluations == 0:
+        return -1
+    else:
+        done_evaluations = api_server.evaluation.no_evaluations(user, level)
+        return level.no_evaluations-done_evaluations-1
