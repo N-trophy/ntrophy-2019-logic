@@ -8,9 +8,42 @@ from api_server.models.level import Level
 from api_server.models.evaluation import Evaluation
 import api_server.level
 import api_server.evaluation
-import api_server.evaluators.plane_quadratic as epc
+import api_server.evaluators.plane as ep
 
 import json
+
+
+def error_plane(level, stations, graph=None):
+    if graph is None:
+        graph = json.loads(level.graph)
+
+    nodes = graph['nodes'].values()
+    nodes = [ep.City(node[0], node[1]) for node in nodes]
+
+    stations = [ep.Station(s['x'], s['y']) for s in stations]
+
+    if level.score == 'QUADRATIC':
+        return ep.quadratic_error(nodes, stations)
+    else:
+        return ep.linear_error(nodes, stations)
+
+
+def error_graph(level, stations, graph=None):
+    if graph is None:
+        graph = json.loads(level.graph)
+
+    return 0
+
+
+def error(level, stations) -> float:
+    graph = json.loads(level.graph)
+
+    if len(graph['edges']) == 0:
+        # Plane
+        return error_plane(level, stations, graph)
+    else:
+        # Graph
+        return error_graph(level, stations, graph)
 
 
 @login_required
@@ -26,17 +59,13 @@ def eval_level(request, *args, **kwargs):
 
     # TODO: add another limit of evaluations?
 
-    nodes = json.loads(level.graph)['nodes'].values()
-    nodes = [epc.City(node[0], node[1]) for node in nodes]
-
     body = request.body.decode('utf-8')
-    data = json.loads(body)
-    stations = [epc.Station(s['x'], s['y']) for s in data]
+    stations = json.loads(body)
 
     if len(stations) != level.no_stations:
-        raise ValidationError('Invalid number od stations!')
+        raise ValidationError('Invalid number of stations!')
 
-    score = epc.error(nodes, stations)
+    score = error(level, stations)
 
     evaluation = Evaluation(
         user=request.user,
@@ -47,9 +76,14 @@ def eval_level(request, *args, **kwargs):
     )
     evaluation.save()
 
+    if level.no_evaluations == 0:
+        remaining = -1
+    else:
+        remaining = level.no_evaluations-done_evaluations-1
+
     return JsonResponse({
         'score': score,
-        'remaining': level.no_evaluations-done_evaluations-1, # -1 if no limit
+        'remaining': remaining, # -1 if no limit
     })
 
 
