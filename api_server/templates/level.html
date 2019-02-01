@@ -1,30 +1,82 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Ntrophy Logika</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/static/css/w3.css">
-        <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-        <script src="/static/lib/axios.min.js"></script>
-        <script src="/static/lib/vis.min.js"></script>
-        <script src="/static/src/graph.js"></script>
-        <script src="/static/src/core.js"></script>
-        <script>
-            CSRF_TOKEN = "{{ csrf_token }}"
-            level_id = {{ level_id }}
-            graph_data = {{ level.graph|safe }}
-            graph_data.stations = {{ level.no_stations }}
-            SITE_DOMAIN = ""
-            window.onload = function(){
-                init_graph(graph_data)
+
+<head>
+    <title>Ntrophy Logika</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/w3.css">
+    <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+        crossorigin="anonymous">
+    <script src="/static/lib/axios.min.js"></script>
+    <script src="/static/lib/vis.min.js"></script>
+    <script src="/static/src/graph.js"></script>
+    <script src="/static/src/core.js"></script>
+    <script>
+        CSRF_TOKEN = "{{ csrf_token }}"
+        level_id = {{ level_id }}
+        graph_data = {{ level.graph | safe }}
+        graph_data.stations = {{ level.no_stations }}
+        SITE_DOMAIN = ""
+        window.onload = function () {
+            init_graph(graph_data)
+        }
+
+        const fr = new FileReader();
+        function parseUploadedFile() {
+            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+                alert('The File APIs are not fully supported in this browser.');
+                return;
             }
-        </script>
-        <style>
-            #container {
+
+            let input = document.getElementById('upload-file');
+            if (!input) {
+                alert("Couldn't find the file input element.");
+            }
+            else if (!input.files) {
+                alert("Zdá se, že váš prohlížeč nepodporuje nutnou funkcionalitu.");
+            }
+            else if (!input.files[0]) {
+                alert("Vyberte soubor předtím, než stisknete 'Odeslat'");
+            }
+            else {
+                let file = input.files[0];
+                fr.onload = receivedText;
+                fr.readAsText(file);
+            }
+        }
+        function isNumber(num) {
+            return true;
+        }
+
+        function parseCSV(infile) {
+            let lines = infile.split("\n");
+            let result = [];
+
+            for (let i = 0; i < lines.length; i++) {
+
+                var currentline = lines[i].split(",");
+                if (currentline.length < 2) continue;
+
+                var point = [];
+                point.push(parseFloat(currentline[0]));
+                point.push(parseFloat(currentline[1]));
+                if (!isNaN(point[0]) && !isNaN(point[1])) {
+                    result.push(point);
+                }
+            }
+            return result;
+        }
+        function receivedText(e) {
+            var loaded_data = parseCSV(fr.result);
+            console.log(loaded_data);
+        }
+    </script>
+    <style>
+        #container {
                 width: 100%;
                 height: 100%;
             }
@@ -54,53 +106,59 @@
                 display: none;
             }
         </style>
-    </head>
-    
-    <body>
-        <!-- Navbar -->
-        <div class="w3-top">
-            <div class="w3-bar w3-black w3-card w3-left-align w3-large">
-                <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-padding-large w3-hover-white"><i class="fa fa-home"></i></a>
-                <a href="/level/{{ level.id }}/data" download class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Stáhnout zadání"><i class="fas fa-file-download"></i></a>
-                <button onclick="document.getElementById('modal-upload').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-hover-white"><i class="fas fa-file-upload"></i></button>
-                <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="eval({{ level.id }})">Vyhodnotit</i></button>
-                <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="submit({{ level.id }})">Odevzdat</button>
-                <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white" title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
-                <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white" title="Odevzdat"><i class="fas fa-angle-double-right"></i></button>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+            <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-padding-large w3-hover-white"><i class="fa fa-home"></i></a>
+            <a href="/level/{{ level.id }}/data" download class="w3-bar-item w3-button w3-padding-large w3-hover-white"
+                title="Stáhnout zadání"><i class="fas fa-file-download"></i></a>
+            <button onclick="document.getElementById('modal-upload').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-hover-white"><i
+                    class="fas fa-file-upload"></i></button>
+            <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="eval({{ level.id }})">Vyhodnotit</i></button>
+            <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="submit({{ level.id }})">Odevzdat</button>
+            <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
+                title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
+            <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
+                title="Odevzdat"><i class="fas fa-angle-double-right"></i></button>
+        </div>
+    </div>
+
+    <!-- The Modal Upload -->
+    <div id="modal-upload" class="w3-modal">
+        <div class="w3-modal-content" style="width: 600px">
+            <div class="w3-container w3-padding-large">
+                <span onclick="document.getElementById('modal-upload').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <p class="w3-margin">Nějaký text o tom jak to napsat.</p>
+                <input type="file" id="upload-file" class="w3-margin-left w3-margin-right"><br>
+                <input type="submit" class="w3-center w3-margin" onclick="parseUploadedFile()">
             </div>
         </div>
+    </div>
 
-        <!-- The Modal Upload -->
-        <div id="modal-upload" class="w3-modal">
-                <div class="w3-modal-content" style="width: 600px">
-                <div class="w3-container w3-padding-large">
-                    <span onclick="document.getElementById('modal-upload').style.display='none'"
-                    class="w3-button w3-display-topright">&times;</span>
-                    <input type="file" id="upload-file" class="w3-margin"><br>
-                    <input type="submit" class="w3-center w3-margin-left w3-margin-right w3-margin-bottom">
-                </div>
+    <button id="modal-button" onclick="document.getElementById('modal').style.display='block'" class="w3-button"><i
+            class="fas fa-question-circle w3-text-green"></i></button>
+
+    <!-- The Modal -->
+    <div id="modal" class="w3-modal" style="display: block;">
+        <div class="w3-modal-content">
+            <div class="w3-container w3-padding-large">
+                <span onclick="document.getElementById('modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h1>{{ level.id }}. úroveň</h1>
+                {{ level.intro_text | safe }}
+                {% if evals_remaining > -1 %}
+                <p>Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.</p>
+                {%else%}
+                <p>Pro tuto úroveň můžete využít neomezeně vyhodnocení.</p>
+                {%endif%}
             </div>
         </div>
+    </div>
+    </div>
 
-        <button id="modal-button" onclick="document.getElementById('modal').style.display='block'" class="w3-button"><i class="fas fa-question-circle w3-text-green"></i></button>
+    <div id="graph-container"></div>
+</body>
 
-        <!-- The Modal -->
-        <div id="modal" class="w3-modal" style="display: block;">
-            <div class="w3-modal-content">
-                <div class="w3-container w3-padding-large">
-                    <span onclick="document.getElementById('modal').style.display='none'" 
-                    class="w3-button w3-display-topright">&times;</span>
-                    <h1>{{ level.id }}. úroveň</h1>
-                    {{ level.intro_text | safe }}
-                    {% if evals_remaining > -1 %}
-                      <p>Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.</p>
-                    {%else%}
-                      <p>Pro tuto úroveň můžete využít neomezeně vyhodnocení.</p>
-                    {%endif%}
-                </div>
-            </div>
-        </div>
-
-        <div id="graph-container"></div>
-    </body>
 </html>
