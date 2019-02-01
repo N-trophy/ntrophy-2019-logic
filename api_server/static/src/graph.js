@@ -124,18 +124,30 @@ function init_graph(graph_spec){
         }
     }
     
+    function place_node(event){
+        station_counter++
+        nodes.add([
+            new_station_node(event.pointer.canvas.x, event.pointer.canvas.y)
+        ])
+    }
+
+    function is_station_node(node){
+        return node[0] == 's'
+    }
+
     // initialize your network!
     network = new vis.Network(container, data, options)
     network.on('click',function(event){
-        if(station_counter < max_number_of_stations && event.nodes.length == 0 && event.edges.length == 1) {
-            station_counter++
-            nodes.add([
-                new_station_node(event.pointer.canvas.x, event.pointer.canvas.y)
-            ])
+        if(station_counter < max_number_of_stations){
+            console.log(event)
+            place_node(event)
         }
-        if(event.nodes.length == 1 && event.nodes[0][0] == 's') {
-            nodes.remove(event.nodes[0])
-            station_counter--
+        for(let i=0;i<event.nodes.length;i++) {
+            if (is_station_node(event.nodes[i])) {
+                nodes.remove(event.nodes[i])
+                station_counter--
+                break
+            }
         }
     })
 }
