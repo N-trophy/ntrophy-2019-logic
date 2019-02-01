@@ -25,22 +25,17 @@ function format(fmt, ...args) {
 
 
 function get_node_by_id(id){
-    n = Object.values(network.body.nodes).filter(node=>node.id==id)
+    let n = Object.values(network.body.nodes).filter(node=>node.id==id)
     if (n.length) return n[0]
 }
 
 function get_edge_by_id(id){
-    n = Object.values(network.body.edges).filter(edge=>edge.id==id)
+    let n = Object.values(network.body.edges).filter(edge=>edge.id==id)
     if (n.length) return n[0]
 }
 
-// Evaluator
-function station_nodes_as_cords(){
-    return Object.values(network.body.nodes).filter(node=>node.id[0]=='s').map(node => {return {x: node.x, y: node.y}})
-}
-
 function eval(){
-    cords = station_nodes_as_cords()
+    cords = Object.values(data_to_send)
     axios({
             method:'post',
             url: SITE_DOMAIN + format('/level/{0}/eval', level_id),
@@ -59,7 +54,7 @@ function eval(){
 }
 
 function submit(){
-    cords = station_nodes_as_cords()
+    cords = Object.values(data_to_send)
     axios({
             method:'post',
             url: SITE_DOMAIN + format('/level/{0}/submit', level_id),
@@ -99,11 +94,14 @@ function new_station_node(x, y){
 }
 
 var network
+var place_anywhere = false
 var station_counter = 0
 var next_station_id = 0
 var max_number_of_stations = 0
+var data_to_send = {}
 
 function init_graph(graph_spec){
+    if (graph_spec.edges.length == 0) place_anywhere = true
     var nodes = new vis.DataSet(Object.entries(graph_spec.nodes).map(rec => {
         return new_node(rec[0], rec[1][0], rec[1][1], rec[1][2])
     }))
@@ -135,7 +133,6 @@ function init_graph(graph_spec){
     }
     
     function place_node(event){
-        station_counter++
         x = event.pointer.canvas.x
         y = event.pointer.canvas.y
         event_nodes = event.nodes.filter(node => node[0]=='n')
@@ -161,9 +158,23 @@ function init_graph(graph_spec){
             x += nx
             y += ny
         }
-        nodes.add([
-            new_station_node(x, y)
-        ])
+        if (place_anywhere || event.edges.length){
+            station_counter++
+            let n = new_station_node(x, y)
+            data_to_send[n.id] = {x:x, y:y}
+            if (!place_anywhere && event.edges.length) {
+                e = get_edge_by_id(event.edges[0])
+                data_to_send[n.id].edge_a = e.fromId.substr(1)
+                data_to_send[n.id].edge_b = e.toId.substr(1)
+            }
+            nodes.add([n])
+        }
+    }
+
+    function delete_node(node_id){
+        nodes.remove(node_id)
+        station_counter--
+        delete data_to_send[node_id]
     }
 
     function is_station_node(node){
@@ -176,8 +187,7 @@ function init_graph(graph_spec){
         deleted = false
         for(let i=0;i<event.nodes.length;i++) {
             if (is_station_node(event.nodes[i])) {
-                nodes.remove(event.nodes[i])
-                station_counter--
+                delete_node(event.nodes[i])
                 deleted = true
                 break
             }
