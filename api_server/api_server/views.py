@@ -53,7 +53,7 @@ def index(request, *args, **kwargs):
         'next_level': next_level,
         'name': request.user.get_full_name(),
         'posts': Post.objects.filter(published__lt=timezone.now()).\
-                 order_by('-published'),
+                 order_by('-published')[:12],
     }
     return HttpResponse(template.render(context, request))
 
