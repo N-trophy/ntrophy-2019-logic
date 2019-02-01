@@ -29,6 +29,11 @@ function get_node_by_id(id){
     if (n.length) return n[0]
 }
 
+function get_edge_by_id(id){
+    n = Object.values(network.body.edges).filter(edge=>edge.id==id)
+    if (n.length) return n[0]
+}
+
 // Evaluator
 function station_nodes_as_cords(){
     return Object.values(network.body.nodes).filter(node=>node.id[0]=='s').map(node => {return {x: node.x, y: node.y}})
@@ -131,13 +136,30 @@ function init_graph(graph_spec){
     
     function place_node(event){
         station_counter++
-        console.log(event)
         x = event.pointer.canvas.x
         y = event.pointer.canvas.y
-        if (event.nodes.length){
-            center = get_node_by_id(event.nodes[0])
+        event_nodes = event.nodes.filter(node => node[0]=='n')
+        if (event_nodes.length){
+            center = get_node_by_id(event_nodes[0])
             x = center.x
             y = center.y
+        } else if (event.edges.length) {
+            e = get_edge_by_id(event.edges[0])
+            from = get_node_by_id(e.fromId)
+            to = get_node_by_id(e.toId)
+            vx = x-from.x
+            vy = y-from.y
+            ux = to.x-from.x
+            uy = to.y-from.y
+            nx = -uy
+            ny = ux
+            norm_len = Math.sqrt(nx*nx + ny*ny)
+            len = (vx*uy-vy*ux)/norm_len
+            
+            nx *= len/norm_len
+            ny *= len/norm_len
+            x += nx
+            y += ny
         }
         nodes.add([
             new_station_node(x, y)
@@ -151,16 +173,17 @@ function init_graph(graph_spec){
     // initialize your network!
     network = new vis.Network(container, data, options)
     network.on('click',function(event){
-        if(station_counter < max_number_of_stations){
-            console.log(event)
-            place_node(event)
-        }
+        deleted = false
         for(let i=0;i<event.nodes.length;i++) {
             if (is_station_node(event.nodes[i])) {
                 nodes.remove(event.nodes[i])
                 station_counter--
+                deleted = true
                 break
             }
+        }
+        if(!deleted && station_counter < max_number_of_stations){
+            place_node(event)
         }
     })
 }
