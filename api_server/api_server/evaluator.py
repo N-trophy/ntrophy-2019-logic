@@ -10,8 +10,10 @@ from api_server.models.submission import Submission
 import api_server.level
 import api_server.evaluation
 import api_server.evaluators.plane as ep
+import api_server.evaluators.graph as eg
 
 import json
+import math
 
 
 def error_plane(level, stations, graph=None):
@@ -29,11 +31,26 @@ def error_plane(level, stations, graph=None):
         return ep.linear_error(nodes, stations)
 
 
+def euclid_distance(a: (float, float), b: (float, float)) -> float:
+    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
+
+
 def error_graph(level, stations, graph=None):
     if graph is None:
         graph = json.loads(level.graph)
 
-    return 0
+    nodes = {id: eg.Node(weight) for (id, (x, y, weight)) in graph['nodes'].items()}
+    edges = [eg.Edge(start, end, weight) for start, end, weight in graph['edges']]
+    s = []
+    for st in stations:
+        nodea, nodeb, x, y = (st['edge_a'], st['edge_b'], st['x'], st['y'])
+        nodes_dist = euclid_distance(graph['nodes'][nodea], graph['nodes'][nodeb])
+        dista = euclid_distance(graph['nodes'][nodea], (x, y))
+        distb = euclid_distance(graph['nodes'][nodeb], (x, y))
+        s.append(eg.Station(nodea, nodeb, dista/(dista+distb), distb/(dista+distb)))
+
+    g = eg.Graph(nodes, edges)
+    return eg.error(g, s)
 
 
 def error(level, stations) -> float:
