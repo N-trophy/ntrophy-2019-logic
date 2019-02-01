@@ -12,3 +12,6 @@ class Level(models.Model):
     graph = models.TextField()
     intro_text = models.TextField(default='')
     no_evaluations = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id)
