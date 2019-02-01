@@ -135,11 +135,11 @@
                 title="Stáhnout zadání"><i class="fas fa-file-download"></i></a>
             <button onclick="document.getElementById('modal-upload').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-hover-white"><i
                     class="fas fa-file-upload"></i></button>
-            <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="eval({{ level.id }})">Vyhodnotit</i></button>
-            <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="submit({{ level.id }})">Odevzdat</button>
-            <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
+            <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Vyhodnotit</i></button>
+            <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Odevzdat</button>
+            <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
-            <button class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
+            <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Odevzdat"><i class="fas fa-angle-double-right"></i></button>
         </div>
     </div>
@@ -148,7 +148,8 @@
     <div id="modal-upload" class="w3-modal">
         <div class="w3-modal-content" style="width: 600px">
             <div class="w3-container w3-padding-large">
-                <span onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';" class="w3-button w3-display-topright">&times;</span>
+                <span onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';"
+                    class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin">
                     Nahrávejte soubor s polohou nemocnic ve formátu: x, y (každá nemocnice na nový řádek, souřadnice
                     x a y oddělené čárkami, zaokrouleny na 2 desetinná místa s použitím desetinné tečky).<br><br>
@@ -185,6 +186,49 @@
             </div>
         </div>
     </div>
+
+    <!-- The Modal Eval -->
+    <div id="modal-eval" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container w3-padding-large">
+                <span onclick="document.getElementById('modal-eval').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <p class="w3-margin w3-center w3-padding-large">
+                    {% if evals_remaining > -1 %}
+                    Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
+                    {%else%}
+                    Pro tuto úroveň můžete využít neomezeně vyhodnocení.
+                    {%endif%}
+                    <br><br>
+                    Opravdu chcete vyhodnotit?
+                </p>
+                <div class="w3-center">
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="eval({{ level.id }})">Vyhodnotit</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'">Zrušit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal Submit -->
+    <div id="modal-submit" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container w3-padding-large">
+                <span onclick="document.getElementById('modal-submit').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <p class="w3-margin w3-center w3-padding-large">
+                    {% if evals_remaining > -1 %}
+                    Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
+                    {%else%}
+                    Pro tuto úroveň můžete využít neomezeně vyhodnocení.
+                    {%endif%}
+                    <br><br>
+                    Opravdu chcete odevzdat?
+                </p>
+                <div class="w3-center">
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="submit({{ level.id }})">Odevzdat</button>
+                    <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-submit').style.display='none'">Zrušit</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="graph-container"></div>
