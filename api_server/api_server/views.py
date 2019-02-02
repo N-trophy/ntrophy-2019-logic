@@ -1,4 +1,4 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.views import View
 from django.template import loader, RequestContext, Library
@@ -60,7 +60,7 @@ def index(request, *args, **kwargs):
 @login_required
 def level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
-        raise PermissionDenied("Task not opened.")
+        return HttpResponseForbidden('Level not opened!')
 
     template = loader.get_template('level.html')
     level = Level.objects.get(id=kwargs['id'])
@@ -87,7 +87,7 @@ def graph_js(request, *args, **kwargs):
 @login_required
 def data_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
-        raise PermissionDenied("Task not opened.")
+        return HttpResponseForbidden('Level not opened!')
 
     response = HttpResponse(content_type='text/csv; charset=utf8')
     response['Content-Disposition'] = 'attachment; filename={0}'.\
