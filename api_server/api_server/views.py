@@ -1,10 +1,9 @@
-from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.views import View
 from django.template import loader, RequestContext, Library
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -63,7 +62,12 @@ def level(request, *args, **kwargs):
         return HttpResponseForbidden('Level not opened!')
 
     template = loader.get_template('level.html')
-    level = Level.objects.get(id=kwargs['id'])
+
+    try:
+        level = Level.objects.get(id=kwargs['id'])
+    except api_server.models.level.Level.DoesNotExist:
+        return HttpResponseNotFound('Level not found')
+
     graph = json.loads(level.graph)
     context = {
         'level_id': kwargs['id'],
