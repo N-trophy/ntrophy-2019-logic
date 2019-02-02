@@ -68,10 +68,12 @@ def error(level, stations) -> float:
 
     if len(graph['edges']) == 0:
         # Plane
-        return error_plane(level, stations, graph)
+        e = error_plane(level, stations, graph)
     else:
         # Graph
-        return error_graph(level, stations, graph)
+        e = error_graph(level, stations, graph)
+
+    return round(e, 2)
 
 
 @login_required
@@ -100,7 +102,7 @@ def eval_level(request, *args, **kwargs):
     )
 
     try:
-        evaluation.score = round(error(level, stations), 2)
+        evaluation.score = error(level, stations)
         evaluation.report = 'ok'
     except ValidationError as e:
         evaluation.report = 'Validation Error:\n' + traceback.format_exc()
@@ -137,7 +139,7 @@ def submit_level(request, *args, **kwargs):
     )
 
     try:
-        evaluation.score = round(error(level, stations), 2)
+        evaluation.score = error(level, stations)
         evaluation.report = 'ok'
     except ValidationError as e:
         evaluation.report = 'Validation Error:\n' + traceback.format_exc()
