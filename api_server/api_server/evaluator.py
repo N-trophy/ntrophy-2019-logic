@@ -66,6 +66,11 @@ def error_graph(level, stations, graph=None):
 def error(level, stations) -> float:
     graph = json.loads(level.graph)
 
+    for station in stations:
+        station['x'] = round(station['x'], 2)
+        station['y'] = round(station['y'], 2)
+    print(stations)
+
     if len(graph['edges']) == 0:
         # Plane
         e = error_plane(level, stations, graph)
