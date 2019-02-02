@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 import api_server.views as views
 import api_server.evaluator as evaluator
+import api_server.tools as tools
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('level/<int:id>/eval', evaluator.eval_level),
     path('level/<int:id>/submit', evaluator.submit_level),
     path('level/<int:id>/data', views.data_level),
+    path('usercreate', tools.user_create),
 ]
