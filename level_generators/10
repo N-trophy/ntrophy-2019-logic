@@ -81,6 +81,12 @@ def edge(a, b):
         random.randint(1, 8)
     )
 
+def is_edge_in_output(edge, edges):
+    for e in edges:
+        if (e[0] == edge[0] and e[1] == edge[1]) or (e[1] == edge[0] and e[0] == edge[1]):
+            return True
+    return False
+
 # Add first edge manually
 x, y = (
     random.randint(WIDTH//2 - WIDTH//4, WIDTH//2 + WIDTH//4),
@@ -112,7 +118,7 @@ for y in range(len(grid)):
         ]
 
         for nx, ny in map(lambda n: (n[0]+x, n[1]+y), grid[y][x].neighbors):
-            if (edge((nx, ny), (x, y))) not in output['edges']:
+            if is_edge_in_output(edge((nx, ny), (x, y)), output['edges']):
                 output['edges'].append(edge((x, y), (nx, ny)))
 
 print(json.dumps(output, sort_keys=True, indent=4))
