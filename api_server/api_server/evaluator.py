@@ -3,6 +3,7 @@ from django.views import View
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.utils import timezone
 
 from api_server.models.level import Level
 from api_server.models.evaluation import Evaluation
@@ -15,7 +16,9 @@ import api_server.evaluators.graph as eg
 import json
 import math
 import traceback
+from datetime import datetime
 
+QUALIFICATION_END = timezone.make_aware(datetime(2019, 2, 25, 0, 0, 0))
 
 def error_plane(level, stations, graph=None):
     if graph is None:
@@ -69,7 +72,6 @@ def error(level, stations) -> float:
     for station in stations:
         station['x'] = round(station['x'], 2)
         station['y'] = round(station['y'], 2)
-    print(stations)
 
     if len(graph['edges']) == 0:
         # Plane
@@ -86,6 +88,9 @@ def error(level, stations) -> float:
 def eval_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
+
+    if timezone.now() >= QUALIFICATION_END:
+        return HttpResponseForbidden('Qualification ended!')
 
     level = Level.objects.get(id=kwargs['id'])
     done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
@@ -129,6 +134,9 @@ def eval_level(request, *args, **kwargs):
 def submit_level(request, *args, **kwargs):
     if kwargs['id'] != api_server.level.next_level(request.user):
         return HttpResponseForbidden('Level not opened for submission!')
+
+    if timezone.now() >= QUALIFICATION_END:
+        return HttpResponseForbidden('Qualification ended!')
 
     level = Level.objects.get(id=kwargs['id'])
     body = request.body.decode('utf-8')
