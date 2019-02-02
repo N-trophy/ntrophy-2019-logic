@@ -102,3 +102,10 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_PORT = 465
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.onebit.cz'
+EMAIL_HOST_USER = 'logika-send@ntrophy.cz'
+EMAIL_HOST_PASSWORD = 'loskarlos1'
+EMAIL_USE_SSL = True
