@@ -16,13 +16,16 @@ def user_create(request, *args, **kwargs):
     for line in body.split('\n'):
         login, teamname, email = line.strip().split(',')
 
-        users.append(User(
+
+        u = User(
             username=login,
             first_name=teamname,
             email=email,
-            password=User.objects.make_random_password(),
             is_active=True,
-        ))
+        )
+        u.pwd=User.objects.make_random_password(),
+        u.set_password(u.pwd[0])
+        users.append(u)
 
     User.objects.bulk_create(users)
 
@@ -30,7 +33,7 @@ def user_create(request, *args, **kwargs):
         ('[N-trophy 2019] Logika: přístupové údaje',
          'Přístupové údaje k webu https://logika.ntrophy.cz/ pro tým %s '
          'jsou:\n\n  * login: %s\n  * heslo: %s\n\nS pozdravem,\ntým logiky N-trophy' %
-            (user.first_name, user.username, user.password),
+            (user.first_name, user.username, user.pwd[0]),
          'logika@ntrophy.cz',
          [user.email])
         for user in users
@@ -41,5 +44,5 @@ def user_create(request, *args, **kwargs):
     )
 
     return JsonResponse(
-        {user.username: user.password for user in users}
+        {user.username: user.pwd[0] for user in users}
     )
