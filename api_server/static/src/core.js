@@ -99,7 +99,7 @@ function try_eval() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Score: ...";
+    info_elem.innerHTML = "Hodnota chybové funkce: ...";
     eval();
 }
 
@@ -117,7 +117,7 @@ function try_submit() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Odevzdali jste řešení.<br>Score: ...";
+    info_elem.innerHTML = "Odevzdali jste řešení.<br>Hodnota chybové funkce: ...";
     submit();
 }
 
