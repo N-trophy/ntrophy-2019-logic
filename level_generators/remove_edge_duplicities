@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import json
+import sys
+
+def is_edge_in_output(edge, edges):
+    for e in edges:
+        if (e[0] == edge[0] and e[1] == edge[1]) or (e[1] == edge[0] and e[0] == edge[1]):
+            return True
+    return False
+
+graph = json.loads(sys.stdin.read())
+
+old_edges = graph['edges']
+graph['edges'] = []
+
+for edge in old_edges:
+    if not is_edge_in_output(edge, graph['edges']):
+        graph['edges'].append(edge)
+
+print(json.dumps(graph, sort_keys=True, indent=4))
