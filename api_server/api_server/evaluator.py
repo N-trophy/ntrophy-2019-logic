@@ -92,7 +92,11 @@ def eval_level(request, *args, **kwargs):
     if timezone.now() >= QUALIFICATION_END:
         return HttpResponseForbidden('Qualification ended!')
 
-    level = Level.objects.get(id=kwargs['id'])
+    try:
+        level = Level.objects.get(id=kwargs['id'])
+    except api_server.models.level.Level.DoesNotExist:
+        return HttpResponseNotFound('Level not found')
+
     done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
     if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
         return HttpResponseForbidden('Reached limit of evaluations!')
@@ -138,7 +142,11 @@ def submit_level(request, *args, **kwargs):
     if timezone.now() >= QUALIFICATION_END:
         return HttpResponseForbidden('Qualification ended!')
 
-    level = Level.objects.get(id=kwargs['id'])
+    try:
+        level = Level.objects.get(id=kwargs['id'])
+    except api_server.models.level.Level.DoesNotExist:
+        return HttpResponseNotFound('Level not found')
+
     body = request.body.decode('utf-8')
     stations = json.loads(body)
 
