@@ -137,7 +137,7 @@ def submit_level(request, *args, **kwargs):
     )
 
     try:
-        score = round(error(level, stations), 2)
+        evaluation.score = round(error(level, stations), 2)
         evaluation.report = 'ok'
     except ValidationError as e:
         evaluation.report = 'Validation Error:\n' + traceback.format_exc()
@@ -149,5 +149,5 @@ def submit_level(request, *args, **kwargs):
         evaluation.save()
 
     return JsonResponse({
-        'score': score,
+        'score': evaluation.score,
     })
