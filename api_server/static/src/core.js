@@ -136,3 +136,27 @@ function update_remaining_evals_text() {
             rem_eval_obj.innerHTML = "Pro tuto úroveň můžete využít neomezeně vyhodnocení.";
     }
 }
+
+function after_eval(res) {
+    score = res.data.score;
+    remaining_evals = res.data.remaining;
+    update_remaining_evals_text();
+
+    score_elem = document.getElementById('score');
+    score_elem.innerText = score;
+    document.getElementById('eval-info').innerHTML = "Hodnota chybové funkce: " + score;
+}
+
+function after_submit(res) {
+    score = res.data.score;
+
+    score_elem = document.getElementById('score');
+    score_elem.innerText = score;
+    document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Hodnota chybové funkce: " + score;
+    document.getElementById('submit-menu').style = "display: none!important;";
+    document.getElementById('submit-menu-small').style = "display: none!important;";
+    document.getElementById('next-level-menu').style = "display: block;";
+    document.getElementById('next-level-menu-small').style = "display: block;";
+
+    document.getElementById('next-level').style = "display: block";
+}

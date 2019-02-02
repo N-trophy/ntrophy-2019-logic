@@ -52,15 +52,7 @@ function eval(){
                 "content-type": "application/json"
             }
         })
-        .then(res=>{
-            score = res.data.score;
-            remaining_evals = res.data.remaining;
-            update_remaining_evals_text();
-
-            score_elem = document.getElementById('score');
-            score_elem.innerText = score;
-            document.getElementById('eval-info').innerHTML = "Hodnota chybové funkce: " + score;
-        })
+        .then(after_eval)
         .catch(err=>{
             console.log(err);
             document.getElementById('eval-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
@@ -78,15 +70,7 @@ function submit(){
                 "content-type": "application/json"
             }
         })
-        .then(res=>{
-            score = res.data.score;
-
-            score_elem = document.getElementById('score');
-            score_elem.innerText = score;
-            document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Hodnota chybové funkce: " + score;
-            document.getElementById('submit-menu').style = "display: none!important;"
-            document.getElementById('submit-menu-small').style = "display: none!important;"
-        })
+        .then(after_submit)
         .catch(err=>{
             console.log(err);
             document.getElementById('submit-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
