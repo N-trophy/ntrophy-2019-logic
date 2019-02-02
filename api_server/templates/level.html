@@ -24,6 +24,8 @@
         level_id = {{ level_id }}
         graph_data = {{ level.graph | safe }}
         graph_data.stations = {{ level.no_stations }}
+        weighted_edges = "{{ weighted_edges }}"
+        weighted_nodes = "{{ weighted_nodes }}"
         SITE_DOMAIN = ""
         window.onload = function () {
             init_graph(graph_data)

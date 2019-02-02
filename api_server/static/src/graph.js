@@ -83,11 +83,11 @@ function new_node(id, x, y, size){
         id: 'n' + id,
         x: x,
         y: y,
-        label: ""+size,
+        label: weighted_nodes == "True" ? ""+size : false,
         size: Math.sqrt(size) * 10,
         shape: 'dot',
         fixed: true,
-        title: format("[{0},{1}] (score: {2}, id: \"{3}\")", x, y, size, id),
+        title: format("[{0},{1}] (velikost: {2}, id: \"{3}\")", x, y, size, id),
         shadow:{
             enabled: false,
         },
@@ -107,6 +107,8 @@ function new_station_node(x, y){
     node.id = 's' + next_station_id++
     node.color = '#aa3512'
     node.fixed = false
+    node.label = false
+    node.title = format("[{0},{1}]", x.toFixed(2), y.toFixed(2))
     return node
 }
 
@@ -185,7 +187,7 @@ function init_graph(graph_spec){
         return {
             from: 'n' + edge[0],
             to: 'n' + edge[1],
-            label: "" + edge[2],
+            label: weighted_edges == "True" ? ""+edge[2] : false,
             smooth: false,
         }
     }))
@@ -225,6 +227,17 @@ function init_graph(graph_spec){
     })
 
     network.on('dragEnd', function(event){
-        console.log(event.edges)
+        if (event.nodes.length == 0) return
+        x = event.pointer.canvas.x
+        y = event.pointer.canvas.y
+        id = event.nodes[0]
+        data_to_send[id].x = x
+        data_to_send[id].y = y
+        node = get_node_by_id(id)
+        nodes.remove(node)
+        let n = new_station_node(x, y)
+        nodes.add(n)
+        data_to_send[n.id] = data_to_send[id]
+        delete data_to_send[id]
     })
 }
