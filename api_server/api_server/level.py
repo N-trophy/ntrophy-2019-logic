@@ -3,8 +3,12 @@ from api_server.models import Level, Submission
 import api_server.evaluation
 
 def next_level(user):
-    return Submission.objects.filter(user=user,).exclude(score=None).\
-        aggregate(Max('level'))['level__max'] + 1
+    level = Submission.objects.filter(user=user,).exclude(score=None).\
+        aggregate(Max('level'))['level__max']
+    if level is not None:
+        return level + 1
+    else:
+        return 1
 
 def done_levels(user):
     return {
