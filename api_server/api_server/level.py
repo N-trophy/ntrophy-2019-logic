@@ -10,6 +10,7 @@ def next_level(user):
     else:
         return 1
 
+
 def done_levels(user):
     return {
         submission.level.id: submission \
