@@ -53,9 +53,13 @@ function eval(){
             }
         })
         .then(res=>{
-            score = document.getElementById('score');
-            score.innerText = res.data.score;
-            document.getElementById('eval-info').innerHTML += res.data.score;
+            score = res.data.score;
+            remaining_evals = res.data.remaining;
+            update_remaining_evals_text();
+
+            score_elem = document.getElementById('score');
+            score_elem.innerText = score;
+            document.getElementById('eval-info').innerHTML = "Score: " + score;
         })
         .catch(err=>{
             console.log(err);
@@ -75,8 +79,13 @@ function submit(){
             }
         })
         .then(res=>{
-            console.log(res.data);
-            document.getElementById('submit-info').innerHTML += res.data.score;
+            score = res.data.score;
+
+            score_elem = document.getElementById('score');
+            score_elem.innerText = score;
+            document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Score: " + score;
+            document.getElementById('submit-menu').style = "display: none!important;"
+            document.getElementById('submit-menu-small').style = "display: none!important;"
         })
         .catch(err=>{
             console.log(err);
@@ -125,6 +134,8 @@ var station_counter = 0
 var next_station_id = 0
 var max_number_of_stations = 0
 var data_to_send = {}
+var score
+var remaining_evals = 0
 
 function place_node(event){
     x = event.pointer.canvas.x

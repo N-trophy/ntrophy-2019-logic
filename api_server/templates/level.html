@@ -80,12 +80,12 @@
                     class="fas fa-file-upload"></i></button>
             <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Vyhodnotit</i></button>
             {% if allow_submit %}
-            <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Odevzdat</button>
+            <button id="submit-menu" onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Odevzdat</button>
             {% endif %}
             <button onclick="document.getElementById('modal-eval').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Vyhodnotit"><i class="fas fa-angle-right"></i></button>
             {% if allow_submit %}
-            <button onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
+            <button id="submit-menu-small" onclick="document.getElementById('modal-submit').style.display='block'" class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-large w3-padding-large w3-hover-white"
                 title="Odevzdat"><i class="fas fa-angle-double-right"></i></button>
             {% endif %}
         </div>
@@ -128,11 +128,7 @@
                 <span onclick="document.getElementById('modal').style.display='none';" class="w3-button w3-display-topright">&times;</span>
                 <h1>{{ level.id }}. úroveň</h1>
                 {{ level.intro_text | safe }}
-                {% if evals_remaining > -1 %}
-                <p>Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.</p>
-                {%else%}
-                <p>Pro tuto úroveň můžete využít neomezeně vyhodnocení.</p>
-                {%endif%}
+                <p name="remaining_evals_text"></p>
             </div>
         </div>
     </div>
@@ -142,15 +138,7 @@
         <div class="w3-modal-content">
             <div class="w3-container w3-padding-large">
                 <span onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none'; document.getElementById('eval-send').disabled = false;" class="w3-button w3-display-topright">&times;</span>
-                <p class="w3-margin w3-center w3-padding-large">
-                    {% if evals_remaining > -1 %}
-                    Pro tuto úroveň můžete využít ještě {{ evals_remaining }} vyhodnocení.
-                    {%else%}
-                    Pro tuto úroveň můžete využít neomezeně vyhodnocení.
-                    {%endif%}
-                    <br><br>
-                    Opravdu chcete vyhodnotit?
-                </p>
+                <p name="remaining_evals_text" class="w3-margin w3-center w3-padding-large"></p>
                 <div class="w3-center">
                     <button id="eval-send" class="w3-button w3-padding-large w3-black w3-margin" onclick="try_eval()">Vyhodnotit</button>
                     <button id="eval-back" class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-eval').style.display='none'; document.getElementById('eval-info').innerHTML = ''; document.getElementById('eval-info').style='display: none'; document.getElementById('eval-send').disabled = false;">Zrušit</button>
@@ -178,6 +166,11 @@
     </div>
 
     <div id="graph-container"></div>
+
+    <script>
+        remaining_evals = {{ evals_remaining }};
+        update_remaining_evals_text();
+    </script>
 </body>
 
 </html>

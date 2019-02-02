@@ -99,7 +99,7 @@ function try_eval() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Score: ";
+    info_elem.innerHTML = "Score: ...";
     eval();
 }
 
@@ -117,6 +117,22 @@ function try_submit() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Odevzdali jste řešení.<br>Score: ";
+    info_elem.innerHTML = "Odevzdali jste řešení.<br>Score: ...";
     submit();
+}
+
+function update_remaining_evals_text() {
+    let objs = document.getElementsByName("remaining_evals_text");
+    if (remaining_evals == 0) {
+        document.getElementById("eval-send").style = "display: none;";
+    }
+    for (let i = 0; i < objs.length; i++) {
+        let rem_eval_obj = objs[i];
+        if (remaining_evals == 0)
+            rem_eval_obj.innerHTML = "Pro tuto úroveň už nemůžete využít žádné vyhodnocení.";
+        else if (remaining_evals > 0)
+            rem_eval_obj.innerHTML = "Pro tuto úroveň můžete využít ještě " + remaining_evals + " vyhodnocení.";
+        else
+            rem_eval_obj.innerHTML = "Pro tuto úroveň můžete využít neomezeně vyhodnocení.";
+    }
 }
