@@ -27,7 +27,7 @@ def level_class(next_level, level_id):
 
 def level_status(next_level, level, submission=None):
     if next_level > level.id and submission is not None:
-        return "Chyba: %.2f" % (submission.score)
+        return "Hodnota vzd. f.: %.2f" % (submission.score)
     elif next_level == level.id:
         return "Otevřeno"
     else:

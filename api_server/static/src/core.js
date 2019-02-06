@@ -99,7 +99,7 @@ function try_eval() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Hodnota chybové funkce: ...";
+    info_elem.innerHTML = "Hodnota vzdálenostní funkce: ...";
     eval();
 }
 
@@ -117,7 +117,7 @@ function try_submit() {
         info_elem.innerHTML += " (zadali jste " + station_counter + " nemocnic).";
         return;
     }
-    info_elem.innerHTML = "Odevzdali jste řešení.<br>Hodnota chybové funkce: ...";
+    info_elem.innerHTML = "Odevzdali jste řešení.<br>Hodnota vzdálenostní funkce: ...";
     submit();
 }
 
@@ -144,7 +144,7 @@ function after_eval(res) {
 
     score_elem = document.getElementById('score');
     score_elem.innerText = score;
-    document.getElementById('eval-info').innerHTML = "Hodnota chybové funkce: " + score;
+    document.getElementById('eval-info').innerHTML = "Hodnota vzdálenostní funkce: " + score;
 }
 
 function after_submit(res) {
@@ -152,7 +152,7 @@ function after_submit(res) {
 
     score_elem = document.getElementById('score');
     score_elem.innerText = score;
-    document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Hodnota chybové funkce: " + score;
+    document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Hodnota vzdálenostní funkce: " + score;
     document.getElementById('submit-menu').style = "display: none!important;";
     document.getElementById('submit-menu-small').style = "display: none!important;";
     document.getElementById('next-level-menu').style = "display: block;";
