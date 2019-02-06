@@ -147,16 +147,23 @@ function after_eval(res) {
     document.getElementById('eval-info').innerHTML = "Hodnota vzdálenostní funkce: " + score;
 }
 
+function set_style_id(id, style) {
+    let elem = document.getElementById(id);
+    if (elem)
+        elem.style = style;
+}
+
 function after_submit(res) {
     score = res.data.score;
 
     score_elem = document.getElementById('score');
     score_elem.innerText = score;
     document.getElementById('submit-info').innerHTML = "Odevzdali jste řešení.<br>Hodnota vzdálenostní funkce: " + score;
-    document.getElementById('submit-menu').style = "display: none!important;";
-    document.getElementById('submit-menu-small').style = "display: none!important;";
-    document.getElementById('next-level-menu').style = "display: block;";
-    document.getElementById('next-level-menu-small').style = "display: block;";
+    set_style_id('submit-menu', "display: none!important;");
+    set_style_id('submit-menu-small', "display: none!important;");
+    set_style_id('next-level-menu', "display: block;");
+    set_style_id('next-level-menu-small', "display: block;");
+    set_style_id('next-level-menu-small', '')
 
-    document.getElementById('next-level').style = "display: block";
+    set_style_id('next-level', 'display: block;');
 }
