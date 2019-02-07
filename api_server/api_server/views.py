@@ -19,7 +19,7 @@ register = Library()
 
 def level_class(next_level, level_id):
     if next_level > level_id:
-        return "w3-red"
+        return "w3-green"
     elif next_level == level_id:
         return "w3-white"
     else:

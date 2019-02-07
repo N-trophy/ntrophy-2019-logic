@@ -174,6 +174,10 @@ function submit(){
 
 // Graph handler
 function new_node(id, x, y, size){
+    title = format("[{0},{1}] (id: \"{2}\")", x, y, id)
+    if (place_anywhere) {
+        title = format("[{0},{1}]", x, y)
+    }
     return {
         id: 'n' + id,
         x: x,
@@ -183,7 +187,7 @@ function new_node(id, x, y, size){
         size: Math.sqrt(size) * 10,
         shape: 'dot',
         fixed: true,
-        title: format("[{0},{1}] (velikost: {2}, id: \"{3}\")", x, y, size, id),
+        title: title,
         shadow:{
             enabled: false,
         },
@@ -202,9 +206,10 @@ function new_station_node(x, y){
     var node = new_node(undefined, x, y, 2)
     node.id = 's' + next_station_id++
     node.color = '#87ebff'
+    node.title = false
     node.fixed = false
-    node.label = false
-    node.title = format("[{0},{1}]", x.toFixed(2), y.toFixed(2))
+    node.title = undefined
+    node.label = format("[{0},{1}]", x.toFixed(2), y.toFixed(2))
     return node
 }
 

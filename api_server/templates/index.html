@@ -21,10 +21,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   width: 100%;
   text-align: right
 }
+#logo-container{
+  position: relative;
+}
 #logo {
-  background-color: black;
-  padding: 50px;
-  border-radius: 100%;
+  /* background-color: black; */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100px;
 }
 </style>
 <body>
@@ -48,23 +53,29 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 </div>
 
 <!-- Header -->
-<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+<header class="w3-container w3-red" style="padding:128px 16px">
     <div class="w3-center">
-      <p class="w3-xlarge">Ahoj {{ name }}. Vítej na logické úloze N-trophy.</p>
+
+      <h3 class="w3-xlarge">Vítejte na logické části kvalifikační úlohy N-trophy.</h3>
+      <p class="w3-xlarge">Jste přihlášeni za tým {{ name }}.</p>
       {% if next_level <= 10 %}
       <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
       {% else %}
       <p class="w3-black w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Máte odevzdané všechny úlohy.<br>Nezapomeňte odevzdat pdf soubory.</p></div>
       {% endif %}
     </div>
+    <!-- <div id="logo-container">
+      <img id="logo" src="/static/img/red_cut_logo.svg"></img>
+    </div> -->
 </header>
 
 
 <!-- First Grid -->
 <div id="news" class="w3-row-padding w3-light-gray w3-padding-64 w3-container">
   <div class="w3-content">
+
     <div class="w3-third w3-center">
-      <i class="fas fa-info-circle w3-padding-64 w3-text-red"></i>
+      <i class="fas fa-info-circle w3-padding-64 w3-text-purple"></i>
     </div>
     <div class="w3-twothird w3-border-bottom">
       <h1>Novinky</h1>
@@ -134,7 +145,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
         tvé řešení je optimální.</p>
       </div>
       <div class="w3-third w3-center">
-        <i class="fas fa-book-open w3-padding-64 w3-text-red"></i>
+        <i class="fas fa-book-open w3-padding-64 w3-text-light-blue"></i>
       </div>
     </div>
   </div>
@@ -143,7 +154,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div id="levels" class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-third w3-center">
-      <i class="fas fa-tasks w3-padding-64 w3-text-red w3-margin-right"></i>
+      <i class="fas fa-tasks w3-padding-64 w3-text-green w3-margin-right"></i>
     </div>
 
     <div class="w3-twothird">
