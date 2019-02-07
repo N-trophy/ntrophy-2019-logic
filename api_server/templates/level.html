@@ -196,6 +196,19 @@
     <div id="graph-container"></div>
 
     <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key == "Escape") {
+                let ids = ['modal', 'modal-upload', 'modal-submit', 'modal-eval', 'submit-info', 'eval-info'];
+                for(let i = 0; i < ids.length; i++) {
+                    document.getElementById(ids[i]).style.display='none';
+                }
+                document.getElementById('submit-info').innerHTML = '';
+                document.getElementById('loaded-info').innerHTML = '';
+                document.getElementById('eval-info').innerHTML = '';
+                document.getElementById('submit-send').disabled = false;
+                document.getElementById('eval-send').disabled = false;
+            }
+        });
         remaining_evals = {{ evals_remaining }};
         update_remaining_evals_text();
     </script>
