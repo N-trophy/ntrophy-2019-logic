@@ -107,14 +107,28 @@
                 <span onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';"
                     class="w3-button w3-display-topright">&times;</span>
                 <p class="w3-margin">
-                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y (každá nemocnice na nový řádek, souřadnice
-                    x a y oddělené čárkami, zaokrouleny na 2 desetinná místa s použitím desetinné tečky).<br><br>
+                    {% if level.id < 5 %}
+                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y
+                    (každá nemocnice na nový řádek, souřadnice x a y oddělené čárkami,
+                    zaokrouleny na 2 desetinná místa s použitím desetinné tečky).<br><br>
 
                     Příklad:<br><br>
 
                     1.99, 200.78<br>
                     -56.72, 39.15<br>
                     0.56, -57.80
+                    {% else %}
+                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y, beg_id, end_id
+                    (každá nemocnice na nový řádek, souřadnice x a y zaokrouleny
+                    na 2 desetinná místa s použitím desetinné tečky
+                    a id hraničních vrcholů hrany, na níž je daný vrchol, oddělené čárkami).<br><br>
+
+                    Příklad:<br><br>
+
+                    1.99, 200.78, "5-4", "8-4"<br>
+                    -56.72, 39.15, "6-2", "3-5"<br>
+                    0.56, -57.80, "2-3", "6-7"
+                    {% endif %}
                 </p>
                 <input type="file" id="upload-file" class="w3-margin-left w3-margin-right"><br>
                 <div class="w3-center">

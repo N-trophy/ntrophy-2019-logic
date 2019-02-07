@@ -30,8 +30,43 @@ function parseUploadedFile() {
         fr.readAsText(file);
     }
 }
-function isNumber(num) {
-    return true;
+
+function readFloat(str) {
+    console.log("Reading position: " + str.trim());
+    let num = Number(str.trim());
+    if (isNaN(num)) {
+        console.warn("Is not number");
+        return null;
+    }
+    return Math.round(num * 100) / 100;
+}
+
+function readId(str) {
+    str = str.trim();
+    console.log("Reading id: " + str);
+    if (str.indexOf('.') > -1) {
+        console.warn("Id is not expected to have floating point");
+        return null;
+    }
+
+    if (str.charAt(0) == '"' && str.charAt(str.length - 1) == '"') {
+        str = str.slice(1, -1);
+    }
+
+    let i = str.indexOf('-');
+    if (i < 0) {
+        console.warn("Didn't find '-' in id");
+        return null;
+    }
+
+    let num1 = Number(str.slice(0, i));
+    let num2 = Number(str.slice(i + 1));
+
+    if (isNaN(num1) || isNaN(num2)) {
+        console.warn("Not numbers in id");
+        return null;
+    }
+    return '"' + num1 + '-' + num2 + '"';
 }
 
 function parseCSV(infile) {
@@ -39,22 +74,45 @@ function parseCSV(infile) {
     let result = [];
 
     for (let i = 0; i < lines.length; i++) {
-
         var currentline = lines[i].split(",");
-        if (currentline.length < 2) continue;
+        if (currentline.length == 0) continue;
+        if (currentline[currentline.length - 1].trim() == "")
+            currentline = currentline.slice(0, -1);
+        if (currentline.length == 0) continue;
+
+        if (place_anywhere) {
+            if (currentline.length != 2)
+                return null;
+        } else {
+            if (currentline.length != 4)
+                return null;
+        }
 
         var point = [];
-        point.push(parseFloat(currentline[0]));
-        point.push(parseFloat(currentline[1]));
-        if (!isNaN(point[0]) && !isNaN(point[1])) {
-            result.push(point);
+        point.push(readFloat(currentline[0]));
+        point.push(readFloat(currentline[1]));
+        if (place_anywhere == false) {
+            point.push(readId(currentline[2]));
+            point.push(readId(currentline[3]));
         }
+        if (point[0] === null || point[1] === null) return null;
+        if (place_anywhere == false)
+            if (point[2] === null || point[3] === null) return null;
+
+        result.push(point);
     }
     return result;
 }
+
 function receivedText(e) {
     var loaded_data = parseCSV(fr.result);
     console.log(loaded_data);
+
+    if (loaded_data === null) {
+        let info_elem = document.getElementById('loaded-info');
+        info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
+        return;
+    }
 
     while(true){
         let keys = Object.keys(nodes._data).filter(key => key[0] == 's')
@@ -76,12 +134,18 @@ function receivedText(e) {
     }
 
     let info_elem = document.getElementById('loaded-info');
-    info_elem.innerHTML = "Načteno:<br>";
+    info_elem.innerHTML = "Načteno:";
     for (let i = 0; i < loaded_data.length; i++) {
+        info_elem.innerHTML += '<br>';
         info_elem.innerHTML += loaded_data[i][0];
-        info_elem.innerHTML += ", ";
+        info_elem.innerHTML += ', ';
         info_elem.innerHTML += loaded_data[i][1];
-        info_elem.innerHTML += "<br>";
+        if (place_anywhere == false) {
+            info_elem.innerHTML += ', ';
+            info_elem.innerHTML += loaded_data[i][2];
+            info_elem.innerHTML += ', ';
+            info_elem.innerHTML += loaded_data[i][3];
+        }
     }
 }
 
