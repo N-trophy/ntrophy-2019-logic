@@ -26,9 +26,16 @@ function parseUploadedFile() {
     }
     else {
         let file = input.files[0];
-        fr.onload = receivedText;
+        fr.onload = function() {
+            receivedText(fr.result);
+        }
         fr.readAsText(file);
     }
+}
+
+function parseUploadedText() {
+    let input_field = document.getElementById('upload-text');
+    receivedText(input_field.value);
 }
 
 function readFloat(str) {
@@ -104,8 +111,8 @@ function parseCSV(infile) {
     return result;
 }
 
-function receivedText(e) {
-    var loaded_data = parseCSV(fr.result);
+function receivedText(input_text) {
+    let loaded_data = parseCSV(input_text);
     console.log(loaded_data);
 
     if (loaded_data === null) {
