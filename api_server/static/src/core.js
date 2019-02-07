@@ -231,3 +231,18 @@ function after_submit(res) {
 
     set_style_id('next-level', 'display: block;');
 }
+
+function resize_level_status() {
+    for (let i = 1; i <= 10; i++) {
+        set_style_id('status-' + i, '');
+    }
+    var max_width = 0;
+    for (let i = 1; i <= 10; i++) {
+      let width = document.getElementById("status-" + i).offsetWidth;
+      if (width > max_width)
+        max_width = width;
+    }
+    for (let i = 1; i <= 10; i++) {
+        set_style_id('status-' + i, 'width: ' + max_width + 'px;');
+    }
+}

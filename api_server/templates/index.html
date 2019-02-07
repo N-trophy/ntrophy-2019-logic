@@ -149,13 +149,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <a {% if level.id <= next_level %} href="/level/{{ level.id }}" {% endif %}>
         <div class="w3-cell-row w3-padding-large w3-large {{level.class}}">
             <div class="w3-container w3-cell w3-cell-middle">{{ level.id }}. úroveň</div>
-            <div class="w3-container w3-cell w3-right">{{ level.status }}</div>
+            <div id="status-{{ level.id }}" class="w3-container w3-cell w3-right">{{ level.status }}</div>
         </div>
       </a>
       {% endfor %}
     </div>
   </div>
 </div>
+<script>
+  window.addEventListener('resize', resize_level_status);
+  resize_level_status();
+</script>
   
 <footer class="w3-container w3-black w3-center w3-opacity w3-padding-64">
   <!-- <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1> -->
