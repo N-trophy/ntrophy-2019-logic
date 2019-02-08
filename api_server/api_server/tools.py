@@ -42,7 +42,7 @@ def user_create(request, *args, **kwargs):
     ]
     send_mass_mail(
         mails,
-        fail_silently=False
+        fail_silently=True
     )
 
     return JsonResponse(
