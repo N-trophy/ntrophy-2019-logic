@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core.mail import send_mass_mail
+from django.views.decorators.csrf import csrf_exempt
 
 import json
 
+@csrf_exempt
 @login_required
 @require_http_methods(['POST'])
 @permission_required('add_user', 'change_user')
