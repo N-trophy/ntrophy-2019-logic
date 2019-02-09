@@ -73,7 +73,7 @@ function readId(str) {
         console.warn("Not numbers in id");
         return null;
     }
-    return '"' + num1 + '-' + num2 + '"';
+    return num1 + '-' + num2;
 }
 
 function parseCSV(infile) {
