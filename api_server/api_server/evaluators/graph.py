@@ -57,6 +57,12 @@ class Graph:
 def avg(items) -> float:
     return sum(items) / len(items)
 
+def weighted_avg(items, weights: List[int]) -> float:
+    return sum(items) / sum(weights)
+
 def error(graph, stations) -> float:
     graph.dijkstra(stations)
-    return avg([node.dist for node in graph.nodes.values()])
+    return weighted_avg(
+        [node.dist*node.weight for node in graph.nodes.values()],
+        [node.weight for node in graph.nodes.values()]
+    )
