@@ -13,7 +13,7 @@ class Node:
 
 class Station:
     def __init__(self, anode, bnode, adist, bdist):
-        assert adist + bdist == 1.0, "%f+%f==%f != 1.0" % (adist, bdist, adist+bdist)
+        assert math.isclose(adist+bdist, 1.0), "%f+%f==%f != 1.0" % (adist, bdist, adist+bdist)
 
         self.anode = anode # id
         self.bnode = bnode # id
