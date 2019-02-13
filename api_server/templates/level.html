@@ -110,39 +110,48 @@
                  <p>Tento formulář neslouží k odevzdávání pdf souboru! Pro odevzdání
                  pdf souboru využijte
                  <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárnu</a>.</p>
-                </div> 
-                <p class="w3-margin">
-                    {% if level.id < 5 %}
-                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y
-                    (každá nemocnice na nový řádek, souřadnice x a y oddělené čárkami,
-                    zaokrouleny na 2 desetinná místa s použitím desetinné tečky).<br><br>
-                    <b>Zkontrolujte si, že se vaše body nahrály správně!</b><br><br>
+                </div>
 
-                    Příklad:<br><br>
+                <p>Polohu nemocnic můžete zadat nahráním souboru nebo zadáním
+                obsahu souboru přímo do tohoto okna. Veškerý obsah je očekáván
+                v kódování UTF-8.</p>
 
-                    1.99, 200.78<br>
-                    -56.72, 39.15<br>
-                    0.56, -57.80
-                    {% else %}
-                    Nahrávejte soubor s polohou nemocnic ve formátu: x, y, beg_id, end_id
-                    (každá nemocnice na nový řádek, souřadnice x a y zaokrouleny
-                    na 2 desetinná místa s použitím desetinné tečky
-                    a id hraničních vrcholů hrany, na níž daný vrchol leží, oddělené čárkami).<br><br>
-                    <b>Zkontrolujte si, že se vaše body nahrály správně!</b><br><br>
+                {% if level.id < 5 %}
 
-                    Příklad:<br><br>
+                <p>Na každém řádku je jedna nemocnice. Formát řádku: <code>x,
+                y</code> (souřadnice x a y oddělené čárkami, zaokrouleny na
+                2 desetinná místa s použitím desetinné tečky).</p>
 
-                    1.99, 200.78, 5-4, 8-4<br>
-                    -56.72, 39.15, 6-2, 3-5<br>
-                    0.56, -57.80, 2-3, 6-7
-                    {% endif %}
-                </p>
+                <p><b>Zkontrolujte si, že se vaše body nahrály správně!</b></p>
+
+                <p>Příklad:</p>
+
+                <p>1.99, 200.78<br>
+                -56.72, 39.15<br>
+                0.56, -57.80</p>
+
+                {% else %}
+
+                <p>Na každém řádku je jedna nemocnice. Formát řádku: <code>x,
+                y, beg_id, end_id</code> (souřadnice x a y zaokrouleny na
+                2 desetinná místa s použitím desetinné tečky a id hraničních měst
+                silnice, na které nemocnice leží; vše odělené čárkami).</p>
+
+                <p><b>Zkontrolujte si, že se vaše body nahrály správně!</b></p>
+
+                <p>Příklad:</p>
+
+                <p>1.99, 200.78, 5-4, 8-4<br>
+                -56.72, 39.15, 6-2, 3-5<br>
+                0.56, -57.80, 2-3, 6-7</p>
+                {% endif %}
+
                 <div class="w3-center">
                     <button class="w3-button w3-padding w3-black w3-margin-left w3-margin-bottom" onclick="document.getElementById('text-input').style.display='block'; document.getElementById('file-input').style.display='none';">Text</button>
                     <button class="w3-button w3-padding w3-black w3-margin-right w3-margin-left w3-margin-bottom" onclick="document.getElementById('file-input').style.display='block'; document.getElementById('text-input').style.display='none';">Soubor</button>
                 </div>
                 <div id='text-input' style="display: block;">
-                    <textarea id="upload-text" class="w3-margin-left w3-margin-right"></textarea><br>
+                    <textarea id="upload-text" style="width: 100%"></textarea><br>
                     <div class="w3-center">
                         <button class="w3-button w3-padding-large w3-black w3-margin" onclick="parseUploadedText()">Odeslat</button>
                         <button class="w3-button w3-padding-large w3-black w3-margin" onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';">Zrušit</button>
