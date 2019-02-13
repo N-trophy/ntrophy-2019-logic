@@ -31,6 +31,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   bottom: 0;
   height: 100px;
 }
+p a {
+  text-decoration: underline;
+}
 </style>
 <body>
 
@@ -61,7 +64,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       {% if next_level <= 10 %}
       <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
       {% else %}
-      <p class="w3-black w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Máte odevzdané všechny úlohy.<br>Nezapomeňte odevzdat pdf soubory.</p></div>
+      <p class="w3-black w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Máte odevzdané všechny úlohy.<br>Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p></div>
       {% endif %}
     </div>
     <!-- <div id="logo-container">
@@ -181,6 +184,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
         soubor, do kterého nám ke každé úrovni napište, jak jste k jejímu
         řešení přistoupili a jaké techniky jste použili. U každé úrovně
         zdůvodněte, proč si myslíte, že je vaše řešení optimální.</p>
+
+        <p>Pdf soubor odevzdávejte do <a href="https://ntrophy.cz/submit-page/"
+           target="_blank">odevzdávárny</a>.</p>
       </div>
       <div class="w3-third w3-center">
         <i class="fas fa-book-open w3-padding-64 w3-text-light-blue"></i>
