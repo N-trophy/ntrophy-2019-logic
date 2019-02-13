@@ -77,6 +77,7 @@ def level(request, *args, **kwargs):
         'evals_remaining': api_server.level.evals_remaining(request.user, level),
         'weighted_edges': api_server.level.are_edges_weighted(graph),
         'weighted_nodes': api_server.level.are_nodes_weighted(graph),
+        'edges_present': len(graph['edges']) > 0,
     }
     return HttpResponse(template.render(context, request))
 

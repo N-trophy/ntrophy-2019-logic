@@ -116,21 +116,7 @@
                 obsahu souboru přímo do tohoto okna. Veškerý obsah je očekáván
                 v kódování UTF-8.</p>
 
-                {% if level.id < 5 %}
-
-                <p>Na každém řádku je jedna nemocnice. Formát řádku: <code>x,
-                y</code> (souřadnice x a y oddělené čárkami, zaokrouleny na
-                2 desetinná místa s použitím desetinné tečky).</p>
-
-                <p><b>Zkontrolujte si, že se vaše body nahrály správně!</b></p>
-
-                <p>Příklad:</p>
-
-                <p>1.99, 200.78<br>
-                -56.72, 39.15<br>
-                0.56, -57.80</p>
-
-                {% else %}
+                {% if edges_present %}
 
                 <p>Na každém řádku je jedna nemocnice. Formát řádku: <code>x,
                 y, beg_id, end_id</code> (souřadnice x a y zaokrouleny na
@@ -144,6 +130,21 @@
                 <p>1.99, 200.78, 5-4, 8-4<br>
                 -56.72, 39.15, 6-2, 3-5<br>
                 0.56, -57.80, 2-3, 6-7</p>
+
+                {% else %}
+
+                <p>Na každém řádku je jedna nemocnice. Formát řádku: <code>x,
+                y</code> (souřadnice x a y oddělené čárkami, zaokrouleny na
+                2 desetinná místa s použitím desetinné tečky).</p>
+
+                <p><b>Zkontrolujte si, že se vaše body nahrály správně!</b></p>
+
+                <p>Příklad:</p>
+
+                <p>1.99, 200.78<br>
+                -56.72, 39.15<br>
+                0.56, -57.80</p>
+
                 {% endif %}
 
                 <div class="w3-center">
