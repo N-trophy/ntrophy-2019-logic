@@ -118,7 +118,7 @@ def eval_level(request, *args, **kwargs):
         evaluation.score = error(level, stations)
         evaluation.report = 'ok'
     except ValidationError as e:
-        evaluation.report = 'Validation Error:\n' + traceback.format_exc()
+        evaluation.report = 'Validation Error: ' + str(e)
         return HttpResponseBadRequest(str(e))
     except Exception:
         evaluation.report = traceback.format_exc()
@@ -162,7 +162,7 @@ def submit_level(request, *args, **kwargs):
         evaluation.score = error(level, stations)
         evaluation.report = 'ok'
     except ValidationError as e:
-        evaluation.report = 'Validation Error:\n' + traceback.format_exc()
+        evaluation.report = 'Validation Error: ' + str(e)
         return HttpResponseBadRequest(str(e))
     except Exception:
         evaluation.report = traceback.format_exc()
