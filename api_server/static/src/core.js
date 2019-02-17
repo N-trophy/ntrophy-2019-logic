@@ -127,7 +127,7 @@ function receivedText(input_text) {
 
     if (loaded_data === null) {
         let info_elem = document.getElementById('loaded-info');
-        info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Zkontrolujte si, že vaše hrana v daném grafu existuje.<br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
+        info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Zkontrolujte si, že silnice v mapě existuje.<br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
         return;
     }
 
