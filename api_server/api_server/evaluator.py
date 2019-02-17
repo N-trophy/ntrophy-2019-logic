@@ -18,7 +18,7 @@ import math
 import traceback
 from datetime import datetime
 
-QUALIFICATION_END = timezone.make_aware(datetime(2019, 2, 25, 0, 0, 0))
+QUALIFICATION_END = timezone.make_aware(datetime(2019, 2, 24, 20, 0, 0))
 
 def error_plane(level, stations, graph=None):
     if graph is None:
