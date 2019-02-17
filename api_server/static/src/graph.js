@@ -163,7 +163,8 @@ function eval(){
         .then(after_eval)
         .catch(err=>{
             console.log(err);
-            document.getElementById('eval-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
+            document.getElementById('eval-info').innerHTML = err + " (" + err.response.statusText
+                + "):<br>" + err.response.data;
         })
 }
 
@@ -181,7 +182,8 @@ function submit(){
         .then(after_submit)
         .catch(err=>{
             console.log(err);
-            document.getElementById('submit-info').innerHTML = "Kontaktujte organizátory (" + err + ")";
+            document.getElementById('submit-info').innerHTML = err + " (" + err.response.statusText
+                + "):<br>" + err.response.data;
         })
 }
 
