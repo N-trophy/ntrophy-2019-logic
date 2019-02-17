@@ -27,6 +27,7 @@ function format(fmt, ...args) {
 function get_node_by_id(id){
     let n = Object.values(network.body.nodes).filter(node=>node.id==id)
     if (n.length) return n[0]
+    return null
 }
 
 function get_edge_by_id(id){
@@ -40,6 +41,17 @@ function get_edge_by_node_id(id){
         edge = network.body.edges[key]
         if (edge.toId == id || edge.fromId == id) return edge
     }
+}
+
+function exists_edge_with_node_ids(id1, id2){
+    for (key in network.body.edges) {
+        edge = network.body.edges[key]
+        if (edge.fromId == id1 && edge.toId == id2)
+            return true
+        if (edge.fromId == id2 && edge.toId == id1)
+            return true
+    }
+    return false
 }
 
 function point_dist(x1, y1, x2, y2){

@@ -74,8 +74,8 @@ function readId(str) {
         return null;
     }
     let id = num1 + '-' + num2;
-    if (get_edge_by_id(id) === null) {
-        console.warn("No such edge in graph");
+    if (get_node_by_id('n' + id) === null) {
+        console.warn("No such edge in graph (not valid node)");
         return null;
     }
     return id;
@@ -108,8 +108,13 @@ function parseCSV(infile) {
             point.push(readId(currentline[3]));
         }
         if (point[0] === null || point[1] === null) return null;
-        if (place_anywhere == false)
+        if (place_anywhere == false) {
             if (point[2] === null || point[3] === null) return null;
+            if (exists_edge_with_node_ids('n' + point[2], 'n' + point[3]) == false) {
+                console.warn("No such edge in graph");
+                return null;
+            }
+        }
 
         result.push(point);
     }
