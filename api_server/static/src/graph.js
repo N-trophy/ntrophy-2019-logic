@@ -32,6 +32,7 @@ function get_node_by_id(id){
 function get_edge_by_id(id){
     let n = Object.values(network.body.edges).filter(edge=>edge.id==id)
     if (n.length) return n[0]
+    return null
 }
 
 function get_edge_by_node_id(id){

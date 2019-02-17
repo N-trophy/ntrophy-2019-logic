@@ -73,7 +73,12 @@ function readId(str) {
         console.warn("Not numbers in id");
         return null;
     }
-    return num1 + '-' + num2;
+    let id = num1 + '-' + num2;
+    if (get_edge_by_id(id) === null) {
+        console.warn("No such edge in graph");
+        return null;
+    }
+    return id;
 }
 
 function parseCSV(infile) {
@@ -117,7 +122,7 @@ function receivedText(input_text) {
 
     if (loaded_data === null) {
         let info_elem = document.getElementById('loaded-info');
-        info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
+        info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Zkontrolujte si, že vaše hrana v daném grafu existuje.<br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
         return;
     }
 
