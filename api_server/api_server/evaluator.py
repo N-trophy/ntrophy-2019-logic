@@ -59,6 +59,9 @@ def error_graph(level, stations, graph=None):
 
         nodes_dist = euclid_distance(graph['nodes'][nodea], graph['nodes'][nodeb])
         dista = euclid_distance(graph['nodes'][nodea], (x, y))
+
+        assert nodes_dist-dista >= 0
+
         s.append(eg.Station(nodea, nodeb, dista/nodes_dist, (nodes_dist-dista)/nodes_dist))
 
     g = eg.Graph(nodes, edges)
