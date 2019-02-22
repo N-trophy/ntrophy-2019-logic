@@ -25,11 +25,42 @@
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Kapitola}
-
-Lorem ipsum dolor sit amet.
+Možná nějaké úvodní kecičky.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Další kapitola}
+\section*{Řešení úloh v rovině}
+\paragraph*{Úroveň 1}
+Na první pohled je zřejmé, že vzdálenostní funkce má jediné optimum. Proto posunutí jediné nemocnice libovolným směrem od tohoto optima zvýší hodnotu vzdálenostní funkce.
+Velmi přirozená úvaha byla zvolit za pozici nemocnice těžiště trojúhelníka. S výhodou jste zde mohli využít právě toho, že při pohybu bodem do libovolného směru se vzdálenostní funkce zhorší, a v několka vyhodnoceních ověřit, že těžiště je skutečně optimální polohou.
+\paragraph*{Úroveň 2}
+V druhé úrovni bylo potřeba dát pozor na změnu vzdálenostní funkce. Vzhledem k tomu, že se měřila průměrná vzdálenost (ne její kvadrát) od jednotlivých míst incidentů,
+nebylo optimem těžiště trojúhelníka. Tentokrát se jednalo o tzv. geometrický medián. Jedná se o právě takový bod $S$ pro který platí, že spojnice $S$ s vrcholy trojúhelníka spolu svírají úhel přesně $120^\circ$.
+\paragraph*{Úroveň 3}
+V této úrovni bylo potřebu umístit pouze jedinou nemocnici se stejným kritériem jako v úrovni 1. Řešení je proto v podstatě stejné jako v první úrovni, pouze bylo potřeba zpracovat více dat. S výhodou se tak dalo využít například excelu, nebo jednoduchého programu v oblíbeném jazyce.
+\paragraph*{Úroveň 4}
+Tato úroveň se opět podobá řešení úrovně 3, ovšem bylo potřeba více různých nemocnic. Klíčové proto bylo správně rozdělit body událostí do několika skupin, kde se každá dále vyřešila dle postupu v úrovni 3.
+Z grafického náhledu na mapu si lze navíc lehce povšimnout, že pozice událostí jsou celkem očividně rozděleny do několika shluků. Jejich počet je navíc příhodně roven počtu umisťovaných nemocnic.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Řešení úloh na mapě silnic}
+\paragraph*{Úroveň 5, 6}
+Nejříve si představme, že všehny body událostí jsou umístěny někde na přímce. Když umístíme nemocnici kamkoli na tuto přímku, získáme nějakou hodnotu vzdálenostní funkce.
+Nyní se tuto hodnotu pokusíme optimalizovat. Pozice nemocnice dělí přímku na dvě poloviny, a tydy rozděluje i pozice incidentů na skupinu vlevo a skupinu vrpavo.
+Nyní předpokládejme, že například ve skupině vlevo se nechází více incidentu než vrpavo. Pak posun o malý kousek vlevo zmenší hodnotu vzdálenostní funkce za každý incident vlevo a zvětí její hodnotu za každý incident vpravo.
+Protože je ovšem incidentů vlevo více než vpravo, celková změna bude záporná. Proto takto múžeme posouvat stanici až do místa, kde bude množina vlevo i vpravo stejně velká.
+V tomto bodě je hodnot a vzdálenostní funkce určitě minimální.
+
+Podobnou úvaho uvšem můžeme provést i pro síť silnic. Pokud se totiž nacházíme s nemocnicí na nějaké cestě, tak rozdělí celou síť na dvě poloviny. Nemocnici posuneme tím směrem, kde se nachází více bodů.
+Tento postup nás vždy dovede no optimální pozice pro nemocnici.
+
+\paragraph*{Úroveň 7}
+V této úrovni šel aplikovat naprosto stejný postup, jako v úrovni 5 a 6. Stačilo si uvědomit, že úvaha nezávisý na délce spojnic. Posunout se směrem k většímu počtu vrcholů se nám vyplatí vždy pro libovolně dlouhou spojnici dvou incidentů.
+
+\paragraph*{Úroveň 8}
+V 8. úrovni již bylo potřeba řešení z úrovně 7 trochu poupravit. Váhy jednotlivých incidentů nabourávají naši úvahu o přibližování se té straně, na které se nachází více incidentů.
+Ta lze však jednoduše upravit tak, že si například místo jediného incidentu o velikosti pět představím pět incidentů o velikosti jedna. Takto pouze při rozhodování, na kterou stranu silnice půjdeme, budeme přihlížet také k váze jednotlivých incidentů a místo počtu incidentů na každé straně budeme počítat součet jejich vah.
+
+\paragraph*{Úroveň 9, 10}
+Podobně jako v úrovni 4 halvní myšlenkou úrovně bylo opět rozdělit incidenty do tří sití, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdelení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
 
 \end{document}
