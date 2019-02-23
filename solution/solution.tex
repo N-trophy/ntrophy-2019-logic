@@ -45,8 +45,8 @@ Z grafického náhledu na mapu si lze navíc lehce povšimnout, že pozice udál
 \section*{Řešení úloh na mapě silnic}
 \paragraph*{Úroveň 5, 6}
 Nejříve si představme, že všehny body událostí jsou umístěny někde na přímce. Když umístíme nemocnici kamkoli na tuto přímku, získáme nějakou hodnotu vzdálenostní funkce.
-Nyní se tuto hodnotu pokusíme optimalizovat. Pozice nemocnice dělí přímku na dvě poloviny, a tydy rozděluje i pozice incidentů na skupinu vlevo a skupinu vrpavo.
-Nyní předpokládejme, že například ve skupině vlevo se nechází více incidentu než vrpavo. Pak posun o malý kousek vlevo zmenší hodnotu vzdálenostní funkce za každý incident vlevo a zvětí její hodnotu za každý incident vpravo.
+Nyní se tuto hodnotu pokusíme optimalizovat. Pozice nemocnice dělí přímku na dvě poloviny, a tydy rozděluje i pozice incidentů na skupinu vlevo a skupinu vpravo.
+Nyní předpokládejme, že například ve skupině vlevo se nechází více incidentu než vrpavo. Pak posun o malý kousek vlevo zmenší hodnotu vzdálenostní funkce za každý incident vlevo a zvětší její hodnotu za každý incident vpravo.
 Protože je ovšem incidentů vlevo více než vpravo, celková změna bude záporná. Proto takto múžeme posouvat stanici až do místa, kde bude množina vlevo i vpravo stejně velká.
 V tomto bodě je hodnot a vzdálenostní funkce určitě minimální.
 
@@ -54,13 +54,13 @@ Podobnou úvaho uvšem můžeme provést i pro síť silnic. Pokud se totiž nac
 Tento postup nás vždy dovede no optimální pozice pro nemocnici.
 
 \paragraph*{Úroveň 7}
-V této úrovni šel aplikovat naprosto stejný postup, jako v úrovni 5 a 6. Stačilo si uvědomit, že úvaha nezávisý na délce spojnic. Posunout se směrem k většímu počtu vrcholů se nám vyplatí vždy pro libovolně dlouhou spojnici dvou incidentů.
+V této úrovni šlo aplikovat naprosto stejný postup, jako v úrovni 5 a 6. Stačilo si uvědomit, že úvaha nezávisí na délce spojnic. Posunout se směrem k většímu počtu vrcholů se nám vyplatí vždy pro libovolně dlouhou spojnici dvou incidentů.
 
 \paragraph*{Úroveň 8}
 V 8. úrovni již bylo potřeba řešení z úrovně 7 trochu poupravit. Váhy jednotlivých incidentů nabourávají naši úvahu o přibližování se té straně, na které se nachází více incidentů.
 Ta lze však jednoduše upravit tak, že si například místo jediného incidentu o velikosti pět představím pět incidentů o velikosti jedna. Takto pouze při rozhodování, na kterou stranu silnice půjdeme, budeme přihlížet také k váze jednotlivých incidentů a místo počtu incidentů na každé straně budeme počítat součet jejich vah.
 
 \paragraph*{Úroveň 9, 10}
-Podobně jako v úrovni 4 halvní myšlenkou úrovně bylo opět rozdělit incidenty do tří sití, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdelení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
+Podobně jako v úrovni 4 hlavní myšlenkou úrovně bylo opět rozdělit incidenty do tří sití, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdelení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
 
 \end{document}
