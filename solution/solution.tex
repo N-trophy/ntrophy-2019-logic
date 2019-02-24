@@ -49,20 +49,21 @@ Dostáváme jednodušší výraz:
 $$E(N) = |I_1N|^2 + |I_2N|^2 + |I_3N|^2.$$
 
 Tuto úpravu můžeme udělat v~kterékoliv úrovni, proto ji v~dalším textu budeme
-dělat implicitně.
+dělat automaticky.
 
 Hledáme tedy bod, který \uv{minimalizuje kvadrát vzdálenosti}. Takový bod bude
-nejspíš někde uvnitř trojúhelníka, hledáme jakýsi jeho \uv{střed}. Otázka zní,
+nejspíš někde uvnitř trojúhelníka, hledáme tedy jakýsi \uv{střed}. Otázka zní,
 jak tento bod najít. V~této úrovni jste měli hodně pokusů, takže jste mohli
 prostě zkoušet různé pozice bodů. Možná jste se dostali k~docela dobrému
 výsledku, vyvstává však otázka, jestli je vaše řešení skutečně to nejlepší.
-Tuto otázku jste mohli zodpovědět analytickým řešením úlohy. Nejprve si rozepišme
-funkci $E$ dle Euklidovské vzdálenosti:
+Tuto otázku jste mohli zodpovědět analytickým řešením úlohy.
+
+Nejprve si rozepišme funkci $E$ dle Euklidovské vzdálenosti:
 
 \begin{align}
-E(N) &= \sqrt{(x_n-x_1)^2 + (y_n - y_1)^2}^2 +
-	\sqrt{(x_n-x_2)^2 + (y_n - y_2)^2}^2 +
-	\sqrt{(x_n-x_3)^2 + (y_n - y_3)^2}^2 \nonumber \\
+E(N) &= \left(\sqrt{(x_n-x_1)^2 + (y_n - y_1)^2}\right)^2 +
+	\left(\sqrt{(x_n-x_2)^2 + (y_n - y_2)^2}\right)^2 + \nonumber \\
+	&\hspace{1em} + \left(\sqrt{(x_n-x_3)^2 + (y_n - y_3)^2}\right)^2 \nonumber \\
 E(N) &= (x_n-x_1)^2 + (y_n - y_1)^2 +
 	(x_n-x_2)^2 + (y_n - y_2)^2 +
 	(x_n-x_3)^2 + (y_n - y_3)^2 \nonumber.
