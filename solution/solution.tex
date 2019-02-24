@@ -115,17 +115,18 @@ funkce pro tuto pozici nemocnice je $60000.29$.
 V druhé úrovni bylo potřeba dát si pozor na změnu vzdálenostní funkce, ta vypadala takto:
 $$E(N) = \frac{|AN| + |BN| + |CN|}{3}.$$
 
-Klíčové je uvědomit si, že zadání je symetrické. To nás může přivést k úvaze, že optimální bod leží na ose rovnoramenného trojúhelníka,
-ale toto tvrzení by bylo dobré nějak podložit. Nechť tedy máme stanici $N$ kdekoli na ose $O$ a stanici $N'$ ve stejné výšce. Pak stanice $N$ leží na elipse zadané bodem $N$ a ohnisky $A,B$.
-Připomeňme si, že elipsa je množina všech bodů, které mají stejný součet vzdáleností od dvou ohnisek (v nošem případě bodů $A$ a $B$). Protože elypsa je symetrická podle osy $O$,
+Klíčové je uvědomit si, že zadání je symetrické. To nás může přivést k úvaze, že optimální poloha nemocnice je na ose rovnoramenného trojúhelníka,
+ale toto tvrzení by bylo dobré nějak podložit. Nechť tedy máme stanici $N$ kdekoli na ose $O$ a stanici $N'$ ve stejné výšce, ale ne na ose. Pak stanice $N$ leží na elipse zadané bodem $N$ a ohnisky $A,B$.
+Připomeňme si, že elipsa je množina všech bodů, které mají stejný součet vzdáleností od dvou ohnisek (v našem případě bodů $A$ a $B$). Protože elipsa je symetrická podle osy $O$,
 musí být v místě průniku s osou $O$ její nejvyšší bod. Zejména tedy bod $N'$ se vždy bude nacházet nad elipsou a to znamená, že on sám má větší součet vzdáleností od bodů $A$ a $B$ než bod $N$.
 Zároveň je z trojúhelníkové nerovnosti zřejmé, že i vzdálenost $|N'C|$ je větší než vzdálenost $|NC|$.
 
-Nyní je potřeba jen určit vertikální souřadnici bodu $N$.
-Označme si základnu trojúhelníka $ABC$ $2a$, jeho výšku $v$ a výšku trojúhelníka $ABN$ označme $b$. Pak dosazením do vzorce získáváme:
-$$E(N) = \frac{|AN| + |BN| + |CN|}{3} = \frac{\sqrt{a^2+b^2} + \sqrt{a^2+b^2} + (v - b)}{3}$$.
-Podobně jako v předchozí úloze jsme získali funkci v proměnné $b$, kterou můžeme zderivovat a získat její minimum.
-$$\frac{\partial E(b)}{\partial b} = \frac{\partial}{\partial b}\frac{2 \sqrt{a^2+b^2} + (v - b)}{3} = \frac{2b}{3 \sqrt{a^2+b^2}} - \frac{1}{3}$$
+Nyní je potřeba určit vertikální souřadnici bodu $N$.
+Označme si délku základny trojúhelníka $ABC$ jako $2a$, jeho výšku $v$ a výšku trojúhelníka $ABN$ označme $b$. Dosazením do vzorce získáváme:
+$$E(N) = \frac{|AN| + |BN| + |CN|}{3} = \frac{\sqrt{a^2+b^2} + \sqrt{a^2+b^2} + (v - b)}{3}.$$
+Podobně, jako v předchozí úloze, máme nyní funkci v proměnné $b$, kterou můžeme zderivovat a získat její minimum.
+$$\frac{d E(b)}{db} = \frac{d}{db}\frac{2 \sqrt{a^2+b^2} + (v - b)}{3} = \frac{2b}{3 \sqrt{a^2+b^2}} - \frac{1}{3}$$
+
 \begin{align}
 \frac{2b}{3 \sqrt{a^2+b^2}} - \frac{1}{3} &= 0 \nonumber \\
 \frac{2b}{\sqrt{a^2+b^2}} &= 1 \nonumber \\
@@ -134,12 +135,13 @@ $$\frac{\partial E(b)}{\partial b} = \frac{\partial}{\partial b}\frac{2 \sqrt{a^
 3b^2 &= a^2 \nonumber \\
 \sqrt{3}b &= a \nonumber
 \end{align}
-Získali jsme tedy výsledek, že $$a = \sqrt{3}b$$. To ovšem dle pythagorovy věty znamená, že $$|AN|=2b$$. Pokud nyní překlopíme celý trojúhelník $ABN$ podle horizontální osy,
+
+Získali jsme tedy výsledek, že $a = \sqrt{3}b$. To ovšem dle pythagorovy věty znamená, že $|AN|=2b$. Pokud nyní překlopíme celý trojúhelník $ABN$ podle horizontální osy,
 získáme čtuřúhelník, jehož všechny strany mají délku $2b$ a i jeho uhlopříčka má délku $2b$. Proto se jedná o dva rovnostranné trojúhelníky přiložené k sobě, a tedy úhel u vrcholu $N$ je $120^\circ$.
 Nezávisle na poloze bodu $C$ proto vždy hledáme takový bod $N$ na ose $O$, že velikost úhlu $\angle ANB$ je $120^\circ$
 
-Pro úplnost ještě ukažme správnost výsledku i jinkou cestou, při které nemusíme znát derivace. Mějme tedy $b$ takové, že platí $a = \sqrt{3}b$ a předpokládejme, že se bod $N$ nachází v jiné výšce než $b$.
-Označme ji $b+k$ pro libovolné $k$. Ukážeme si, že pro tuto hodnotu výšky, bude funkce vždy větší než pro hodnotu $b$. Tedy ukážeme $E(b) \leq E(b+k)$.
+Pro zajímavost ještě ukažme správnost výsledku i jinou cestou, při které nemusíme znát derivace. Mějme tedy $b$ takové, že platí $a = \sqrt{3}b$ a předpokládejme, že se bod $N$ nachází v jiné výšce než $b$.
+Označme ji $b+k$ pro libovolné $k$. Ukážeme si, že pro tuto hodnotu výšky bude funkce vždy větší než pro hodnotu $b$. Tedy ukážeme $E(b) \leq E(b+k)$.
 
 \begin{align}
 	E(b) &\leq E(b+k) \nonumber \\
