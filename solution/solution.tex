@@ -70,37 +70,40 @@ E(N) &= (x_n-x_1)^2 + (y_n - y_1)^2 +
 \end{align}
 
 Vidíme, že pro výpočet hodnoty $E$ je možné spočítat nezávisle hodnoty souřadnic
-$x$ a $y$. Rozdělíme výpočet tedy na hledání minim dvou funkcí:
+$x$ a $y$. Rozdělíme tedy výpočet na hledání minim dvou funkcí:
 
 \begin{align}
-E_x(N) &= (x_n-x_1)^2 + (x_n-x_2)^2 + (x_n-x_3)^2 \nonumber \\
+E_x(N) &= (x_n-x_1)^2 + (x_n-x_2)^2 + (x_n-x_3)^2 \nonumber, \\
 E_y(N) &= (y_n-y_1)^2 + (y_n-y_2)^2 + (y_n-y_3)^2 \nonumber.
 \end{align}
 
 Chceme minimalizovat hodnotu funkce $E_x$. Ze školy možná víte, že minimum
 funkce se hledá pomocí derivací\footnote{Pokud neumíte derivovat, mohli jste
 využít například stránku \url{wolframalpha.com}.}. Pro minimum funkce musí
-platit, že v~něm derivace funkce musí být rovna nule. Musí tedy platit:
+platit, že je v~něm derivace rovna nule:
 
 \begin{align}
-\frac{dE}{dN} = 0 &= 2(x_n-x_1) + 2(x_n-x_2) + 2(x_n-x_3) \nonumber \\
+0 &= \frac{dE}{dN} \nonumber \\
+0 &= 2(x_n-x_1) + 2(x_n-x_2) + 2(x_n-x_3) \nonumber \\
 0 &= (x_n-x_1) + (x_n-x_2) + (x_n-x_3) \nonumber \\
 0 &= 3x_n - (x_1 + x_2 + x_3) \nonumber \\
 3x_n &= (x_1 + x_2 + x_3) \nonumber \\
 x_n &= \frac{x_1 + x_2 + x_3}{3} \nonumber
 \end{align}
 
-Z~výpočtu tedy vychází, že pozice optima je přesně v~aritmetickém průměru
+Z~výpočtu tedy vychází, že pozice nemocnice je přesně v~aritmetickém průměru
 všech bodů\footnote{Pokud bychom měli být úplně matematicky korektní, je třeba
 ještě argumentovat, že optimum je pouze jediné a~že se jedná skutečně o~minimum.
 To plyne z~tvaru \textit{Hessiánu} gradientu.}. Hodnotu $y_n$ lze vypočítat
-úplně stejným postupem- Všimněte si, že získaný výsledek odpovídá přesně
-definici těžiště trojúhelníka. Nemocnici je tedy třeba umístit do těžiště
-trojúhelníka. Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
+úplně stejným postupem.
+
+Všimněte si, že získaný výsledek přesně odpovídá definici těžiště trojúhelníka.
+Nemocnici je tedy třeba umístit právě do těžiště. Můžeme pokračovat dosazením
+konkrétních hodnot ze zadání:
 
 \begin{align}
 x_n &= \frac{0 + 400 + 200}{3}, y_n = \frac{0 + 0 - 387.3}{3} \nonumber \\
-x_n &= 200, y_n = -129.1  \nonumber
+x_n &= 200, y_n = -129.1  \nonumber.
 \end{align}
 
 Nemocnici tedy umístíme na souřadnice $X=200$, $Y=-129.1$. Hodnota vzdálenostní
