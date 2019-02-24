@@ -12,6 +12,12 @@
 \usepackage{fancyhdr}
 \usepackage{amsmath}
 \usepackage{empheq}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+
+\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\definecolor{xdxdff}{rgb}{0.49,0.49,1}
 
 \begin{document}
 
@@ -120,6 +126,39 @@ ale toto tvrzení by bylo dobré nějak podložit. Nechť tedy máme stanici $N$
 Připomeňme si, že elipsa je množina všech bodů, které mají stejný součet vzdáleností od dvou ohnisek (v~našem případě bodů $A$ a~$B$). Protože elipsa je symetrická podle osy $O$,
 musí být v~místě průniku s osou $O$ její nejvyšší bod. Zejména tedy bod $N'$ se vždy bude nacházet nad elipsou a~to znamená, že on sám má větší součet vzdáleností od bodů $A$ a $B$ než bod $N$.
 Zároveň je z~trojúhelníkové nerovnosti zřejmé, že i~vzdálenost $|N'C|$ je větší než vzdálenost $|NC|$.
+
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=8.333333333333334cm,y=5.854701276938064cm]
+\clip(-0.4,-0.3) rectangle (1.4,1.2);
+\draw (0.5,-0.3) -- (0.5,1.2);
+\draw [domain=-0.4:1.4] plot(\x,{(--0.53-0*\x)/1});
+\draw [rotate around={0:(0.5,0)}] (0.5,0) ellipse (6.04cm and 3.08cm);
+\draw (0,0)-- (0.5,0);
+\draw (0,0)-- (0.5,0.53);
+\draw (0,0)-- (0.65,0.53);
+\draw (0.5,0)-- (1,0);
+\draw (1,0)-- (0.65,0.53);
+\draw (1,0)-- (0.5,0.53);
+\draw (0.65,0.53)-- (0.5,1);
+\draw (0.12,0.01) node[anchor=north west] {$|DA|=a$};
+\draw (0.65,0.01) node[anchor=north west] {$|DB|=a$};
+\draw (0.5,0.26) node[anchor=north west] {$|DN|=b$};
+\draw (0.26,0.76) node[anchor=north west] {$|DC| = v$};
+\begin{scriptsize}
+\Large
+\fill [color=xdxdff] (0,0) circle (1.5pt);
+\draw[color=xdxdff] (0.0,-0.06) node {$A$};
+\fill [color=xdxdff] (1,0) circle (1.5pt);
+\draw[color=xdxdff] (1.00,-0.06) node {$B$};
+\fill [color=qqqqff] (0.5,1) circle (1.5pt);
+\draw[color=qqqqff] (0.45,1.00) node {$C$};
+\fill [color=uququq] (0.5,0) circle (1.5pt);
+\draw[color=uququq] (0.53,-0.06) node {$D$};
+\fill [color=xdxdff] (0.5,0.53) circle (1.5pt);
+\draw[color=xdxdff] (0.45,0.60) node {$N$};
+\fill [color=xdxdff] (0.65,0.53) circle (1.5pt);
+\draw[color=xdxdff] (0.69,0.60) node {$N'$};
+\end{scriptsize}
+\end{tikzpicture}
 
 Nyní je potřeba určit vertikální souřadnici bodu $N$.
 Označme si délku základny trojúhelníka $ABC$ jako $2a$, jeho výšku $v$ a~výšku trojúhelníka $ABN$ označme $b$. Dosazením do vzorce získáváme:
