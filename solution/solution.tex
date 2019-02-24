@@ -55,36 +55,53 @@ nejspíš někde uvnitř trojúhelníka, hledáme jakýsi jeho \uv{střed}. Otá
 jak tento bod najít. V~této úrovni jste měli hodně pokusů, takže jste mohli
 prostě zkoušet různé pozice bodů. Možná jste se dostali k~docela dobrému
 výsledku, vyvstává však otázka, jestli je vaše řešení skutečně to nejlepší.
-Tuto otázku jste mohli zodpovědět analytickým řešením úlohy.
+Tuto otázku jste mohli zodpovědět analytickým řešením úlohy. Nejprve si rozepišme
+funkci $E$ dle Euklidovské vzdálenosti:
 
-Chcete minimalizovat hodnotu funkce $E$. Ze školy možná víte, že minimum
+\begin{align}
+E(N) &= \sqrt{(x_n-x_1)^2 + (y_n - y_1)^2}^2 +
+	\sqrt{(x_n-x_2)^2 + (y_n - y_2)^2}^2 +
+	\sqrt{(x_n-x_3)^2 + (y_n - y_3)^2}^2 \nonumber \\
+E(N) &= (x_n-x_1)^2 + (y_n - y_1)^2 +
+	(x_n-x_2)^2 + (y_n - y_2)^2 +
+	(x_n-x_3)^2 + (y_n - y_3)^2 \nonumber.
+\end{align}
+
+Vidíme, že pro výpočet hodnoty $E$ je možné spočítat nezávisle hodnoty souřadnic
+$x$ a $y$. Rozdělíme výpočet tedy na hledání minim dvou funkcí:
+
+\begin{align}
+E_x(N) &= (x_n-x_1)^2 + (x_n-x_2)^2 + (x_n-x_3)^2 \nonumber \\
+E_y(N) &= (y_n-y_1)^2 + (y_n-y_2)^2 + (y_n-y_3)^2 \nonumber.
+\end{align}
+
+Chceme minimalizovat hodnotu funkce $E_x$. Ze školy možná víte, že minimum
 funkce se hledá pomocí derivací\footnote{Pokud neumíte derivovat, mohli jste
 využít například stránku \url{wolframalpha.com}.}. Pro minimum funkce musí
 platit, že v~něm derivace funkce musí být rovna nule. Musí tedy platit:
 
 \begin{align}
-\frac{dE}{dN} = 0 &= 2|I_1 N| + 2|I_2N| + 2|I_3N| \nonumber \\
-0 &= |I_1 N| + |I_2N| + |I_3N| \nonumber \\
-0 &= (N-I_1) + (N-I_2) + (N-I_3) \nonumber \\
-0 &= 3N - (I_1 + I_2 + I_3) \nonumber \\
-3N &= (I_1 + I_2 + I_3) \nonumber \\
-N &= \frac{I_1 + I_2 + I_3}{3} \nonumber
+\frac{dE}{dN} = 0 &= 2(x_n-x_1) + 2(x_n-x_2) + 2(x_n-x_3) \nonumber \\
+0 &= (x_n-x_1) + (x_n-x_2) + (x_n-x_3) \nonumber \\
+0 &= 3x_n - (x_1 + x_2 + x_3) \nonumber \\
+3x_n &= (x_1 + x_2 + x_3) \nonumber \\
+x_n &= \frac{x_1 + x_2 + x_3}{3} \nonumber
 \end{align}
 
 Z~výpočtu tedy vychází, že pozice optima je přesně v~aritmetickém průměru
 všech bodů\footnote{Pokud bychom měli být úplně matematicky korektní, je třeba
 ještě argumentovat, že optimum je pouze jediné a~že se jedná skutečně o~minimum.
-To plyne z~tvaru \textit{Hessiánu} gradientu.}. Všimněte si, že získaný výsledek
-odpovídá přesně definici těžiště trojúhelníka. Nemocnici je tedy třeba umístit
-do těžiště trojúhelníka. Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
+To plyne z~tvaru \textit{Hessiánu} gradientu.}. Hodnotu $y_n$ lze vypočítat
+úplně stejným postupem- Všimněte si, že získaný výsledek odpovídá přesně
+definici těžiště trojúhelníka. Nemocnici je tedy třeba umístit do těžiště
+trojúhelníka. Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
 
 \begin{align}
-N &= \frac{(0, 0) + (400, 0) + (200, -387.3)}{3} \nonumber \\
-N &= \left( \frac{0 + 400 + 200}{3}, \frac{0 + 0 - 387.3}{3} \right) \nonumber \\
-N &= (200, -129.1)  \nonumber
+x_n &= \frac{0 + 400 + 200}{3}, y_n = \frac{0 + 0 - 387.3}{3} \nonumber \\
+x_n &= 200, y_n = -129.1  \nonumber
 \end{align}
 
-Nemocnici tedy umístíme na souřadnice $X=200$, $Y=129.1$. Hodnota vzdálenostní
+Nemocnici tedy umístíme na souřadnice $X=200$, $Y=-129.1$. Hodnota vzdálenostní
 funkce pro tuto pozici nemocnice je $60000.29$.
 
 \subsection*{Úroveň 2}
