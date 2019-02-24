@@ -35,16 +35,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
+     inkscape:window-width="960"
      inkscape:window-height="1062"
      id="namedview288"
      showgrid="false"
      inkscape:zoom="0.65186407"
-     inkscape:cx="-269.03503"
+     inkscape:cx="228.18084"
      inkscape:cy="-0.5"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg286" />
   <circle
      cx="297"
@@ -145,7 +145,7 @@
      cy="-337"
      r="10"
      id="circle34"
-     style="fill:#13ffff;fill-opacity:1" />
+     style="fill:#000000;fill-opacity:1" />
   <circle
      cx="263"
      cy="-303"
@@ -506,7 +506,7 @@
      cy="-146"
      r="10"
      id="circle156"
-     style="fill:#ec8914;fill-opacity:1" />
+     style="fill:#00f100;fill-opacity:1" />
   <circle
      cx="428"
      cy="-332"
@@ -869,7 +869,7 @@
      cy="-143"
      r="10"
      id="circle278"
-     style="fill:#ec8914;fill-opacity:1" />
+     style="fill:#00f100;fill-opacity:1" />
   <circle
      cx="-332"
      cy="289"
