@@ -36,31 +36,31 @@ Možná nějaké úvodní kecičky.
 \section*{Řešení úloh v rovině}
 \paragraph*{Úroveň 1}
 
-V této úrovni byly 3 incidenty umístěny do vrcholů rovnostranného trojúhelníku.
+V~této úrovni byly 3 incidenty umístěny do vrcholů rovnostranného trojúhelníku.
 Vzdálenostní funkce vypadala takto:
 $$E(N) = \frac{|I_1N|^2 + |I_2N|^2 + |I_3N|^2}{3}.$$
 
-Nejprve proveďme nejuniverzálnější úpravu: zjednodušme výraz tak, že z něj
+Nejprve proveďme nejuniverzálnější úpravu: zjednodušme výraz tak, že z~něj
 odstraníme konstanty. To můžeme udělat vždy, protože nás nezajímá konkrétní
 hodnota vzdálenostní funkce, ale pouze místo, ve kterém se realizuje optimum.
 Dostáváme jednodušší výraz:
 
 $$E(N) = |I_1N|^2 + |I_2N|^2 + |I_3N|^2.$$
 
-Tuto úpravu můžeme udělat v kterékoliv úrovni, proto ji v dalším textu budeme
+Tuto úpravu můžeme udělat v~kterékoliv úrovni, proto ji v~dalším textu budeme
 dělat implicitně.
 
 Hledáme tedy bod, který \uv{minimalizuje kvadrát vzdálenosti}. Takový bod bude
 nejspíš někde uvnitř trojúhelníka, hledáme jakýsi jeho \uv{střed}. Otázka zní,
-jak tento bod najít. V této úrovni jste měli hodně pokusů, takže jste mohli
-prostě zkoušet různé pozice bodů. Možná jste se dostali k docela dobrému
+jak tento bod najít. V~této úrovni jste měli hodně pokusů, takže jste mohli
+prostě zkoušet různé pozice bodů. Možná jste se dostali k~docela dobrému
 výsledku, vyvstává však otázka, jestli je vaše řešení skutečně to nejlepší.
 Tuto otázku jste mohli zodpovědět analytickým řešením úlohy.
 
 Chcete minimalizovat hodnotu funkce $E$. Ze školy možná víte, že minimum
 funkce se hledá pomocí derivací\footnote{Pokud neumíte derivovat, mohli jste
 využít například stránku \url{wolframalpha.com}.}. Pro minimum funkce musí
-platit, že v něm derivace funkce musí být rovna nule. Musí tedy platit:
+platit, že v~něm derivace funkce musí být rovna nule. Musí tedy platit:
 
 \begin{align}
 \frac{dE}{dN} = 0 &= 2|I_1 N| + 2|I_2N| + 2|I_3N| \nonumber \\
@@ -71,10 +71,10 @@ platit, že v něm derivace funkce musí být rovna nule. Musí tedy platit:
 N &= \frac{I_1 + I_2 + I_3}{3} \nonumber
 \end{align}
 
-Z výpočtu tedy vychází, že pozice optima je přesně v aritmetickém průměrů
+Z~výpočtu tedy vychází, že pozice optima je přesně v~aritmetickém průměru
 všech bodů\footnote{Pokud bychom měli být úplně matematicky korektní, je třeba
-ještě argumentovat, že optimum je pouze jediné a že se jedná skutečně o minimum.
-To plyne z tvaru Hessiánu gradientu.}. Všimněte si, že získaný výsledek
+ještě argumentovat, že optimum je pouze jediné a~že se jedná skutečně o~minimum.
+To plyne z~tvaru \textit{Hessiánu} gradientu.}. Všimněte si, že získaný výsledek
 odpovídá přesně definici těžiště trojúhelníka. Nemocnici je tedy třeba umístit
 do těžiště trojúhelníka. Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
 
