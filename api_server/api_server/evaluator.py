@@ -91,7 +91,7 @@ def eval_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
 
-    if timezone.now() >= QUALIFICATION_END:
+    if timezone.now() >= QUALIFICATION_END and not request.user.is_superuser:
         return HttpResponseForbidden('Qualification ended!')
 
     try:
