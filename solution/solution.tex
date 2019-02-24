@@ -10,6 +10,8 @@
 \oddsidemargin 0cm
 \usepackage{url}
 \usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{empheq}
 
 \begin{document}
 
@@ -24,14 +26,66 @@
 \date{\today}
 \maketitle
 
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{3mm plus2pt minus2pt}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Možná nějaké úvodní kecičky.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Řešení úloh v rovině}
 \paragraph*{Úroveň 1}
-Na první pohled je zřejmé, že vzdálenostní funkce má jediné optimum. Proto posunutí jediné nemocnice libovolným směrem od tohoto optima zvýší hodnotu vzdálenostní funkce.
-Velmi přirozená úvaha byla zvolit za pozici nemocnice těžiště trojúhelníka. S výhodou jste zde mohli využít právě toho, že při pohybu bodem do libovolného směru se vzdálenostní funkce zhorší, a v několka vyhodnoceních ověřit, že těžiště je skutečně optimální polohou.
+
+V této úrovni byly 3 incidenty umístěny do vrcholů rovnostranného trojúhelníku.
+Vzdálenostní funkce vypadala takto:
+$$E(N) = \frac{|I_1N|^2 + |I_2N|^2 + |I_3N|^2}{3}.$$
+
+Nejprve proveďme nejuniverzálnější úpravu: zjednodušme výraz tak, že z něj
+odstraníme konstanty. To můžeme udělat vždy, protože nás nezajímá konkrétní
+hodnota vzdálenostní funkce, ale pouze místo, ve kterém se realizuje optimum.
+Dostáváme jednodušší výraz:
+
+$$E(N) = |I_1N|^2 + |I_2N|^2 + |I_3N|^2.$$
+
+Tuto úpravu můžeme udělat v kterékoliv úrovni, proto ji v dalším textu budeme
+dělat implicitně.
+
+Hledáme tedy bod, který \uv{minimalizuje kvadrát vzdálenosti}. Takový bod bude
+nejspíš někde uvnitř trojúhelníka, hledáme jakýsi jeho \uv{střed}. Otázka zní,
+jak tento bod najít. V této úrovni jste měli hodně pokusů, takže jste mohli
+prostě zkoušet různé pozice bodů. Možná jste se dostali k docela dobrému
+výsledku, vyvstává však otázka, jestli je vaše řešení skutečně to nejlepší.
+Tuto otázku jste mohli zodpovědět analytickým řešením úlohy.
+
+Chcete minimalizovat hodnotu funkce $E$. Ze školy možná víte, že minimum
+funkce se hledá pomocí derivací.  Pro minimum funkce musí platit, že v něm
+derivace funkce musí být rovna nule. Musí tedy platit:
+
+\begin{align}
+\frac{dE}{dN} = 0 &= 2|I_1 N| + 2|I_2N| + 2|I_3N| \nonumber \\
+0 &= |I_1 N| + |I_2N| + |I_3N| \nonumber \\
+0 &= (N-I_1) + (N-I_2) + (N-I_3) \nonumber \\
+0 &= 3N - (I_1 + I_2 + I_3) \nonumber \\
+3N &= (I_1 + I_2 + I_3) \nonumber \\
+N &= \frac{I_1 + I_2 + I_3}{3} \nonumber
+\end{align}
+
+Z výpočtu tedy vychází, že pozice optima je přesně v aritmetickém průměrů
+všech bodů\footnote{Pokud bychom měli být úplně matematicky korektní, je třeba
+ještě argumentovat, že optimum je pouze jediné a že se jedná skutečně o minimum.
+To plyne z tvaru Hessiánu gradientu.}. Všimněte si, že získaný výsledek
+odpovídá přesně definici těžiště trojúhelníka. Nemocnici je tedy třeba umístit
+do těžiště trojúhelníka. Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
+
+\begin{align}
+N &= \frac{(0, 0) + (400, 0) + (200, -387.3)}{3} \nonumber \\
+N &= \left( \frac{0 + 400 + 200}{3}, \frac{0 + 0 - 387.3}{3} \right) \nonumber \\
+N &= (200, -129.1)  \nonumber
+\end{align}
+
+Nemocnici tedy umístíme na souřadnice $X=200$, $Y=129.1$. Hodnota vzdálenostní
+funkce pro tuto pozici nemocnice je $60000.29$.
+
 \paragraph*{Úroveň 2}
 V druhé úrovni bylo potřeba dát pozor na změnu vzdálenostní funkce. Vzhledem k tomu, že se měřila průměrná vzdálenost (ne její kvadrát) od jednotlivých míst incidentů,
 nebylo optimem těžiště trojúhelníka. Tentokrát se jednalo o tzv. geometrický medián. Jedná se o právě takový bod $S$ pro který platí, že spojnice $S$ s vrcholy trojúhelníka spolu svírají úhel přesně $120^\circ$.
