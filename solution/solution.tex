@@ -154,13 +154,13 @@ Hodnota vzdálenostní funkce pro tyto souřadnice je $6208.63$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Řešení úloh na mapě silnic}
 \subsection*{Úroveň 5, 6}
-Nejříve si představme, že všehny body událostí jsou umístěny někde na přímce. Když umístíme nemocnici kamkoli na tuto přímku, získáme nějakou hodnotu vzdálenostní funkce.
-Nyní se tuto hodnotu pokusíme optimalizovat. Pozice nemocnice dělí přímku na dvě poloviny, a tydy rozděluje i pozice incidentů na skupinu vlevo a skupinu vpravo.
-Nyní předpokládejme, že například ve skupině vlevo se nechází více incidentu než vrpavo. Pak posun o malý kousek vlevo zmenší hodnotu vzdálenostní funkce za každý incident vlevo a zvětší její hodnotu za každý incident vpravo.
-Protože je ovšem incidentů vlevo více než vpravo, celková změna bude záporná. Proto takto múžeme posouvat stanici až do místa, kde bude množina vlevo i vpravo stejně velká.
+Nejdříve si představme, že všechny body událostí jsou umístěny někde na přímce. Když umístíme nemocnici kamkoli na tuto přímku, získáme nějakou hodnotu vzdálenostní funkce.
+Nyní se tuto hodnotu pokusíme optimalizovat. Pozice nemocnice dělí přímku na dvě poloviny, a tedy rozděluje i pozice incidentů na skupinu vlevo a skupinu vpravo.
+Nyní předpokládejme, že například ve skupině vlevo se nachází více incidentu než vpravo. Pak posun o malý kousek vlevo zmenší hodnotu vzdálenostní funkce za každý incident vlevo a zvětší její hodnotu za každý incident vpravo.
+Protože je ovšem incidentů vlevo více než vpravo, celková změna bude záporná. Proto takto můžeme posouvat stanici až do místa, kde bude množina vlevo i vpravo stejně velká.
 V tomto bodě je hodnot a vzdálenostní funkce určitě minimální.
 
-Podobnou úvaho uvšem můžeme provést i pro síť silnic. Pokud se totiž nacházíme s nemocnicí na nějaké cestě, tak rozdělí celou síť na dvě poloviny. Nemocnici posuneme tím směrem, kde se nachází více bodů.
+Podobnou úvaho ovšem můžeme provést i pro síť silnic. Pokud se totiž nacházíme s nemocnicí na nějaké cestě, tak rozdělí celou síť na dvě poloviny. Nemocnici posuneme tím směrem, kde se nachází více bodů.
 Tento postup nás vždy dovede no optimální pozice pro nemocnici.
 
 \subsection*{Úroveň 7}
@@ -171,6 +171,6 @@ V 8. úrovni již bylo potřeba řešení z úrovně 7 trochu poupravit. Váhy j
 Ta lze však jednoduše upravit tak, že si například místo jediného incidentu o velikosti pět představím pět incidentů o velikosti jedna. Takto pouze při rozhodování, na kterou stranu silnice půjdeme, budeme přihlížet také k váze jednotlivých incidentů a místo počtu incidentů na každé straně budeme počítat součet jejich vah.
 
 \subsection*{Úroveň 9, 10}
-Podobně jako v úrovni 4 hlavní myšlenkou úrovně bylo opět rozdělit incidenty do tří sití, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdelení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
+Podobně jako v úrovni 4 hlavní myšlenkou úrovně bylo opět rozdělit incidenty do tří sítí, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdělení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
 
 \end{document}
