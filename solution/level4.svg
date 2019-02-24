@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -44,9 +44,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="0.65186407"
-     inkscape:cx="451.85156"
-     inkscape:cy="458.5"
+     inkscape:zoom="0.92187501"
+     inkscape:cx="427.42721"
+     inkscape:cy="501.68091"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -55,710 +55,852 @@
      cx="768"
      cy="839"
      r="10"
-     id="circle2" />
+     id="circle2"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="628"
      cy="504"
      r="10"
-     id="circle4" />
+     id="circle4"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="695"
      cy="489"
      r="10"
-     id="circle6" />
+     id="circle6"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="456"
      cy="515"
      r="10"
-     id="circle8" />
+     id="circle8"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="560"
      cy="146"
      r="10"
-     id="circle10" />
+     id="circle10"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="816"
      cy="869"
      r="10"
-     id="circle12" />
+     id="circle12"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="848"
      cy="189"
      r="10"
-     id="circle14" />
+     id="circle14"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="453"
      cy="485"
      r="10"
-     id="circle16" />
+     id="circle16"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="87"
      cy="844"
      r="10"
-     id="circle18" />
+     id="circle18"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="607"
      cy="95"
      r="10"
-     id="circle20" />
+     id="circle20"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="389"
      cy="535"
      r="10"
-     id="circle22" />
+     id="circle22"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="482"
      cy="519"
      r="10"
-     id="circle24" />
+     id="circle24"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="128"
      cy="360"
      r="10"
-     id="circle26" />
+     id="circle26"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="179"
      cy="771"
      r="10"
-     id="circle28" />
+     id="circle28"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="746"
      cy="742"
      r="10"
-     id="circle30" />
+     id="circle30"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="770"
      cy="898"
      r="10"
-     id="circle32" />
+     id="circle32"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="740"
      cy="171"
      r="10"
-     id="circle34" />
+     id="circle34"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="734"
      cy="205"
      r="10"
-     id="circle36" />
+     id="circle36"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="795"
      cy="827"
      r="10"
-     id="circle38" />
+     id="circle38"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="889"
      cy="179"
      r="10"
-     id="circle40" />
+     id="circle40"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="127"
      cy="855"
      r="10"
-     id="circle42" />
+     id="circle42"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="609"
      cy="499"
      r="10"
-     id="circle44" />
+     id="circle44"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="51"
      cy="276"
      r="10"
-     id="circle46" />
+     id="circle46"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="310"
      cy="950"
      r="10"
-     id="circle48" />
+     id="circle48"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="345"
      cy="465"
      r="10"
-     id="circle50" />
+     id="circle50"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="751"
      cy="940"
      r="10"
-     id="circle52" />
+     id="circle52"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="466"
      cy="200"
      r="10"
-     id="circle54" />
+     id="circle54"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="328"
      cy="486"
      r="10"
-     id="circle56" />
+     id="circle56"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="99"
      cy="293"
      r="10"
-     id="circle58" />
+     id="circle58"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="669"
      cy="625"
      r="10"
-     id="circle60" />
+     id="circle60"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="615"
      cy="610"
      r="10"
-     id="circle62" />
+     id="circle62"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="763"
      cy="292"
      r="10"
-     id="circle64" />
+     id="circle64"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="702"
      cy="164"
      r="10"
-     id="circle66" />
+     id="circle66"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="871"
      cy="336"
      r="10"
-     id="circle68" />
+     id="circle68"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="302"
      cy="149"
      r="10"
-     id="circle70" />
+     id="circle70"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="830"
      cy="261"
      r="10"
-     id="circle72" />
+     id="circle72"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="10"
      cy="353"
      r="10"
-     id="circle74" />
+     id="circle74"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="751"
      cy="228"
      r="10"
-     id="circle76" />
+     id="circle76"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="923"
      cy="886"
      r="10"
-     id="circle78" />
+     id="circle78"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="940"
      cy="864"
      r="10"
-     id="circle80" />
+     id="circle80"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="153"
      cy="902"
      r="10"
-     id="circle82" />
+     id="circle82"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="737"
      cy="84"
      r="10"
-     id="circle84" />
+     id="circle84"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="772"
      cy="196"
      r="10"
-     id="circle86" />
+     id="circle86"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="354"
      cy="867"
      r="10"
-     id="circle88" />
+     id="circle88"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="72"
      cy="358"
      r="10"
-     id="circle90" />
+     id="circle90"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="905"
      cy="750"
      r="10"
-     id="circle92" />
+     id="circle92"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="406"
      cy="556"
      r="10"
-     id="circle94" />
+     id="circle94"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="437"
      cy="166"
      r="10"
-     id="circle96" />
+     id="circle96"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="130"
      cy="867"
      r="10"
-     id="circle98" />
+     id="circle98"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="661"
      cy="151"
      r="10"
-     id="circle100" />
+     id="circle100"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="804"
      cy="809"
      r="10"
-     id="circle102" />
+     id="circle102"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="391"
      cy="165"
      r="10"
-     id="circle104" />
+     id="circle104"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="801"
      cy="792"
      r="10"
-     id="circle106" />
+     id="circle106"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="544"
      cy="668"
      r="10"
-     id="circle108" />
+     id="circle108"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="828"
      cy="204"
      r="10"
-     id="circle110" />
+     id="circle110"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="20"
      cy="885"
      r="10"
-     id="circle112" />
+     id="circle112"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="777"
      cy="897"
      r="10"
-     id="circle114" />
+     id="circle114"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="140"
      cy="408"
      r="10"
-     id="circle116" />
+     id="circle116"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="624"
      cy="118"
      r="10"
-     id="circle118" />
+     id="circle118"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="432"
      cy="500"
      r="10"
-     id="circle120" />
+     id="circle120"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="146"
      cy="821"
      r="10"
-     id="circle122" />
+     id="circle122"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="61"
      cy="924"
      r="10"
-     id="circle124" />
+     id="circle124"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="289"
      cy="894"
      r="10"
-     id="circle126" />
+     id="circle126"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="828"
      cy="835"
      r="10"
-     id="circle128" />
+     id="circle128"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="807"
      cy="224"
      r="10"
-     id="circle130" />
+     id="circle130"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="349"
      cy="286"
      r="10"
-     id="circle132" />
+     id="circle132"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="459"
      cy="218"
      r="10"
-     id="circle134" />
+     id="circle134"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="612"
      cy="204"
      r="10"
-     id="circle136" />
+     id="circle136"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="385"
      cy="208"
      r="10"
-     id="circle138" />
+     id="circle138"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="525"
      cy="530"
      r="10"
-     id="circle140" />
+     id="circle140"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="827"
      cy="825"
      r="10"
-     id="circle142" />
+     id="circle142"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="68"
      cy="783"
      r="10"
-     id="circle144" />
+     id="circle144"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="558"
      cy="501"
      r="10"
-     id="circle146" />
+     id="circle146"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="900"
      cy="775"
      r="10"
-     id="circle148" />
+     id="circle148"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="752"
      cy="840"
      r="10"
-     id="circle150" />
+     id="circle150"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="846"
      cy="922"
      r="10"
-     id="circle152" />
+     id="circle152"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="930"
      cy="258"
      r="10"
-     id="circle154" />
+     id="circle154"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="350"
      cy="362"
      r="10"
-     id="circle156" />
+     id="circle156"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="899"
      cy="176"
      r="10"
-     id="circle158" />
+     id="circle158"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="408"
      cy="503"
      r="10"
-     id="circle160" />
+     id="circle160"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="151"
      cy="825"
      r="10"
-     id="circle162" />
+     id="circle162"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="420"
      cy="943"
      r="10"
-     id="circle164" />
+     id="circle164"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="641"
      cy="506"
      r="10"
-     id="circle166" />
+     id="circle166"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="312"
      cy="767"
      r="10"
-     id="circle168" />
+     id="circle168"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="299"
      cy="843"
      r="10"
-     id="circle170" />
+     id="circle170"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="85"
      cy="266"
      r="10"
-     id="circle172" />
+     id="circle172"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="567"
      cy="604"
      r="10"
-     id="circle174" />
+     id="circle174"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="172"
      cy="279"
      r="10"
-     id="circle176" />
+     id="circle176"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="920"
      cy="304"
      r="10"
-     id="circle178" />
+     id="circle178"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="517"
      cy="498"
      r="10"
-     id="circle180" />
+     id="circle180"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="772"
      cy="255"
      r="10"
-     id="circle182" />
+     id="circle182"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="891"
      cy="191"
      r="10"
-     id="circle184" />
+     id="circle184"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="51"
      cy="336"
      r="10"
-     id="circle186" />
+     id="circle186"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="696"
      cy="553"
      r="10"
-     id="circle188" />
+     id="circle188"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="612"
      cy="561"
      r="10"
-     id="circle190" />
+     id="circle190"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="432"
      cy="325"
      r="10"
-     id="circle192" />
+     id="circle192"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="515"
      cy="586"
      r="10"
-     id="circle194" />
+     id="circle194"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="528"
      cy="557"
      r="10"
-     id="circle196" />
+     id="circle196"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="856"
      cy="745"
      r="10"
-     id="circle198" />
+     id="circle198"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="158"
      cy="805"
      r="10"
-     id="circle200" />
+     id="circle200"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="275"
      cy="789"
      r="10"
-     id="circle202" />
+     id="circle202"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="850"
      cy="193"
      r="10"
-     id="circle204" />
+     id="circle204"
+     style="stroke:none;stroke-opacity:1;fill:#002828;fill-opacity:1" />
   <circle
      cx="164"
      cy="888"
      r="10"
-     id="circle206" />
+     id="circle206"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="905"
      cy="810"
      r="10"
-     id="circle208" />
+     id="circle208"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="904"
      cy="907"
      r="10"
-     id="circle210" />
+     id="circle210"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="534"
      cy="549"
      r="10"
-     id="circle212" />
+     id="circle212"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="622"
      cy="639"
      r="10"
-     id="circle214" />
+     id="circle214"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="404"
      cy="439"
      r="10"
-     id="circle216" />
+     id="circle216"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="138"
      cy="354"
      r="10"
-     id="circle218" />
+     id="circle218"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="910"
      cy="879"
      r="10"
-     id="circle220" />
+     id="circle220"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="567"
      cy="638"
      r="10"
-     id="circle222" />
+     id="circle222"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="180"
      cy="412"
      r="10"
-     id="circle224" />
+     id="circle224"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="122"
      cy="249"
      r="10"
-     id="circle226" />
+     id="circle226"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="707"
      cy="555"
      r="10"
-     id="circle228" />
+     id="circle228"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="929"
      cy="834"
      r="10"
-     id="circle230" />
+     id="circle230"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="442"
      cy="212"
      r="10"
-     id="circle232" />
+     id="circle232"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="336"
      cy="177"
      r="10"
-     id="circle234" />
+     id="circle234"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="342"
      cy="774"
      r="10"
-     id="circle236" />
+     id="circle236"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="706"
      cy="10"
      r="10"
-     id="circle238" />
+     id="circle238"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="396"
      cy="400"
      r="10"
-     id="circle240" />
+     id="circle240"
+     style="stroke:none;stroke-opacity:1;fill:#0128b7;fill-opacity:1" />
   <circle
      cx="625"
      cy="46"
      r="10"
-     id="circle242" />
+     id="circle242"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="790"
      cy="836"
      r="10"
-     id="circle244" />
+     id="circle244"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="670"
      cy="557"
      r="10"
-     id="circle246" />
+     id="circle246"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
   <circle
      cx="137"
      cy="807"
      r="10"
-     id="circle248" />
+     id="circle248"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="96"
      cy="939"
      r="10"
-     id="circle250" />
+     id="circle250"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="456"
      cy="281"
      r="10"
-     id="circle252" />
+     id="circle252"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="606"
      cy="106"
      r="10"
-     id="circle254" />
+     id="circle254"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="870"
      cy="925"
      r="10"
-     id="circle256" />
+     id="circle256"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="339"
      cy="764"
      r="10"
-     id="circle258" />
+     id="circle258"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="73"
      cy="346"
      r="10"
-     id="circle260" />
+     id="circle260"
+     style="stroke:none;stroke-opacity:1;fill:#ff28de;fill-opacity:1" />
   <circle
      cx="757"
      cy="797"
      r="10"
-     id="circle262" />
+     id="circle262"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="259"
      cy="956"
      r="10"
-     id="circle264" />
+     id="circle264"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="903"
      cy="794"
      r="10"
-     id="circle266" />
+     id="circle266"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="803"
      cy="744"
      r="10"
-     id="circle268" />
+     id="circle268"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="786"
      cy="851"
      r="10"
-     id="circle270" />
+     id="circle270"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="807"
      cy="864"
      r="10"
-     id="circle272" />
+     id="circle272"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="742"
      cy="351"
      r="10"
-     id="circle274" />
+     id="circle274"
+     style="stroke:none;stroke-opacity:1;fill:#362828;fill-opacity:1" />
   <circle
      cx="777"
      cy="788"
      r="10"
-     id="circle276" />
+     id="circle276"
+     style="stroke:none;stroke-opacity:1;fill:#ffcf28;fill-opacity:1" />
   <circle
      cx="462"
      cy="365"
      r="10"
-     id="circle278" />
+     id="circle278"
+     style="stroke:none;stroke-opacity:1;fill:#2ce4da;fill-opacity:1" />
   <circle
      cx="139"
      cy="797"
      r="10"
-     id="circle280" />
+     id="circle280"
+     style="stroke:none;stroke-opacity:1;fill:#9b1828;fill-opacity:1" />
   <circle
      cx="394"
      cy="782"
      r="10"
-     id="circle282" />
+     id="circle282"
+     style="stroke:none;stroke-opacity:1;fill:#ff2828;fill-opacity:1" />
   <circle
      cx="552"
      cy="594"
      r="10"
-     id="circle284" />
+     id="circle284"
+     style="stroke:none;stroke-opacity:1;fill:#2ac928;fill-opacity:1" />
 </svg>
