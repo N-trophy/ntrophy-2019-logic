@@ -13,7 +13,8 @@ def main(ifn, ofn):
 
     for node in root.iter():
         if node.tag.endswith('circle'):
-            match = re.search(r'fill:#(......)', node.attrib['style'])
+            match = re.search(r'fill:#(......)', node.attrib['style'] \
+                              if 'style' in node.attrib else 'fill:#000000')
             color = match.group(1)
             nodes[color] = nodes.get(color, []) + [(
                 (int(node.attrib['cx']), int(node.attrib['cy']))
