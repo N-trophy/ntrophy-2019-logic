@@ -41,6 +41,9 @@ V~této úrovni byly 3 incidenty umístěny do vrcholů rovnostranného trojúhe
 Vzdálenostní funkce vypadala takto:
 $$E(N) = \frac{|I_1N|^2 + |I_2N|^2 + |I_3N|^2}{3}.$$
 
+Optimální polohou pro tuto vzdálenostní funkci je těžiště trojúhelníka.
+V~následujícím textu budeme argumentovat, proč tomu tak je.
+
 Nejprve proveďme nejuniverzálnější úpravu: zjednodušme výraz tak, že z~něj
 odstraníme konstanty. To můžeme udělat vždy, protože nás nezajímá konkrétní
 hodnota vzdálenostní funkce, ale pouze místo, ve kterém se realizuje optimum.
@@ -98,8 +101,7 @@ To plyne z~tvaru \textit{Hessiánu} gradientu.}. Hodnotu $y_n$ lze vypočítat
 úplně stejným postupem.
 
 Všimněte si, že získaný výsledek přesně odpovídá definici těžiště trojúhelníka.
-Nemocnici je tedy třeba umístit právě do těžiště. Můžeme pokračovat dosazením
-konkrétních hodnot ze zadání:
+Můžeme pokračovat dosazením konkrétních hodnot ze zadání:
 
 \begin{align}
 x_n &= \frac{0 + 400 + 200}{3}, y_n = \frac{0 + 0 - 387.3}{3} \nonumber \\
