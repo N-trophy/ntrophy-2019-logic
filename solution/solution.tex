@@ -217,6 +217,7 @@ Označme ji $b+k$ pro libovolné $k$. Ukážeme si, že pro tuto hodnotu výšky
 \end{align}
 Rovnost tedy nastává práve pro volbu $k=0$.
 
+Po dosazení přesných souřadnic incidentů získáváme pozici nemocnice $[200, 115.47]$. Hodnota vzdálenostní funkce byla $244.57$.
 
 \subsection*{Úroveň 3}
 V~této úrovni bylo potřeba umístit pouze jedinou nemocnici se stejným kritériem
@@ -272,17 +273,23 @@ V tomto bodě je hodnot a vzdálenostní funkce určitě minimální.
 Podobnou úvaho ovšem můžeme provést i pro síť silnic. Pokud se totiž nacházíme s nemocnicí na nějaké cestě, tak rozdělí celou síť na dvě poloviny. Nemocnici posuneme tím směrem, kde se nachází více bodů.
 Tento postup nás vždy dovede no optimální pozice pro nemocnici.
 
+Tímto způsobem jsme mohli najít pro jednotlivé úrovně po řadě optimální pozice nemocnic $[100, 100]$ a $[500, 800]$, kde hodnoty vzdálenostní funkce byly $2.8$ a $7.04$.
+
 \subsection*{Úroveň 7}
 V této úrovni šlo aplikovat naprosto stejný postup, jako v úrovni 5 a 6. Stačilo si uvědomit, že úvaha nezávisí na délce spojnic. Posunout se směrem k většímu počtu vrcholů se nám vyplatí vždy pro libovolně dlouhou spojnici dvou incidentů.
 
+Optimální poloha nemocnice v této úrovni je $[900, 900]$. Hodnota vzdálenostní funkce je $18.44$. 
 \subsection*{Úroveň 8}
 V 8. úrovni již bylo potřeba řešení z úrovně 7 trochu poupravit. Váhy jednotlivých incidentů nabourávají naši úvahu o přibližování se té straně, na které se nachází více incidentů.
 Ta lze však jednoduše upravit tak, že si například místo jediného incidentu o velikosti pět představím pět incidentů o velikosti jedna. Takto pouze při rozhodování, na kterou stranu silnice půjdeme, budeme přihlížet také k váze jednotlivých incidentů a místo počtu incidentů na každé straně budeme počítat součet jejich vah.
 
+Optimální poloha nemocnice v této úrovni je $[700, 700]$. Hodnota vzdálenostní funkce je $20.5$.
+
 \subsection*{Úroveň 9, 10}
 Podobně jako v úrovni 4 hlavní myšlenkou úrovně bylo opět rozdělit incidenty do tří sítí, které se následně řešily postupem z předchozích úrovní. V úrovni 10 mělo být ovšem umístěno tolik nemocnic, že optimální rozdělení na podsítě téměř nebylo možné pouze ručně. S výhodou se tak dalo využít dynamického programování pro získání optimální polohy. Rozumně blízko optimu se šlo ovšem samozřejmě přiblížit i pouhým zkoušením rozdělení na podsítě.
 
-
+Absolutní optimum 9. úrovně bylo $3,68$ s umístěním nemocninc na souřadnice $[700, 700], [400, 300]$ a $[900, 900]$.
+Optimum v 10. úrovni pak byla hodnota $10.88$. Poloha nemocnic byla tato: $[500,1000],[700,900],[500,500],[1200,1000],[800, 600],[800,300],[1300,800],[1300,500],[1200, 200],[1500,100]$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Detailní bodování}
 
