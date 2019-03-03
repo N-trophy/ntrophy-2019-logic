@@ -41,18 +41,18 @@ print("Final text length: {0}".format(len(final_text)))
 """
 Přepočítání a vykreslení počtu výskytů jednotlivých znaků.
 """
-def compute_frequency(data):
-    frequency = {}
-    for d in data:
-        if d not in frequency:
-            frequency[d] = 0
-        frequency[d] += 1
-    return list(zip(*sorted(frequency.items())))
+# def compute_frequency(data):
+#     frequency = {}
+#     for d in data:
+#         if d not in frequency:
+#             frequency[d] = 0
+#         frequency[d] += 1
+#     return list(zip(*sorted(frequency.items())))
 
-x1, y1 = compute_frequency(final_text)
-plt.subplot(211)
-plt.bar(x1, y1)
-x2, y2 = compute_frequency(y1)
-plt.subplot(212)
-plt.bar(x2, y2)
-plt.show()
+# x1, y1 = compute_frequency(final_text)
+# plt.subplot(211)
+# plt.bar(x1, y1)
+# x2, y2 = compute_frequency(y1)
+# plt.subplot(212)
+# plt.bar(x2, y2)
+# plt.show()
