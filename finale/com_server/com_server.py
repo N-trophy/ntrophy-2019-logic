@@ -7,7 +7,7 @@ Server for ESP32-Learning Kits communication
 Input ports of server: 1000,1100
 Input ports of ESPs: 2000,2100
 
-Data flow: 1000 -> 2100, 1100 -> 2000
+Data flow: everything on port 2000
 """
 
 import socket
@@ -40,17 +40,25 @@ def main():
                 connected.append(sockfd)
                 print('New connection: %s' % (str(addr)))
             else:
-                data = rsock.recv(1024)
+                try:
+                    data = rsock.recv(1024)
+                except socket.error:
+                    data = None
+
                 if data:
                     print('%s: %s ' % (
                         str(rsock.getpeername()), data.decode('utf-8').strip()
                     ), end='')
                     for s in filter(lambda s: s != rsock, connected):
                         print('-> %s' % (str(s.getpeername())), end='')
-                        s.send(data)
+                        try:
+                            s.send(data)
+                        except socket.error:
+                            print('Error!', end='')
                     print()
                 else:
-                    print('Closing socket %s...' % (str(rsock.getpeername())))
+                    #print('Closing socket %s...' % (str(rsock.getpeername() if rsock.)))
+                    print('Closing socket...')
                     connected.remove(rsock)
                     rsock.close()
 
