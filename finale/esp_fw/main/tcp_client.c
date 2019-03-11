@@ -37,6 +37,8 @@
 
 const size_t GPIO_LED_RED = 22;
 const size_t GPIO_LED_YEL = 23;
+const size_t GPIO_LED_GREEN = 17;
+const size_t GPIO_LED_BLUE = 5;
 const size_t GPIO_BTN1 = 15;
 const size_t GPIO_BTN2 = 0;
 
@@ -121,6 +123,11 @@ static void wait_for_ip() {
 static void tcp_client_task(void *pvParameters) {
 	wait_for_ip();
 
+	gpio_set_level(GPIO_LED_BLUE, 0);
+	gpio_set_level(GPIO_LED_GREEN, 0);
+	gpio_set_level(GPIO_LED_YEL, 0);
+	gpio_set_level(GPIO_LED_RED, 0);
+
 	char rx_buffer[128];
 	char addr_str[128];
 	int addr_family;
@@ -181,6 +188,15 @@ static void button_task(void* arg) {
 	static int btn2_cnt = 0;
 	const size_t no_ticks = 5; // 50 ms
 
+	gpio_set_level(GPIO_LED_BLUE, 1);
+	vTaskDelay(200 / portTICK_PERIOD_MS);
+	gpio_set_level(GPIO_LED_GREEN, 1);
+	vTaskDelay(200 / portTICK_PERIOD_MS);
+	gpio_set_level(GPIO_LED_YEL, 1);
+	vTaskDelay(200 / portTICK_PERIOD_MS);
+	gpio_set_level(GPIO_LED_RED, 1);
+	vTaskDelay(200 / portTICK_PERIOD_MS);
+
 	while (1) {
 		if (gpio_get_level(GPIO_BTN1) == 0) {
 			if (btn1_cnt >= 0)
@@ -215,11 +231,15 @@ static void initialise_io() {
 
 	gpio_pad_select_gpio(GPIO_LED_RED);
 	gpio_set_direction(GPIO_LED_RED, GPIO_MODE_OUTPUT);
-	gpio_set_level(GPIO_LED_RED, 1);
 
 	gpio_pad_select_gpio(GPIO_LED_YEL);
 	gpio_set_direction(GPIO_LED_YEL, GPIO_MODE_OUTPUT);
-	gpio_set_level(GPIO_LED_YEL, 1);
+
+	gpio_pad_select_gpio(GPIO_LED_GREEN);
+	gpio_set_direction(GPIO_LED_GREEN, GPIO_MODE_OUTPUT);
+
+	gpio_pad_select_gpio(GPIO_LED_BLUE);
+	gpio_set_direction(GPIO_LED_BLUE, GPIO_MODE_OUTPUT);
 
 	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
 	io_conf.pin_bit_mask = (1ull << GPIO_BTN1);
