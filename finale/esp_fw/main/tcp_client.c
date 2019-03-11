@@ -48,7 +48,6 @@ const int IPV4_GOTIP_BIT = BIT0;
 const int IPV6_GOTIP_BIT = BIT1;
 
 static const char *TAG = "N-trophy";
-static const char *payload = "Message from ESP32";
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_LED_RED, 0);
@@ -151,12 +150,6 @@ static void tcp_client_task(void *pvParameters) {
 		ESP_LOGI(TAG, "Successfully connected");
 
 		while (1) {
-			int err = send(sock, payload, strlen(payload), 0);
-			if (err < 0) {
-				ESP_LOGE(TAG, "Error occured during sending: errno %d", errno);
-				break;
-			}
-
 			int len = recv(sock, rx_buffer, sizeof(rx_buffer) - 1, 0);
 			// Error occured during receiving
 			if (len < 0) {
@@ -171,7 +164,7 @@ static void tcp_client_task(void *pvParameters) {
 				data_received(rx_buffer);
 			}
 
-			vTaskDelay(2000 / portTICK_PERIOD_MS);
+			vTaskDelay(10 / portTICK_PERIOD_MS);
 		}
 
 		if (sock != -1) {
@@ -194,7 +187,6 @@ static void button_task(void* arg) {
 				btn1_cnt++;
 			if (btn1_cnt == no_ticks) {
 				btn1_cnt = -1;
-				ESP_LOGI(TAG, "BUTTON1 intr");
 				if (sock >= 0)
 					send(sock, "0", 1, 0);
 			}
@@ -206,7 +198,6 @@ static void button_task(void* arg) {
 				btn2_cnt++;
 			if (btn2_cnt == no_ticks) {
 				btn2_cnt = -1;
-				ESP_LOGI(TAG, "BUTTON2 intr");
 				if (sock >= 0)
 					send(sock, "1", 1, 0);
 			}
