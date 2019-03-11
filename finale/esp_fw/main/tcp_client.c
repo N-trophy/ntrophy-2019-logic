@@ -36,12 +36,12 @@
 #define PORT 2000
 
 const size_t GPIO_LED_RED = 22;
+const size_t GPIO_LED_YEL = 23;
 const size_t GPIO_BTN1 = 15;
 const size_t GPIO_BTN2 = 0;
 
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
 static EventGroupHandle_t wifi_event_group;
-static xQueueHandle gpio_evt_queue = NULL;
 static int sock = -1;
 
 const int IPV4_GOTIP_BIT = BIT0;
@@ -51,6 +51,13 @@ static const char *TAG = "N-trophy";
 static const char *payload = "Message from ESP32";
 
 static void data_received(char rx_buf[]) {
+	gpio_set_level(GPIO_LED_RED, 0);
+	gpio_set_level(GPIO_LED_YEL, 0);
+
+	if (rx_buf[0] == '0')
+		gpio_set_level(GPIO_LED_RED, 1);
+	if (rx_buf[0] == '1')
+		gpio_set_level(GPIO_LED_YEL, 1);
 }
 
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
@@ -113,6 +120,8 @@ static void wait_for_ip() {
 }
 
 static void tcp_client_task(void *pvParameters) {
+	wait_for_ip();
+
 	char rx_buffer[128];
 	char addr_str[128];
 	int addr_family;
@@ -174,16 +183,6 @@ static void tcp_client_task(void *pvParameters) {
 	vTaskDelete(NULL);
 }
 
-static void IRAM_ATTR gpio_isr_handler(void* arg) {
-	volatile static unsigned long last_millis = 0;
-	if (xTaskGetTickCount()-last_millis < 10)
-		return;
-	last_millis = xTaskGetTickCount();
-
-	uint32_t gpio_num = (uint32_t) arg;
-	xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
-}
-
 static void button_task(void* arg) {
 	static int btn1_cnt = 0;
 	static int btn2_cnt = 0;
@@ -196,6 +195,8 @@ static void button_task(void* arg) {
 			if (btn1_cnt == no_ticks) {
 				btn1_cnt = -1;
 				ESP_LOGI(TAG, "BUTTON1 intr");
+				if (sock >= 0)
+					send(sock, "0", 1, 0);
 			}
 		} else
 			btn1_cnt = 0;
@@ -206,6 +207,8 @@ static void button_task(void* arg) {
 			if (btn2_cnt == no_ticks) {
 				btn2_cnt = -1;
 				ESP_LOGI(TAG, "BUTTON2 intr");
+				if (sock >= 0)
+					send(sock, "1", 1, 0);
 			}
 		} else
 			btn2_cnt = 0;
@@ -223,6 +226,10 @@ static void initialise_io() {
 	gpio_set_direction(GPIO_LED_RED, GPIO_MODE_OUTPUT);
 	gpio_set_level(GPIO_LED_RED, 1);
 
+	gpio_pad_select_gpio(GPIO_LED_YEL);
+	gpio_set_direction(GPIO_LED_YEL, GPIO_MODE_OUTPUT);
+	gpio_set_level(GPIO_LED_YEL, 1);
+
 	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
 	io_conf.pin_bit_mask = (1ull << GPIO_BTN1);
 	io_conf.mode = GPIO_MODE_INPUT;
@@ -236,20 +243,13 @@ static void initialise_io() {
 	io_conf.pull_up_en = 1;
 	io_conf.pull_down_en = 0;
 	gpio_config(&io_conf);
-
-	//gpio_install_isr_service(0);
-	//gpio_isr_handler_add(GPIO_BTN1, gpio_isr_handler, (void*) GPIO_BTN1);
-	//gpio_isr_handler_add(GPIO_BTN2, gpio_isr_handler, (void*) GPIO_BTN2);
-
-	gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 }
 
 void app_main() {
 	ESP_ERROR_CHECK(nvs_flash_init());
 	initialise_io();
-	//initialise_wifi();
-	//wait_for_ip();
+	initialise_wifi();
 
-	//xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
+	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 }
