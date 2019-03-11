@@ -50,6 +50,7 @@ const int IPV4_GOTIP_BIT = BIT0;
 const int IPV6_GOTIP_BIT = BIT1;
 
 static const char *TAG = "N-trophy";
+static xQueueHandle gpio_evt_queue = NULL;
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_LED_RED, 0);
@@ -166,12 +167,11 @@ static void tcp_client_task(void *pvParameters) {
 			// Data received
 			else {
 				rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
-				ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
-				ESP_LOGI(TAG, "%s", rx_buffer);
+				ESP_LOGI(TAG, "Received %d bytes from %s: %s", len, addr_str, rx_buffer);
 				data_received(rx_buffer);
 			}
 
-			vTaskDelay(10 / portTICK_PERIOD_MS);
+			vTaskDelay(20 / portTICK_PERIOD_MS);
 		}
 
 		if (sock != -1) {
@@ -206,8 +206,9 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "0", 1, 0);
 			}
-		} else
+		} else {
 			btn1_cnt = 0;
+		}
 
 		if (gpio_get_level(GPIO_BTN2) == 0) {
 			if (btn2_cnt >= 0)
@@ -217,8 +218,9 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "1", 1, 0);
 			}
-		} else
+		} else {
 			btn2_cnt = 0;
+		}
 
 		vTaskDelay(10/portTICK_PERIOD_MS);
 	}
@@ -256,11 +258,31 @@ static void initialise_io() {
 	gpio_config(&io_conf);
 }
 
+static void gpio_turnoff_task(void* arg) {
+	uint32_t io_num;
+	while (1) {
+		if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
+			printf("GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
+		}
+		vTaskDelay(100/portTICK_PERIOD_MS);
+	}
+}
+
+typedef struct {
+	uint32_t io_num;
+} GpIoTurnoff;
+
+static void initialise_gpio_turnoff() {
+	gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+}
+
 void app_main() {
 	ESP_ERROR_CHECK(nvs_flash_init());
 	initialise_io();
 	initialise_wifi();
+	initialise_gpio_turnoff();
 
 	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
+	xTaskCreate(gpio_turnoff_task, "gpio_turnoff_task", 2048, NULL, 10, NULL);
 }
