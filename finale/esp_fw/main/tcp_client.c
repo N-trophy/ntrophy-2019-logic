@@ -69,9 +69,9 @@ const int IPV6_GOTIP_BIT = BIT1;
 
 static const char *TAG = "N-trophy";
 static xQueueHandle gpio_evt_queue = NULL;
-long rgb_led_timeout = LONG_MAX;
-long normal_led_timeout = LONG_MAX;
-const size_t LED_BLINK_TIME = 800000; // 800 ms
+volatile uint64_t rgb_led_timeout = UINT64_MAX;
+volatile uint64_t normal_led_timeout = UINT64_MAX;
+const uint64_t LED_BLINK_TIME = 800000; // 800 ms
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_RGB_B, 0);
