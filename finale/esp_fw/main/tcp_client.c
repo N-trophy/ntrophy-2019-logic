@@ -14,6 +14,9 @@
 #include "freertos/event_groups.h"
 #include "driver/gpio.h"
 #include "driver/ledc.h"
+#include "driver/mcpwm.h"
+#include "soc/mcpwm_reg.h"
+#include "soc/mcpwm_struct.h"
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_event_loop.h"
@@ -45,6 +48,7 @@
 #define GPIO_RGB_B 16
 #define GPIO_BTN1 15
 #define GPIO_BTN2 0
+#define GPIO_BEEP 19
 
 size_t GPIO_OUTS[] = {
 	GPIO_LED_R,
@@ -67,6 +71,7 @@ static const char *TAG = "N-trophy";
 static xQueueHandle gpio_evt_queue = NULL;
 long rgb_led_timeout = LONG_MAX;
 long normal_led_timeout = LONG_MAX;
+long beep_timeout = LONG_MAX;
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_RGB_B, 0);
@@ -77,6 +82,11 @@ static void data_received(char rx_buf[]) {
 	if (rx_buf[0] == '1')
 		gpio_set_level(GPIO_RGB_G, 1);
 
+	//mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, 50.0);
+	//mcpwm_set_frequency(MCPWM_UNIT_0, MCPWM_TIMER_0, 500);
+	//mcpwm_start(MCPWM_UNIT_0, MCPWM_TIMER_0);
+
+	beep_timeout = esp_timer_get_time() + 100000; // 100 ms
 	rgb_led_timeout = esp_timer_get_time() + 500000; // 500 ms
 }
 
@@ -249,6 +259,7 @@ static void button_task(void* arg) {
 		if (rgb_led_timeout < esp_timer_get_time()) {
 			gpio_set_level(GPIO_RGB_B, 0);
 			gpio_set_level(GPIO_RGB_G, 0);
+
 			rgb_led_timeout = LONG_MAX;
 		}
 
@@ -256,6 +267,11 @@ static void button_task(void* arg) {
 			gpio_set_level(GPIO_LED_B, 0);
 			gpio_set_level(GPIO_LED_G, 0);
 			normal_led_timeout = LONG_MAX;
+		}
+
+		if (beep_timeout < esp_timer_get_time()) {
+			mcpwm_set_signal_low(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A);
+			beep_timeout = LONG_MAX;
 		}
 
 		vTaskDelay(10/portTICK_PERIOD_MS);
@@ -285,6 +301,16 @@ static void initialise_io() {
 	io_conf.pull_up_en = 1;
 	io_conf.pull_down_en = 0;
 	gpio_config(&io_conf);
+
+	mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, GPIO_BEEP);
+
+	mcpwm_config_t pwm_config;
+	pwm_config.frequency = 500; //frequency = 500Hz,
+	pwm_config.cmpr_a = 50; //duty cycle of PWMxA = 50 %
+	pwm_config.cmpr_b = 50; //duty cycle of PWMxb = 50 %
+	pwm_config.counter_mode = MCPWM_UP_COUNTER;
+	pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
+	mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config); //Configure PWM0A & PWM0B with above settings
 }
 
 static void gpio_turnoff_task(void* arg) {
