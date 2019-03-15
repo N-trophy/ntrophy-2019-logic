@@ -77,5 +77,7 @@ if __name__ == '__main__':
     fn = sys.argv[1]
     print('Starting server on port %d, file %s...' % (port, fn))
 
-    with open(fn, 'w') as f:
+    with open(fn, 'a') as f:
+        f.write('\n'+str(datetime.datetime.now().time())+':\n')
+        f.flush()
         com_server(port, f)
