@@ -14,6 +14,7 @@ import socket
 import types
 import select
 import sys
+import datetime
 
 DEFAULT_PORT = 2000
 
@@ -45,8 +46,10 @@ def com_server(port):
                     data = None
 
                 if data:
-                    print('%s: %s ' % (
-                        rsock.getpeername()[0], data.decode('utf-8').strip()
+                    print('%s: %s: %s ' % (
+                        datetime.datetime.now().time(),
+                        rsock.getpeername()[0],
+                       data.decode('utf-8').strip()
                     ), end='')
                     for s in filter(lambda s: s != rsock, connected):
                         print('-> %s' % (s.getpeername()[0]), end='')
@@ -63,4 +66,5 @@ def com_server(port):
 
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
+    print('Starting server on port %d...' % (port))
     com_server(port)
