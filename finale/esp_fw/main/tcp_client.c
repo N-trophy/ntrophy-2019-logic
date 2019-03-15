@@ -90,6 +90,16 @@ static void data_received(char rx_buf[]) {
 	rgb_led_timeout = esp_timer_get_time() + 500000; // 500 ms
 }
 
+static void keep_alive(void* arg) {
+	while (1) {
+		gpio_set_level(GPIO_LED_R, 1);
+		vTaskDelay(5/portTICK_PERIOD_MS);
+		gpio_set_level(GPIO_LED_R, 0);
+		vTaskDelay(10/portTICK_PERIOD_MS);
+	}
+	vTaskDelete(NULL);
+}
+
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
 	switch (event->event_id) {
 	case SYSTEM_EVENT_STA_START:
@@ -156,6 +166,8 @@ static void tcp_client_task(void *pvParameters) {
 	gpio_set_level(GPIO_LED_G, 0);
 	gpio_set_level(GPIO_LED_Y, 0);
 	gpio_set_level(GPIO_LED_R, 0);
+
+	xTaskCreate(keep_alive, "keep_alive", 2048, NULL, 10, NULL);
 
 	char rx_buffer[128];
 	char addr_str[128];
@@ -234,7 +246,7 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "0", 1, 0);
 				gpio_set_level(GPIO_LED_G, 0);
-				gpio_set_level(GPIO_LED_B, 1);
+				gpio_set_level(GPIO_LED_Y, 1);
 				normal_led_timeout = esp_timer_get_time() + 500000; // 500 ms
 			}
 		} else {
@@ -249,7 +261,7 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "1", 1, 0);
 				gpio_set_level(GPIO_LED_G, 1);
-				gpio_set_level(GPIO_LED_B, 0);
+				gpio_set_level(GPIO_LED_Y, 0);
 				normal_led_timeout = esp_timer_get_time() + 500000; // 500 ms
 			}
 		} else {
@@ -264,7 +276,7 @@ static void button_task(void* arg) {
 		}
 
 		if (normal_led_timeout < esp_timer_get_time()) {
-			gpio_set_level(GPIO_LED_B, 0);
+			gpio_set_level(GPIO_LED_Y, 0);
 			gpio_set_level(GPIO_LED_G, 0);
 			normal_led_timeout = LONG_MAX;
 		}
@@ -340,4 +352,5 @@ void app_main() {
 	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 	xTaskCreate(gpio_turnoff_task, "gpio_turnoff_task", 2048, NULL, 10, NULL);
+
 }
