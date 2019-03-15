@@ -352,5 +352,4 @@ void app_main() {
 	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 	xTaskCreate(gpio_turnoff_task, "gpio_turnoff_task", 2048, NULL, 10, NULL);
-
 }
