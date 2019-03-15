@@ -65,6 +65,7 @@ const int IPV6_GOTIP_BIT = BIT1;
 
 static const char *TAG = "N-trophy";
 static xQueueHandle gpio_evt_queue = NULL;
+long rgb_led_timeout = LONG_MAX;
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_RGB_R, 0);
@@ -74,6 +75,8 @@ static void data_received(char rx_buf[]) {
 		gpio_set_level(GPIO_RGB_R, 1);
 	if (rx_buf[0] == '1')
 		gpio_set_level(GPIO_RGB_G, 1);
+
+	rgb_led_timeout = esp_timer_get_time() + 500000; // 500 ms
 }
 
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
@@ -234,6 +237,12 @@ static void button_task(void* arg) {
 			}
 		} else {
 			btn2_cnt = 0;
+		}
+
+		if (rgb_led_timeout < esp_timer_get_time()) {
+			gpio_set_level(GPIO_RGB_R, 0);
+			gpio_set_level(GPIO_RGB_G, 0);
+			rgb_led_timeout = LONG_MAX;
 		}
 
 		vTaskDelay(10/portTICK_PERIOD_MS);
