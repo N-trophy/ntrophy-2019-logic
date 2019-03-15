@@ -36,7 +36,7 @@
 */
 #define EXAMPLE_WIFI_SSID "Ntrophy"
 #define EXAMPLE_WIFI_PASS "ruzovouckyslon"
-#define HOST_IP_ADDR "192.168.1.107"
+#define HOST_IP_ADDR "192.168.0.60"
 #define PORT 2000
 
 #define GPIO_LED_R 22
@@ -81,10 +81,6 @@ static void data_received(char rx_buf[]) {
 		gpio_set_level(GPIO_RGB_B, 1);
 	if (rx_buf[0] == '1')
 		gpio_set_level(GPIO_RGB_G, 1);
-
-	//mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, 50.0);
-	//mcpwm_set_frequency(MCPWM_UNIT_0, MCPWM_TIMER_0, 500);
-	//mcpwm_start(MCPWM_UNIT_0, MCPWM_TIMER_0);
 
 	beep_timeout = esp_timer_get_time() + 100000; // 100 ms
 	rgb_led_timeout = esp_timer_get_time() + 500000; // 500 ms
@@ -313,16 +309,6 @@ static void initialise_io() {
 	io_conf.pull_up_en = 1;
 	io_conf.pull_down_en = 0;
 	gpio_config(&io_conf);
-
-	mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, GPIO_BEEP);
-
-	mcpwm_config_t pwm_config;
-	pwm_config.frequency = 500; //frequency = 500Hz,
-	pwm_config.cmpr_a = 50; //duty cycle of PWMxA = 50 %
-	pwm_config.cmpr_b = 50; //duty cycle of PWMxb = 50 %
-	pwm_config.counter_mode = MCPWM_UP_COUNTER;
-	pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
-	mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config); //Configure PWM0A & PWM0B with above settings
 }
 
 static void gpio_turnoff_task(void* arg) {
