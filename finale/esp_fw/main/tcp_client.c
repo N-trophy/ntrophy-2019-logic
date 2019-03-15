@@ -35,12 +35,19 @@
 #define HOST_IP_ADDR "192.168.1.107"
 #define PORT 2000
 
-const size_t GPIO_LED_RED = 22;
-const size_t GPIO_LED_YEL = 23;
-const size_t GPIO_LED_GREEN = 17;
-const size_t GPIO_LED_BLUE = 5;
-const size_t GPIO_BTN1 = 15;
-const size_t GPIO_BTN2 = 0;
+#define GPIO_LED_RED 22
+#define GPIO_LED_YEL 23
+#define GPIO_LED_GREEN 17
+#define GPIO_LED_BLUE 5
+#define GPIO_BTN1 15
+#define GPIO_BTN2 0
+
+size_t GPIO_OUTS[] = {
+	GPIO_LED_RED,
+	GPIO_LED_YEL,
+	GPIO_LED_GREEN,
+	GPIO_LED_BLUE,
+};
 
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
 static EventGroupHandle_t wifi_event_group;
@@ -231,17 +238,10 @@ static void button_task(void* arg) {
 static void initialise_io() {
 	gpio_config_t io_conf;
 
-	gpio_pad_select_gpio(GPIO_LED_RED);
-	gpio_set_direction(GPIO_LED_RED, GPIO_MODE_OUTPUT);
-
-	gpio_pad_select_gpio(GPIO_LED_YEL);
-	gpio_set_direction(GPIO_LED_YEL, GPIO_MODE_OUTPUT);
-
-	gpio_pad_select_gpio(GPIO_LED_GREEN);
-	gpio_set_direction(GPIO_LED_GREEN, GPIO_MODE_OUTPUT);
-
-	gpio_pad_select_gpio(GPIO_LED_BLUE);
-	gpio_set_direction(GPIO_LED_BLUE, GPIO_MODE_OUTPUT);
+	for (size_t i = 0; i < sizeof(GPIO_OUTS)/sizeof(*GPIO_OUTS); i++) {
+		gpio_pad_select_gpio(GPIO_OUTS[i]);
+		gpio_set_direction(GPIO_OUTS[i], GPIO_MODE_OUTPUT);
+	}
 
 	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
 	io_conf.pin_bit_mask = (1ull << GPIO_BTN1);
