@@ -19,7 +19,7 @@ import datetime
 DEFAULT_PORT = 2000
 
 
-def com_server(port):
+def com_server(port, log_file):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_socket.bind(('0.0.0.0', port))
@@ -46,11 +46,16 @@ def com_server(port):
                     data = None
 
                 if data:
+                    decoded = data.decode('utf-8').strip()
                     print('%s: %s: %s ' % (
                         datetime.datetime.now().time(),
                         rsock.getpeername()[0],
-                       data.decode('utf-8').strip()
+                        decoded
                     ), end='')
+                    if decoded[0] == '0' or decoded[0] == '1':
+                        log_file.write(decoded[0])
+                        log_file.flush()
+
                     for s in filter(lambda s: s != rsock, connected):
                         print('-> %s' % (s.getpeername()[0]), end='')
                         try:
@@ -65,6 +70,12 @@ def com_server(port):
 
 
 if __name__ == '__main__':
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
-    print('Starting server on port %d...' % (port))
-    com_server(port)
+    if len(sys.argv) < 2:
+        sys.stderr.write('Usage: com_server.py filename port\n')
+        sys.exit(1)
+    port = int(sys.argv[2]) if len(sys.argv) > 2 else DEFAULT_PORT
+    fn = sys.argv[1]
+    print('Starting server on port %d, file %s...' % (port, fn))
+
+    with open(fn, 'w') as f:
+        com_server(port, f)
