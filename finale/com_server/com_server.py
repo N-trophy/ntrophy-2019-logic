@@ -19,7 +19,7 @@ import datetime
 DEFAULT_PORT = 2000
 
 
-def com_server(port, log_file):
+def com_server(port, fn):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_socket.bind(('0.0.0.0', port))
@@ -53,8 +53,8 @@ def com_server(port, log_file):
                         decoded
                     ), end='')
                     if decoded[0] == '0' or decoded[0] == '1':
-                        log_file.write(decoded[0])
-                        log_file.flush()
+                        with open(fn, 'a') as log_file:
+                            log_file.write(decoded[0])
 
                     for s in filter(lambda s: s != rsock, connected):
                         print('-> %s' % (s.getpeername()[0]), end='')
@@ -77,7 +77,8 @@ if __name__ == '__main__':
     fn = sys.argv[1]
     print('Starting server on port %d, file %s...' % (port, fn))
 
+    # Write header to file
     with open(fn, 'a') as f:
-        f.write('\n'+str(datetime.datetime.now().time())+':\n')
-        f.flush()
-        com_server(port, f)
+        f.write(str(datetime.datetime.now().time())+':\n')
+
+    com_server(port, f)
