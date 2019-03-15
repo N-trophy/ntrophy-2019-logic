@@ -85,14 +85,26 @@ static void data_received(char rx_buf[]) {
 	rgb_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 }
 
-static void keep_alive(void* arg) {
-	while (sock != 0) {
-		gpio_set_level(GPIO_LED_R, 1);
-		vTaskDelay(5/portTICK_PERIOD_MS);
-		gpio_set_level(GPIO_LED_R, 0);
-		vTaskDelay(10/portTICK_PERIOD_MS);
+static void led_keep_alive(void* arg) {
+	while (1) {
+		if (sock > -1) {
+			gpio_set_level(GPIO_LED_R, 1);
+			vTaskDelay(5/portTICK_PERIOD_MS);
+			gpio_set_level(GPIO_LED_R, 0);
+			vTaskDelay(10/portTICK_PERIOD_MS);
+		} else {
+			vTaskDelay(1000/portTICK_PERIOD_MS);
+		}
 	}
-	gpio_set_level(GPIO_LED_R, 1);
+	vTaskDelete(NULL);
+}
+
+static void sock_keep_alive(void* arg) {
+	while (1) {
+		if (sock > -1)
+			send(sock, "K", 1, 0);
+		vTaskDelay(5000/portTICK_PERIOD_MS);
+	}
 	vTaskDelete(NULL);
 }
 
@@ -197,8 +209,6 @@ static void tcp_client_task(void *pvParameters) {
 		} while (sock < 0 && err != 0);
 		ESP_LOGI(TAG, "Successfully connected");
 		gpio_set_level(GPIO_LED_Y, 0);
-
-		xTaskCreate(keep_alive, "keep_alive", 2048, NULL, 10, NULL);
 
 		while (1) {
 			int len = recv(sock, rx_buffer, sizeof(rx_buffer) - 1, 0);
@@ -340,4 +350,6 @@ void app_main() {
 	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 	xTaskCreate(gpio_turnoff_task, "gpio_turnoff_task", 2048, NULL, 10, NULL);
+	xTaskCreate(led_keep_alive, "led_keep_alive", 2048, NULL, 10, NULL);
+	xTaskCreate(sock_keep_alive, "sock_keep_alive", 2048, NULL, 10, NULL);
 }
