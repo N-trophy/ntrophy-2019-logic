@@ -71,7 +71,7 @@ static const char *TAG = "N-trophy";
 static xQueueHandle gpio_evt_queue = NULL;
 long rgb_led_timeout = LONG_MAX;
 long normal_led_timeout = LONG_MAX;
-long beep_timeout = LONG_MAX;
+const size_t LED_BLINK_TIME = 800000; // 800 ms
 
 static void data_received(char rx_buf[]) {
 	gpio_set_level(GPIO_RGB_B, 0);
@@ -82,8 +82,7 @@ static void data_received(char rx_buf[]) {
 	if (rx_buf[0] == '1')
 		gpio_set_level(GPIO_RGB_G, 1);
 
-	beep_timeout = esp_timer_get_time() + 100000; // 100 ms
-	rgb_led_timeout = esp_timer_get_time() + 500000; // 500 ms
+	rgb_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 }
 
 static void keep_alive(void* arg) {
@@ -243,7 +242,7 @@ static void button_task(void* arg) {
 					send(sock, "0", 1, 0);
 				gpio_set_level(GPIO_LED_G, 0);
 				gpio_set_level(GPIO_LED_Y, 1);
-				normal_led_timeout = esp_timer_get_time() + 500000; // 500 ms
+				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
 			btn1_cnt = 0;
@@ -258,7 +257,7 @@ static void button_task(void* arg) {
 					send(sock, "1", 1, 0);
 				gpio_set_level(GPIO_LED_G, 1);
 				gpio_set_level(GPIO_LED_Y, 0);
-				normal_led_timeout = esp_timer_get_time() + 500000; // 500 ms
+				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
 			btn2_cnt = 0;
@@ -275,11 +274,6 @@ static void button_task(void* arg) {
 			gpio_set_level(GPIO_LED_Y, 0);
 			gpio_set_level(GPIO_LED_G, 0);
 			normal_led_timeout = LONG_MAX;
-		}
-
-		if (beep_timeout < esp_timer_get_time()) {
-			mcpwm_set_signal_low(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A);
-			beep_timeout = LONG_MAX;
 		}
 
 		vTaskDelay(10/portTICK_PERIOD_MS);
