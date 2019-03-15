@@ -13,6 +13,7 @@
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
 #include "driver/gpio.h"
+#include "driver/ledc.h"
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_event_loop.h"
@@ -35,18 +36,24 @@
 #define HOST_IP_ADDR "192.168.1.107"
 #define PORT 2000
 
-#define GPIO_LED_RED 22
-#define GPIO_LED_YEL 23
-#define GPIO_LED_GREEN 17
-#define GPIO_LED_BLUE 5
+#define GPIO_LED_R 22
+#define GPIO_LED_Y 23
+#define GPIO_LED_G 17
+#define GPIO_LED_B 5
+#define GPIO_RGB_R 4
+#define GPIO_RGB_G 21
+#define GPIO_RGB_B 16
 #define GPIO_BTN1 15
 #define GPIO_BTN2 0
 
 size_t GPIO_OUTS[] = {
-	GPIO_LED_RED,
-	GPIO_LED_YEL,
-	GPIO_LED_GREEN,
-	GPIO_LED_BLUE,
+	GPIO_LED_R,
+	GPIO_LED_Y,
+	GPIO_LED_G,
+	GPIO_LED_B,
+	GPIO_RGB_R,
+	GPIO_RGB_G,
+	GPIO_RGB_B,
 };
 
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
@@ -60,13 +67,13 @@ static const char *TAG = "N-trophy";
 static xQueueHandle gpio_evt_queue = NULL;
 
 static void data_received(char rx_buf[]) {
-	gpio_set_level(GPIO_LED_RED, 0);
-	gpio_set_level(GPIO_LED_YEL, 0);
+	gpio_set_level(GPIO_RGB_R, 0);
+	gpio_set_level(GPIO_RGB_G, 0);
 
 	if (rx_buf[0] == '0')
-		gpio_set_level(GPIO_LED_RED, 1);
+		gpio_set_level(GPIO_RGB_R, 1);
 	if (rx_buf[0] == '1')
-		gpio_set_level(GPIO_LED_YEL, 1);
+		gpio_set_level(GPIO_RGB_G, 1);
 }
 
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
@@ -131,10 +138,10 @@ static void wait_for_ip() {
 static void tcp_client_task(void *pvParameters) {
 	wait_for_ip();
 
-	gpio_set_level(GPIO_LED_BLUE, 0);
-	gpio_set_level(GPIO_LED_GREEN, 0);
-	gpio_set_level(GPIO_LED_YEL, 0);
-	gpio_set_level(GPIO_LED_RED, 0);
+	gpio_set_level(GPIO_LED_B, 0);
+	gpio_set_level(GPIO_LED_G, 0);
+	gpio_set_level(GPIO_LED_Y, 0);
+	gpio_set_level(GPIO_LED_R, 0);
 
 	char rx_buffer[128];
 	char addr_str[128];
@@ -195,13 +202,13 @@ static void button_task(void* arg) {
 	static int btn2_cnt = 0;
 	const size_t no_ticks = 5; // 50 ms
 
-	gpio_set_level(GPIO_LED_BLUE, 1);
+	gpio_set_level(GPIO_LED_B, 1);
 	vTaskDelay(200 / portTICK_PERIOD_MS);
-	gpio_set_level(GPIO_LED_GREEN, 1);
+	gpio_set_level(GPIO_LED_G, 1);
 	vTaskDelay(200 / portTICK_PERIOD_MS);
-	gpio_set_level(GPIO_LED_YEL, 1);
+	gpio_set_level(GPIO_LED_Y, 1);
 	vTaskDelay(200 / portTICK_PERIOD_MS);
-	gpio_set_level(GPIO_LED_RED, 1);
+	gpio_set_level(GPIO_LED_R, 1);
 	vTaskDelay(200 / portTICK_PERIOD_MS);
 
 	while (1) {
