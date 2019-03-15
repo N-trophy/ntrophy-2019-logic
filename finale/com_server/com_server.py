@@ -13,27 +13,26 @@ Data flow: everything on port 2000
 import socket
 import types
 import select
+import sys
+
+DEFAULT_PORT = 2000
 
 
-LISTEN_PORTS = (2000,)
-
-
-def main():
-    server_sockets = []
-    for port in LISTEN_PORTS:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind(('0.0.0.0', port))
-        s.listen()
-        server_sockets.append(s)
+def com_server(port):
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server_socket.bind(('0.0.0.0', port))
+    server_socket.listen()
 
     connected = []
 
     while True:
-        rsocks, wsocsk, esocks = select.select(server_sockets + connected, [], [])
+        rsocks, wsocsk, esocks = select.select(
+            [server_socket] + connected, [], []
+        )
 
         for rsock in rsocks:
-            if rsock in server_sockets:
+            if rsock == server_socket:
                 # New connection
                 sockfd, addr = rsock.accept()
                 sockfd.setblocking(0)
@@ -47,21 +46,21 @@ def main():
 
                 if data:
                     print('%s: %s ' % (
-                        str(rsock.getpeername()), data.decode('utf-8').strip()
+                        rsock.getpeername()[0], data.decode('utf-8').strip()
                     ), end='')
                     for s in filter(lambda s: s != rsock, connected):
-                        print('-> %s' % (str(s.getpeername())), end='')
+                        print('-> %s' % (s.getpeername()[0]), end='')
                         try:
                             s.send(data)
                         except socket.error:
                             print('Error!', end='')
                     print()
                 else:
-                    #print('Closing socket %s...' % (str(rsock.getpeername() if rsock.)))
                     print('Closing socket...')
                     connected.remove(rsock)
                     rsock.close()
 
 
 if __name__ == '__main__':
-    main()
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
+    com_server(port)
