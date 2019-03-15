@@ -86,12 +86,13 @@ static void data_received(char rx_buf[]) {
 }
 
 static void keep_alive(void* arg) {
-	while (1) {
+	while (sock != 0) {
 		gpio_set_level(GPIO_LED_R, 1);
 		vTaskDelay(5/portTICK_PERIOD_MS);
 		gpio_set_level(GPIO_LED_R, 0);
 		vTaskDelay(10/portTICK_PERIOD_MS);
 	}
+	gpio_set_level(GPIO_LED_R, 1);
 	vTaskDelete(NULL);
 }
 
@@ -159,10 +160,6 @@ static void tcp_client_task(void *pvParameters) {
 
 	gpio_set_level(GPIO_LED_B, 0);
 	gpio_set_level(GPIO_LED_G, 0);
-	gpio_set_level(GPIO_LED_Y, 0);
-	gpio_set_level(GPIO_LED_R, 0);
-
-	xTaskCreate(keep_alive, "keep_alive", 2048, NULL, 10, NULL);
 
 	char rx_buffer[128];
 	char addr_str[128];
@@ -178,19 +175,30 @@ static void tcp_client_task(void *pvParameters) {
 		ip_protocol = IPPROTO_IP;
 		inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 
-		sock = socket(addr_family, SOCK_STREAM, ip_protocol);
-		if (sock < 0) {
-			ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
-			break;
-		}
-		ESP_LOGI(TAG, "Socket created");
+		int err = 0;
+		do {
+			gpio_set_level(GPIO_LED_Y, 1);
+			gpio_set_level(GPIO_LED_R, 1);
 
-		int err = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
-		if (err != 0) {
-			ESP_LOGE(TAG, "Socket unable to connect: errno %d", errno);
-			break;
-		}
+			sock = socket(addr_family, SOCK_STREAM, ip_protocol);
+			if (sock < 0) {
+				ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
+				vTaskDelay(1000 / portTICK_PERIOD_MS);
+				continue;
+			}
+			ESP_LOGI(TAG, "Socket created");
+
+			err = connect(sock, (struct sockaddr *)&destAddr, sizeof(destAddr));
+			if (err != 0) {
+				ESP_LOGE(TAG, "Socket unable to connect: errno %d", errno);
+				vTaskDelay(1000 / portTICK_PERIOD_MS);
+			}
+
+		} while (sock < 0 && err != 0);
 		ESP_LOGI(TAG, "Successfully connected");
+		gpio_set_level(GPIO_LED_Y, 0);
+
+		xTaskCreate(keep_alive, "keep_alive", 2048, NULL, 10, NULL);
 
 		while (1) {
 			int len = recv(sock, rx_buffer, sizeof(rx_buffer) - 1, 0);
