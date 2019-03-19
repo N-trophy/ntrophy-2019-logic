@@ -18,6 +18,7 @@ import api_server.level
 
 register = Library()
 
+
 def level_class(next_level, level_id):
     if next_level > level_id:
         return "w3-green"
@@ -25,6 +26,7 @@ def level_class(next_level, level_id):
         return "w3-white"
     else:
         return "w3-dark-gray"
+
 
 def level_status(next_level, level, submission=None):
     if next_level > level.id and submission is not None:
@@ -34,30 +36,37 @@ def level_status(next_level, level, submission=None):
     else:
         return "Zatím uzavřeno"
 
-@login_required
+
 def index(request, *args, **kwargs):
     template = loader.get_template('index.html')
-    done_levels = api_server.level.done_levels(request.user)
-    if len(done_levels.keys()) > 0:
-        next_level = max(done_levels.keys())+1
+
+    if request.user.is_authenticated:
+        done_levels = api_server.level.done_levels(request.user)
+        if len(done_levels.keys()) > 0:
+            next_level = max(done_levels.keys())+1
+        else:
+            next_level = 1
     else:
-        next_level = 1
+        next_level = Level.objects.latest('id').id + 1
+
     levels = list(map(lambda l: {
         'id': l.id,
-        'status': level_status(next_level, l, done_levels.get(l.id)),
+        'status': level_status(next_level, l, done_levels.get(l.id)) \
+                  if request.user.is_authenticated else 'Otevřeno',
         'class': level_class(next_level, l.id)
     }, Level.objects.order_by('id')))
 
     context = {
         'levels': levels,
         'next_level': next_level,
-        'name': request.user.get_full_name(),
+        'name': request.user.get_full_name() if request.user.is_authenticated \
+                else 'Anonymní Keporkak',
         'posts': Post.objects.filter(published__lt=timezone.now()).\
                  order_by('-published')[:12],
     }
     return HttpResponse(template.render(context, request))
 
-@login_required
+
 def level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
@@ -81,7 +90,7 @@ def level(request, *args, **kwargs):
     }
     return HttpResponse(template.render(context, request))
 
-@login_required
+
 def graph_js(request, *args, **kwargs):
     template = loader.get_template('graph.js')
     context = {
@@ -90,7 +99,6 @@ def graph_js(request, *args, **kwargs):
     return HttpResponse(template.render(context, request))
 
 
-@login_required
 def data_level(request, *args, **kwargs):
     if not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
