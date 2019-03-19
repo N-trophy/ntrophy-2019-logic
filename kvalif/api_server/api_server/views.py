@@ -68,7 +68,8 @@ def index(request, *args, **kwargs):
 
 
 def level(request, *args, **kwargs):
-    if not api_server.level.is_level_open(request.user, kwargs['id']):
+    if request.user.is_authenticated and \
+       not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
 
     template = loader.get_template('level.html')
@@ -82,8 +83,10 @@ def level(request, *args, **kwargs):
     context = {
         'level_id': kwargs['id'],
         'level': level,
-        'allow_submit': kwargs['id'] == api_server.level.next_level(request.user),
-        'evals_remaining': api_server.level.evals_remaining(request.user, level),
+        'allow_submit': (kwargs['id'] == api_server.level.next_level(request.user))
+                        if request.user.is_authenticated else False,
+        'evals_remaining': api_server.level.evals_remaining(request.user, level)
+                           if request.user.is_authenticated else -1,
         'weighted_edges': api_server.level.are_edges_weighted(graph),
         'weighted_nodes': api_server.level.are_nodes_weighted(graph),
         'edges_present': len(graph['edges']) > 0,
