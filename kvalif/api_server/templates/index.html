@@ -69,11 +69,15 @@ p a {
 <header class="w3-container w3-red" style="padding:128px 16px">
     <div class="w3-center">
       <h3 class="w3-xlarge w3-padding-large w3-margin">Vítejte na logické části kvalifikační úlohy N-trophy<sup>9</sup>.</h3>
-      {% if next_level <= 10 %}
-      <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
-      {% else %}
-      <p class="w3-black w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Máte odevzdané všechny úlohy.<br>Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p></div>
-      {% endif %}
+      {% if user.is_authenticated %}
+          {% if next_level <= 10 %}
+          <a href="/level/{{ next_level }}" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
+          {% else %}
+          <p class="w3-black w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Máte odevzdané všechny úlohy.<br>Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p></div>
+          {% endif %}
+    {% else %}
+        <a href="/level/1" class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Jdi rovnou řešit</a>
+    {% endif %}
     </div>
     <!-- <div id="logo-container">
       <img id="logo" src="/static/img/red_cut_logo.svg"></img>
