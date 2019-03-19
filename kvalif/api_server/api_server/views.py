@@ -103,7 +103,8 @@ def graph_js(request, *args, **kwargs):
 
 
 def data_level(request, *args, **kwargs):
-    if not api_server.level.is_level_open(request.user, kwargs['id']):
+    if request.user.is_authenticated and \
+        api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
 
     response = HttpResponse(content_type='text/csv; charset=utf8')
