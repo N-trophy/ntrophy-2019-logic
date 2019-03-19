@@ -44,7 +44,11 @@ p a {
     <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-padding-large w3-hover-white"><i class="fa fa-home"></i></a>
     <a href="/#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pravidla</a>
     <a href="/#levels" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Přehled úrovní</a>
-    <a href="/accounts/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+    {% if user.is_authenticated %}
+      <a href="/accounts/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+    {% else %}
+      <a href="/accounts/login" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Přihlásit se</a>
+    {% endif %}
     <div class="w3-bar-item w3-hide-small w3-padding-large w3-right">{{ name }}</div>
   </div>
 
@@ -53,7 +57,11 @@ p a {
     <div class="w3-bar-item w3-padding-large w3-black">{{ name }}</div>
     <a href="/#rules" class="w3-bar-item w3-button w3-padding-large">Pravidla</a>
     <a href="/#levels" class="w3-bar-item w3-button w3-padding-large">Přehled úrovní</a>
-    <a href="/accounts/logout" class="w3-bar-item w3-button w3-padding-large">Odhlásit</a>
+    {% if user.is_authenticated %}
+      <a href="/accounts/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+    {% else %}
+      <a href="/accounts/login" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Přihlásit se</a>
+    {% endif %}
   </div>
 </div>
 
