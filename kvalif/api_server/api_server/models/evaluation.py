@@ -19,3 +19,6 @@ class Evaluation(models.Model):
     datetime = models.DateTimeField(default=timezone.now)
 
     unique_together = (('user', 'level'),)
+
+class FakeEvaluation:
+    pass

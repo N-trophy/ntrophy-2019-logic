@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils import timezone
 
 from api_server.models.level import Level
-from api_server.models.evaluation import Evaluation
+from api_server.models.evaluation import Evaluation, FakeEvaluation
 from api_server.models.submission import Submission
 import api_server.level
 import api_server.evaluation
@@ -85,23 +85,24 @@ def error(level, stations) -> float:
     return round(e, 2)
 
 
-@login_required
 @require_http_methods(['POST'])
 def eval_level(request, *args, **kwargs):
-    if not api_server.level.is_level_open(request.user, kwargs['id']):
+    if request.user.is_authenticated and \
+        not api_server.level.is_level_open(request.user, kwargs['id']):
         return HttpResponseForbidden('Level not opened!')
 
-    if timezone.now() >= QUALIFICATION_END and not request.user.is_superuser:
-        return HttpResponseForbidden('Qualification ended!')
+    # if timezone.now() >= QUALIFICATION_END and not request.user.is_superuser:
+    #     return HttpResponseForbidden('Qualification ended!')
 
     try:
         level = Level.objects.get(id=kwargs['id'])
     except api_server.models.level.Level.DoesNotExist:
         return HttpResponseNotFound('Level not found')
 
-    done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
-    if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
-        return HttpResponseForbidden('Reached limit of evaluations!')
+    if request.user.is_authenticated:
+        done_evaluations = api_server.evaluation.no_evaluations(request.user, level)
+        if level.no_evaluations > 0 and done_evaluations >= level.no_evaluations:
+            return HttpResponseForbidden('Reached limit of evaluations!')
 
     # TODO: add another limit of evaluations?
 
@@ -111,11 +112,14 @@ def eval_level(request, *args, **kwargs):
     if len(stations) != level.no_stations:
         return HttpResponseBadRequest('Invalid number of stations!')
 
-    evaluation = Evaluation(
-        user=request.user,
-        level=level,
-        positions=body,
-    )
+    if request.user.is_authenticated:
+        evaluation = Evaluation(
+            user=request.user,
+            level=level,
+            positions=body,
+        )
+    else:
+        evaluation = FakeEvaluation()
 
     try:
         evaluation.score = error(level, stations)
@@ -127,11 +131,13 @@ def eval_level(request, *args, **kwargs):
         evaluation.report = traceback.format_exc()
         raise
     finally:
-        evaluation.save()
+        if request.user.is_authenticated:
+            evaluation.save()
 
     return JsonResponse({
         'score': evaluation.score,
-        'remaining': api_server.level.evals_remaining(request.user, level), # -1 if no limit
+        'remaining': api_server.level.evals_remaining(request.user, level)
+                     if request.user.is_authenticated else -1, # -1 if no limit
     })
 
 
