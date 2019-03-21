@@ -26,8 +26,8 @@
 
 #define EXAMPLE_WIFI_SSID "Ntrophy"
 #define EXAMPLE_WIFI_PASS "ruzovouckyslon"
-#define HOST_IP_ADDR "192.168.0.60"
-#define PORT 2000
+const char* HOST_IP_ADDR = "192.168.0.60";
+uint16_t host_port = 2000;
 
 #define GPIO_LED_R 22
 #define GPIO_LED_Y 23
@@ -173,7 +173,7 @@ static void tcp_client_task(void *pvParameters) {
 		struct sockaddr_in destAddr;
 		destAddr.sin_addr.s_addr = inet_addr(HOST_IP_ADDR);
 		destAddr.sin_family = AF_INET;
-		destAddr.sin_port = htons(PORT);
+		destAddr.sin_port = htons(host_port);
 		addr_family = AF_INET;
 		ip_protocol = IPPROTO_IP;
 		inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
@@ -295,7 +295,7 @@ static void initialise_io() {
 	gpio_config_t io_conf;
 
 	for (size_t i = 0; i < sizeof(GPIO_OUTS)/sizeof(*GPIO_OUTS); i++) {
-		gpio_pad_select_gpio(GPIO_OUTS[i]);
+		//gpio_pad_select_gpio(GPIO_OUTS[i]); TODO check if not required
 		gpio_set_direction(GPIO_OUTS[i], GPIO_MODE_OUTPUT);
 	}
 
@@ -314,8 +314,22 @@ static void initialise_io() {
 	gpio_config(&io_conf);
 }
 
+uint16_t get_port() {
+	for (size_t i = 0; i < sizeof(PORT_GPIO)/sizeof(*PORT_GPIO); i++) {
+		gpio_set_direction(PORT_GPIO[i], GPIO_MODE_INPUT);
+		gpio_set_pull_mode(PORT_GPIO[i], GPIO_PULLUP_ONLY);
+	}
+
+	uint16_t result = 2000;
+	for (size_t i = 0; i < sizeof(PORT_GPIO)/sizeof(*PORT_GPIO); i++)
+		if (gpio_get_level(PORT_GPIO[i]))
+			result |= (2 << i);
+	return result;
+}
+
 void app_main() {
 	ESP_ERROR_CHECK(nvs_flash_init());
+	host_port = get_port();
 	initialise_io();
 	initialise_wifi();
 
