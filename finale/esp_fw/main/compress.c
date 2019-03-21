@@ -24,12 +24,6 @@
 #include "lwip/sys.h"
 #include <lwip/netdb.h>
 
-
-/* The examples use simple WiFi configuration that you can set via
-   'make menuconfig'.
-   If you'd rather not, just change the below entries to strings with
-   the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
-*/
 #define EXAMPLE_WIFI_SSID "Ntrophy"
 #define EXAMPLE_WIFI_PASS "ruzovouckyslon"
 #define HOST_IP_ADDR "192.168.0.60"
@@ -255,7 +249,7 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "0", 1, 0);
 				gpio_set_level(GPIO_LED_G, 0);
-				gpio_set_level(GPIO_LED_Y, 1);
+				gpio_set_level(GPIO_LED_B, 1);
 				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
@@ -270,7 +264,7 @@ static void button_task(void* arg) {
 				if (sock >= 0)
 					send(sock, "1", 1, 0);
 				gpio_set_level(GPIO_LED_G, 1);
-				gpio_set_level(GPIO_LED_Y, 0);
+				gpio_set_level(GPIO_LED_B, 0);
 				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
@@ -285,7 +279,7 @@ static void button_task(void* arg) {
 		}
 
 		if (normal_led_timeout < esp_timer_get_time()) {
-			gpio_set_level(GPIO_LED_Y, 0);
+			gpio_set_level(GPIO_LED_B, 0);
 			gpio_set_level(GPIO_LED_G, 0);
 			normal_led_timeout = LONG_MAX;
 		}
