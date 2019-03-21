@@ -50,6 +50,8 @@ size_t GPIO_OUTS[] = {
 	GPIO_RGB_B,
 };
 
+size_t PORT_GPIO[] = {32, 33, 35, 26};
+
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
 static EventGroupHandle_t wifi_event_group;
 static int sock = -1;
@@ -58,7 +60,6 @@ const int IPV4_GOTIP_BIT = BIT0;
 const int IPV6_GOTIP_BIT = BIT1;
 
 static const char *TAG = "N-trophy";
-static xQueueHandle gpio_evt_queue = NULL;
 volatile uint64_t rgb_led_timeout = UINT64_MAX;
 volatile uint64_t normal_led_timeout = UINT64_MAX;
 const uint64_t LED_BLINK_TIME = 800000; // 800 ms
@@ -313,33 +314,13 @@ static void initialise_io() {
 	gpio_config(&io_conf);
 }
 
-static void gpio_turnoff_task(void* arg) {
-	uint32_t io_num;
-	while (1) {
-		if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-			printf("GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
-		}
-		vTaskDelay(100/portTICK_PERIOD_MS);
-	}
-}
-
-typedef struct {
-	uint32_t io_num;
-} GpIoTurnoff;
-
-static void initialise_gpio_turnoff() {
-	gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-}
-
 void app_main() {
 	ESP_ERROR_CHECK(nvs_flash_init());
 	initialise_io();
 	initialise_wifi();
-	initialise_gpio_turnoff();
 
 	xTaskCreate(tcp_client_task, "tcp_client", 4096, NULL, 5, NULL);
 	xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
-	xTaskCreate(gpio_turnoff_task, "gpio_turnoff_task", 2048, NULL, 10, NULL);
 	xTaskCreate(led_keep_alive, "led_keep_alive", 2048, NULL, 10, NULL);
 	xTaskCreate(sock_keep_alive, "sock_keep_alive", 2048, NULL, 10, NULL);
 }
