@@ -1,10 +1,6 @@
-/* BSD Socket API Example
-
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
+/* N-trphy 2019 final task:
+   Allows to send data between 2 ESPs (buttons -> LEDs)
+   This code is inspired by ESP32 TCP client example.
 */
 #include <string.h>
 #include <sys/param.h>
