@@ -81,4 +81,4 @@ if __name__ == '__main__':
     with open(fn, 'a') as f:
         f.write(str(datetime.datetime.now().time())+':\n')
 
-    com_server(port, f)
+    com_server(port, fn)
