@@ -65,15 +65,16 @@ volatile uint64_t normal_led_timeout = UINT64_MAX;
 const uint64_t LED_BLINK_TIME = 800000; // 800 ms
 
 static void data_received(char rx_buf[]) {
-	gpio_set_level(GPIO_RGB_B, 0);
-	gpio_set_level(GPIO_RGB_G, 0);
+	if (rx_buf[0] == '0' || rx_buf[0] == '1') {
+		gpio_set_level(GPIO_RGB_B, 0);
+		gpio_set_level(GPIO_RGB_G, 0);
+		rgb_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 
-	if (rx_buf[0] == '0')
-		gpio_set_level(GPIO_RGB_B, 1);
-	if (rx_buf[0] == '1')
-		gpio_set_level(GPIO_RGB_G, 1);
-
-	rgb_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
+		if (rx_buf[0] == '0')
+			gpio_set_level(GPIO_RGB_B, 1);
+		if (rx_buf[0] == '1')
+			gpio_set_level(GPIO_RGB_G, 1);
+	}
 }
 
 static void led_keep_alive(void* arg) {
@@ -249,9 +250,9 @@ static void button_task(void* arg) {
 				btn1_cnt = -1;
 				if (sock >= 0)
 					send(sock, "0", 1, 0);
+				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 				gpio_set_level(GPIO_LED_G, 0);
 				gpio_set_level(GPIO_LED_B, 1);
-				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
 			btn1_cnt = 0;
@@ -264,22 +265,26 @@ static void button_task(void* arg) {
 				btn2_cnt = -1;
 				if (sock >= 0)
 					send(sock, "1", 1, 0);
+				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 				gpio_set_level(GPIO_LED_G, 1);
 				gpio_set_level(GPIO_LED_B, 0);
-				normal_led_timeout = esp_timer_get_time() + LED_BLINK_TIME;
 			}
 		} else {
 			btn2_cnt = 0;
 		}
 
-		if (rgb_led_timeout < esp_timer_get_time()) {
+		if ((rgb_led_timeout < esp_timer_get_time()) &&
+		    ((GPIO_REG_READ(GPIO_OUT_REG) >> GPIO_RGB_B) & 1u ||
+			 (GPIO_REG_READ(GPIO_OUT_REG) >> GPIO_RGB_G & 1u))) {
 			gpio_set_level(GPIO_RGB_B, 0);
 			gpio_set_level(GPIO_RGB_G, 0);
 
 			rgb_led_timeout = LONG_MAX;
 		}
 
-		if (normal_led_timeout < esp_timer_get_time()) {
+		if (normal_led_timeout < esp_timer_get_time() &&
+		    ((GPIO_REG_READ(GPIO_OUT_REG) >> GPIO_LED_B) & 1u ||
+			 (GPIO_REG_READ(GPIO_OUT_REG) >> GPIO_LED_G & 1u))) {
 			gpio_set_level(GPIO_LED_B, 0);
 			gpio_set_level(GPIO_LED_G, 0);
 			normal_led_timeout = LONG_MAX;
