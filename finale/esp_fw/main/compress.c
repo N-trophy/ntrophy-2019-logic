@@ -50,7 +50,7 @@ size_t GPIO_OUTS[] = {
 	GPIO_RGB_B,
 };
 
-size_t PORT_GPIO[] = {32, 33, 35, 26};
+size_t PORT_GPIO[] = {26, 27, 14};
 
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
 static EventGroupHandle_t wifi_event_group;
@@ -322,14 +322,15 @@ uint16_t get_port() {
 
 	uint16_t result = 2000;
 	for (size_t i = 0; i < sizeof(PORT_GPIO)/sizeof(*PORT_GPIO); i++)
-		if (gpio_get_level(PORT_GPIO[i]))
-			result |= (2 << i);
+		if (!gpio_get_level(PORT_GPIO[i]))
+			result += (1 << i);
 	return result;
 }
 
 void app_main() {
 	ESP_ERROR_CHECK(nvs_flash_init());
 	host_port = get_port();
+	ESP_LOGI(TAG, "Port %d", host_port);
 	initialise_io();
 	initialise_wifi();
 
